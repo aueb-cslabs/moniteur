@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
+$font-size-base: 1.4rem;
+
+@import "~bootstrap/scss/bootstrap.scss";
+
+body {
+  background: black;
+  color: white;
+
+  font-family: 'Lato', sans-serif;
+}
