@@ -4,13 +4,18 @@
 .build-aueb-plugin:
 	go build -buildmode=plugin -o bin/aueb-plugin.so github.com/aueb-cslabs/moniteur/aueb
 
-.build: .build-moniteur .build-aueb-plugin
+.build-go: .build-moniteur .build-aueb-plugin
+
+.build-react:
+	cd app; yarn install; yarn build
+
+.build: .build-go .build-react
 
 default: .build
 
-test: .build
+test: .build-go
 	go test github.com/aueb-cslabs/moniteur
 	go test github.com/aueb-cslabs/moniteur/aueb
 
-start: .build
+start: .build-go
 	bin/moniteur
