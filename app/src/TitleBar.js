@@ -12,11 +12,13 @@ class TitleBar extends React.Component {
         setInterval(function () {
             this.setState( {date: new Date()})
         }.bind(this), 1000);
+
+        fetch('/api/schedule/CSLAB 2').then(res => res.json()).then(res => console.log(res))
     }
 
     style() {
         return {
-            'background-color': '#762124'
+            backgroundColor: '#762124'
         }
     }
 

@@ -3,10 +3,13 @@
 package main
 
 import (
+	"github.com/aueb-cslabs/moniteur/rest"
 	"github.com/aueb-cslabs/moniteur/types"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
-	"net/http"
+	"net/url"
+	"strings"
 )
 
 func main() {
@@ -21,13 +24,35 @@ func main() {
 	}
 
 	e := echo.New()
-	e.GET("/", func(c echo.Context) error {
-		schedule, err := plugin.Schedule()
-		if err != nil {
-			return err
+	e.HideBanner = true
+	e.HidePort = true
+
+	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			return next(types.NewContext(c, plugin))
 		}
-		return c.JSON(http.StatusOK, schedule)
 	})
+
+	e.GET("/api/schedule/all", rest.ScheduleAll)
+	e.GET("/api/schedule/:room", rest.ScheduleRoom)
+	e.GET("/api/schedule/:room/now", rest.ScheduleRoomNow)
+
+	// Should go in effect only in development mode.
+	// In production this should just serve the files.
+	u, err := url.Parse("http://localhost:3000")
+	if err != nil {
+		e.Logger.Fatal(err)
+	}
+	targets := []*middleware.ProxyTarget{{URL: u,},}
+	proxyConfig := middleware.ProxyConfig{
+		Skipper: func(c echo.Context) bool {
+			return strings.HasPrefix(c.Path(), "/api")
+		},
+		Balancer: middleware.NewRandomBalancer(targets),
+	}
+	e.Use(middleware.ProxyWithConfig(proxyConfig))
+	// End block
+
 	e.Logger.Fatal(e.Start(":1323"))
 
 }

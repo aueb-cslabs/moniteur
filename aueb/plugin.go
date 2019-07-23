@@ -35,8 +35,8 @@ func (Plugin) Schedule() (*types.Schedule, error) {
 		lessonTime := strings.Split(lesson.Time, "-")
 		start, _ := strconv.ParseInt(lessonTime[0], 10, 64)
 		end, _ := strconv.ParseInt(lessonTime[1], 10, 64)
-		subject.Start = start
-		subject.End = end
+		subject.Start = start * int64(3600)
+		subject.End = end * int64(3600)
 		subject.Room = lesson.Room
 		subject.Day = determineDay(lesson.Day)
 		subject.Title = lesson.LessonTitle
