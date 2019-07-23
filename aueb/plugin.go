@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/aueb-cslabs/moniteur/types"
 	"io/ioutil"
 	"net/http"
@@ -28,9 +27,7 @@ type Plugin struct {
 }
 
 func (Plugin) Schedule() (*types.Schedule, error) {
-
 	resp := &types.Schedule{}
-
 	for _, lesson := range getEntireSchedule() {
 		subject := &types.ScheduleSlot{}
 		lessonTime := strings.Split(lesson.Time, "-")
@@ -44,8 +41,7 @@ func (Plugin) Schedule() (*types.Schedule, error) {
 		subject.Host = lesson.Professor
 		resp.Slots = append(resp.Slots, subject)
 	}
-
-	return resp, fmt.Errorf("this must be working")
+	return resp, nil
 }
 
 func getEntireSchedule() []*Lesson {

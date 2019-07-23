@@ -10,13 +10,13 @@ ScheduleSlot Contains information about a schedule slot, like times, room
 and subject.
 */
 type ScheduleSlot struct {
-	Room string
+	Room string `json:"room"`
 	// Day is the days after the start of the week (0 = Sunday)
-	Day int
+	Day int `json:"day"`
 	// Start is seconds after the start of day.
-	Start int64
+	Start int64 `json:"start"`
 	// End is seconds after the start of day.
-	End   int64
-	Title string
-	Host  string
+	End   int64 `json:"end"`
+	Title string `json:"title"`
+	Host  string `json:"host"`
 }
