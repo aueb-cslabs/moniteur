@@ -1,7 +1,11 @@
 package main
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestPlugin_Schedule(t *testing.T) {
-	_, _ = PLUGIN.Schedule()
+	schedule, _ := PLUGIN.Schedule()
+	fmt.Println(len(schedule.Slots))
 }
