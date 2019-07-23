@@ -8,5 +8,9 @@
 
 default: .build
 
+test: .build
+	go test github.com/aueb-cslabs/moniteur
+	go test github.com/aueb-cslabs/moniteur/aueb
+
 start: .build
 	bin/moniteur
