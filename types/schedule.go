@@ -10,7 +10,7 @@ ScheduleSlot Contains information about a schedule slot, like times, room
 and subject.
 */
 type ScheduleSlot struct {
-	Room  string
+	Room string
 	// Day is the days after the start of the week (0 = Sunday)
 	Day int
 	// Start is seconds after the start of day.
