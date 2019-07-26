@@ -41,17 +41,20 @@ func ScheduleRoomNow(ec echo.Context) error {
 		return err
 	}
 
+	returnSchedule := &types.ScheduleNow{}
+
 	day, sec := determineNow()
 
-	var applicableSlots []*types.ScheduleSlot
 	for _, slot := range schedule.Slots {
 		if slot.Room == c.Param("room") && slot.Day == day && slot.Start < sec && slot.End > sec {
-			applicableSlots = append(applicableSlots, slot)
+			returnSchedule.Now = slot
+		}
+		if slot.Room == c.Param("room") && slot.Day == day && slot.Start >= sec {
+			returnSchedule.Next = append(returnSchedule.Next, slot)
 		}
 	}
-	schedule.Slots = applicableSlots
 
-	return c.JSON(http.StatusOK, schedule)
+	return c.JSON(http.StatusOK, returnSchedule)
 }
 
 func determineNow() (int, int64) {
