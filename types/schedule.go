@@ -16,7 +16,12 @@ type ScheduleSlot struct {
 	// Start is seconds after the start of day.
 	Start int64 `json:"start"`
 	// End is seconds after the start of day.
-	End   int64 `json:"end"`
+	End   int64  `json:"end"`
 	Title string `json:"title"`
 	Host  string `json:"host"`
+}
+
+type ScheduleNow struct {
+	Now  *ScheduleSlot   `json:"now"`
+	Next []*ScheduleSlot `json:"next"`
 }
