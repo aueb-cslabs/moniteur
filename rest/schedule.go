@@ -23,9 +23,13 @@ func ScheduleRoom(ec echo.Context) error {
 		return err
 	}
 
+	room := checkMapping(ec, c.Param("room"))
+
+	room = c.Plugin().ConvertChars(room)
+
 	var applicableSlots []*types.ScheduleSlot
 	for _, slot := range schedule.Slots {
-		if slot.Room == c.Param("room") {
+		if slot.Room == room {
 			applicableSlots = append(applicableSlots, slot)
 		}
 	}
@@ -45,11 +49,15 @@ func ScheduleRoomNow(ec echo.Context) error {
 
 	day, sec := determineNow()
 
+	room := checkMapping(ec, c.Param("room"))
+
+	room = c.Plugin().ConvertChars(room)
+
 	for _, slot := range schedule.Slots {
-		if slot.Room == c.Param("room") && slot.Day == day && slot.Start < sec && slot.End > sec {
+		if slot.Room == room && slot.Day == day && slot.Start < sec && slot.End > sec {
 			returnSchedule.Now = slot
 		}
-		if slot.Room == c.Param("room") && slot.Day == day && slot.Start >= sec {
+		if slot.Room == room && slot.Day == day && slot.Start >= sec {
 			returnSchedule.Next = append(returnSchedule.Next, slot)
 		}
 	}
@@ -62,4 +70,15 @@ func determineNow() (int, int64) {
 	year, month, day := now.Date()
 	sod := time.Date(year, month, day, 0, 0, 0, 0, now.Location())
 	return int(now.Weekday()), int64(now.Sub(sod).Seconds())
+}
+
+func checkMapping(ec echo.Context, room string) string {
+	c := ec.(*types.Context)
+	rooms := c.Rooms.Rooms
+
+	if rooms != nil && rooms[room] != "" {
+		return rooms[room]
+	}
+
+	return room
 }

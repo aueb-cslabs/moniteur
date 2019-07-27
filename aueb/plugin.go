@@ -7,6 +7,7 @@ import (
 	"github.com/aueb-cslabs/moniteur/types"
 	"io/ioutil"
 	"net/http"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -44,6 +45,25 @@ func (Plugin) Schedule() (*types.Schedule, error) {
 		resp.Slots = append(resp.Slots, subject)
 	}
 	return resp, nil
+}
+
+func (Plugin) ConvertChars(room string) string {
+	re := regexp.MustCompile("[0-9]+")
+
+	if re.MatchString(room) {
+		if strings.Contains(room, "a") {
+			room = strings.ReplaceAll(room, "a", "Α")
+		}
+		if strings.Contains(room, "d") {
+			room = strings.ReplaceAll(room, "d", "Δ")
+		}
+		if strings.Contains(room, "t") {
+			room = strings.ReplaceAll(room, "t", "Τ")
+		}
+		return room
+	}
+
+	return room
 }
 
 func getEntireSchedule() []*Lesson {

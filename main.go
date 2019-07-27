@@ -22,6 +22,7 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
+	rooms, err := types.LoadMapping("mapping.yml")
 
 	e := echo.New()
 	e.HideBanner = true
@@ -29,7 +30,7 @@ func main() {
 
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			return next(types.NewContext(c, plugin))
+			return next(types.NewContext(c, plugin, rooms))
 		}
 	})
 
@@ -43,7 +44,7 @@ func main() {
 	if err != nil {
 		e.Logger.Fatal(err)
 	}
-	targets := []*middleware.ProxyTarget{{URL: u,},}
+	targets := []*middleware.ProxyTarget{{URL: u}}
 	proxyConfig := middleware.ProxyConfig{
 		Skipper: func(c echo.Context) bool {
 			return strings.HasPrefix(c.Path(), "/api")
