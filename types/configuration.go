@@ -10,10 +10,6 @@ type Configuration struct {
 	Plugin string `json:"plugin"`
 }
 
-type RoomMap struct {
-	Rooms map[string]string `yaml:"rooms,omitempty"`
-}
-
 // LoadConfiguration reads a configuration file and returns a struct.
 func LoadConfiguration(file string) (*Configuration, error) {
 	byt, err := ioutil.ReadFile(file)
@@ -25,16 +21,4 @@ func LoadConfiguration(file string) (*Configuration, error) {
 		return nil, err
 	}
 	return config, nil
-}
-
-func LoadMapping(file string) (*RoomMap, error) {
-	byt, err := ioutil.ReadFile(file)
-	if err != nil {
-		return nil, err
-	}
-	rooms := &RoomMap{}
-	if err := yaml.Unmarshal(byt, rooms); err != nil {
-		return nil, err
-	}
-	return rooms, nil
 }
