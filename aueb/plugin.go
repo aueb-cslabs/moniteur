@@ -86,25 +86,6 @@ func convertChars(room string) string {
 	return room
 }
 
-func (Plugin) ConvertChars(room string) string {
-	re := regexp.MustCompile("[0-9]+")
-
-	if re.MatchString(room) {
-		if strings.Contains(room, "a") {
-			room = strings.ReplaceAll(room, "a", "Α")
-		}
-		if strings.Contains(room, "d") {
-			room = strings.ReplaceAll(room, "d", "Δ")
-		}
-		if strings.Contains(room, "t") {
-			room = strings.ReplaceAll(room, "t", "Τ")
-		}
-		return room
-	}
-
-	return room
-}
-
 func getEntireSchedule() []*Lesson {
 	resp, _ := http.Get("http://schedule.aueb.gr/mobile/")
 	bts, _ := ioutil.ReadAll(resp.Body)
