@@ -1,8 +1,10 @@
 package rest
 
 import (
+	"encoding/json"
 	"github.com/aueb-cslabs/moniteur/types"
 	"github.com/labstack/echo"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
@@ -94,6 +96,8 @@ func isBreak(breaks types.Break) bool {
 	various := breaks.Various
 	current := currentDate()
 
+	res4 := saturateHolidAPI()
+
 	for i := range various {
 		if current == *various[i] {
 			res3 = true
@@ -101,7 +105,7 @@ func isBreak(breaks types.Break) bool {
 		}
 	}
 
-	return res1 || res2 || res3
+	return res1 || res2 || res3 || res4
 }
 
 func isWeekend() bool {
@@ -109,6 +113,27 @@ func isWeekend() bool {
 	day := int(now.Weekday())
 
 	if day == 0 || day == 6 {
+		return true
+	}
+	return false
+}
+
+func saturateHolidAPI() bool {
+	resp, _ := http.Get("http://api.holid.co/v1/GR/Europe/Athens")
+	bts, _ := ioutil.ReadAll(resp.Body)
+	var holidAPI *types.HolidAPI
+	_ = json.Unmarshal(bts, &holidAPI)
+
+	holidays := holidAPI.Holidays
+
+	if holidAPI.Success && len(holidays) != 0 {
+		for i := range holidays {
+			if strings.Contains(holidays[i].Name, "Solstice") ||
+				strings.Contains(holidays[i].Name, "Equinox") ||
+				strings.Contains(holidays[i].Name, "Armed") {
+				return false
+			}
+		}
 		return true
 	}
 	return false
