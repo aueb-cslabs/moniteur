@@ -9,7 +9,7 @@ import (
 
 func ScheduleAll(ec echo.Context) error {
 	c := ec.(*types.Context)
-	schedule, err := c.Plugin().Schedule()
+	schedule, err, _ := c.Plugin().Schedule("")
 	if err != nil {
 		return err
 	}
@@ -18,14 +18,15 @@ func ScheduleAll(ec echo.Context) error {
 
 func ScheduleRoom(ec echo.Context) error {
 	c := ec.(*types.Context)
-	schedule, err := c.Plugin().Schedule()
+
+	schedule, err, room := c.Plugin().Schedule(c.Param("room"))
 	if err != nil {
 		return err
 	}
 
 	var applicableSlots []*types.ScheduleSlot
 	for _, slot := range schedule.Slots {
-		if slot.Room == c.Param("room") {
+		if slot.Room == room {
 			applicableSlots = append(applicableSlots, slot)
 		}
 	}
@@ -36,22 +37,26 @@ func ScheduleRoom(ec echo.Context) error {
 
 func ScheduleRoomNow(ec echo.Context) error {
 	c := ec.(*types.Context)
-	schedule, err := c.Plugin().Schedule()
+
+	schedule, err, room := c.Plugin().Schedule(c.Param("room"))
 	if err != nil {
 		return err
 	}
 
+	returnSchedule := &types.ScheduleNow{}
+
 	day, sec := determineNow()
 
-	var applicableSlots []*types.ScheduleSlot
 	for _, slot := range schedule.Slots {
-		if slot.Room == c.Param("room") && slot.Day == day && slot.Start < sec && slot.End > sec {
-			applicableSlots = append(applicableSlots, slot)
+		if slot.Room == room && slot.Day == day && slot.Start < sec && slot.End > sec {
+			returnSchedule.Now = slot
+		}
+		if slot.Room == room && slot.Day == day && slot.Start >= sec {
+			returnSchedule.Next = append(returnSchedule.Next, slot)
 		}
 	}
-	schedule.Slots = applicableSlots
 
-	return c.JSON(http.StatusOK, schedule)
+	return c.JSON(http.StatusOK, returnSchedule)
 }
 
 func determineNow() (int, int64) {

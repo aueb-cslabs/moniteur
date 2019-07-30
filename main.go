@@ -22,6 +22,12 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
+	calendar, err := types.LoadCalendar("calendar.yml")
+	if err != nil {
+		log.Panic(err)
+	}
+
+	plugin.Initialize()
 
 	e := echo.New()
 	e.HideBanner = true
@@ -29,13 +35,14 @@ func main() {
 
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			return next(types.NewContext(c, plugin))
+			return next(types.NewContext(c, plugin, calendar))
 		}
 	})
 
 	e.GET("/api/schedule/all", rest.ScheduleAll)
 	e.GET("/api/schedule/:room", rest.ScheduleRoom)
 	e.GET("/api/schedule/:room/now", rest.ScheduleRoomNow)
+	e.GET("/api/calendarInfo", rest.CalendarInfo)
 
 	// Should go in effect only in development mode.
 	// In production this should just serve the files.
@@ -43,7 +50,7 @@ func main() {
 	if err != nil {
 		e.Logger.Fatal(err)
 	}
-	targets := []*middleware.ProxyTarget{{URL: u,},}
+	targets := []*middleware.ProxyTarget{{URL: u}}
 	proxyConfig := middleware.ProxyConfig{
 		Skipper: func(c echo.Context) bool {
 			return strings.HasPrefix(c.Path(), "/api")

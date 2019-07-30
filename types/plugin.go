@@ -6,14 +6,15 @@ import (
 )
 
 /*
-Plugin The interface that plugins need to implement so that they can 
+Plugin The interface that plugins need to implement so that they can
 provide data to moniteur.
 */
 type Plugin interface {
 	/*
-	Schedule Returns the schedule object that includes all the schedule data.
+		Schedule Returns the schedule object that includes all the schedule data.
 	*/
-	Schedule() (*Schedule, error)
+	Initialize()
+	Schedule(room string) (*Schedule, error, string)
 }
 
 func LoadPlugin(path string) (Plugin, error) {
