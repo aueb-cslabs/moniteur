@@ -26,7 +26,6 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-	rooms, err := types.LoadMapping("mapping.yml")
 
 	e := echo.New()
 	e.HideBanner = true
@@ -34,14 +33,14 @@ func main() {
 
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			return next(types.NewContext(c, plugin, rooms, calendar))
+			return next(types.NewContext(c, plugin, calendar))
 		}
 	})
 
 	e.GET("/api/schedule/all", rest.ScheduleAll)
 	e.GET("/api/schedule/:room", rest.ScheduleRoom)
 	e.GET("/api/schedule/:room/now", rest.ScheduleRoomNow)
-	e.GET("/api/info", rest.CalendarInfo)
+	e.GET("/api/calendarInfo", rest.CalendarInfo)
 
 	// Should go in effect only in development mode.
 	// In production this should just serve the files.
