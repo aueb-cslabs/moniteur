@@ -35,14 +35,29 @@ var mapping = &RoomMap{}
 type Plugin struct {
 }
 
+// Initialize Method that initializes crucial functions for the plugin
 func (Plugin) Initialize() {
 	if len(mapping.Rooms) == 0 {
 		mapping, _ = loadMapping("mapping.yml")
 	}
 }
 
-func (Plugin) Schedule(room string) (*types.Schedule, error, string) {
+// Schedule Method that returns current schedule from Schedule Master
+func (Plugin) Schedule() (*types.Schedule, error) {
+	return retriever(), nil
+}
 
+// ScheduleRoom Method that returns current schedule and the room that corresponds to it
+func (Plugin) ScheduleRoom(room string) (*types.Schedule, error, string) {
+	room, changed := checkMapping(room)
+	if !changed {
+		room = convertChars(room)
+	}
+	return retriever(), nil, room
+}
+
+// retriever Method that converts Schedule Master json to our json format
+func retriever() *types.Schedule {
 	resp := &types.Schedule{}
 	for _, lesson := range getEntireSchedule() {
 		subject := &types.ScheduleSlot{}
@@ -57,16 +72,10 @@ func (Plugin) Schedule(room string) (*types.Schedule, error, string) {
 		subject.Host = lesson.Professor
 		resp.Slots = append(resp.Slots, subject)
 	}
-
-	room, changed := checkMapping(room)
-
-	if !changed {
-		room = convertChars(room)
-	}
-
-	return resp, nil, room
+	return resp
 }
 
+// convertChars Method that converts english characters to greek in order to parse Schedule Master Room Name
 func convertChars(room string) string {
 	re := regexp.MustCompile("[0-9]+")
 
@@ -86,25 +95,7 @@ func convertChars(room string) string {
 	return room
 }
 
-func (Plugin) ConvertChars(room string) string {
-	re := regexp.MustCompile("[0-9]+")
-
-	if re.MatchString(room) {
-		if strings.Contains(room, "a") {
-			room = strings.ReplaceAll(room, "a", "Α")
-		}
-		if strings.Contains(room, "d") {
-			room = strings.ReplaceAll(room, "d", "Δ")
-		}
-		if strings.Contains(room, "t") {
-			room = strings.ReplaceAll(room, "t", "Τ")
-		}
-		return room
-	}
-
-	return room
-}
-
+// getEntireSchedule Method that retrieves the schedule for Schedule Master API
 func getEntireSchedule() []*Lesson {
 	resp, _ := http.Get("http://schedule.aueb.gr/mobile/")
 	bts, _ := ioutil.ReadAll(resp.Body)
@@ -113,6 +104,7 @@ func getEntireSchedule() []*Lesson {
 	return slots
 }
 
+// determineDay Method that converts the Day (from the greek language) to an int
 func determineDay(day string) int {
 	switch day {
 	case "Δευτέρα":
@@ -131,6 +123,7 @@ func determineDay(day string) int {
 	return 0
 }
 
+// loadMapping Method that loads the room mapping from english to greek names
 func loadMapping(file string) (*RoomMap, error) {
 	byt, err := ioutil.ReadFile(file)
 	if err != nil {
@@ -143,6 +136,7 @@ func loadMapping(file string) (*RoomMap, error) {
 	return rooms, nil
 }
 
+// checkMapping Method that checks the room map in order to retrieve the right room name
 func checkMapping(room string) (string, bool) {
 	rooms := mapping.Rooms
 
