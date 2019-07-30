@@ -9,7 +9,7 @@ import (
 
 func ScheduleAll(ec echo.Context) error {
 	c := ec.(*types.Context)
-	schedule, err, _ := c.Plugin().Schedule("")
+	schedule, err := c.Plugin().Schedule()
 	if err != nil {
 		return err
 	}
@@ -19,7 +19,7 @@ func ScheduleAll(ec echo.Context) error {
 func ScheduleRoom(ec echo.Context) error {
 	c := ec.(*types.Context)
 
-	schedule, err, room := c.Plugin().Schedule(c.Param("room"))
+	schedule, err, room := c.Plugin().ScheduleRoom(c.Param("room"))
 	if err != nil {
 		return err
 	}
@@ -38,7 +38,7 @@ func ScheduleRoom(ec echo.Context) error {
 func ScheduleRoomNow(ec echo.Context) error {
 	c := ec.(*types.Context)
 
-	schedule, err, room := c.Plugin().Schedule(c.Param("room"))
+	schedule, err, room := c.Plugin().ScheduleRoom(c.Param("room"))
 	if err != nil {
 		return err
 	}

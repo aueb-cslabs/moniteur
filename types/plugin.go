@@ -14,7 +14,8 @@ type Plugin interface {
 		Schedule Returns the schedule object that includes all the schedule data.
 	*/
 	Initialize()
-	Schedule(room string) (*Schedule, error, string)
+	Schedule() (*Schedule, error)
+	ScheduleRoom(room string) (*Schedule, error, string)
 }
 
 func LoadPlugin(path string) (Plugin, error) {
