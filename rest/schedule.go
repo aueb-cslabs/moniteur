@@ -9,7 +9,7 @@ import (
 
 func ScheduleAll(ec echo.Context) error {
 	c := ec.(*types.Context)
-	schedule, err := c.Plugin().Schedule()
+	schedule, err, _ := c.Plugin().Schedule("")
 	if err != nil {
 		return err
 	}
@@ -18,14 +18,11 @@ func ScheduleAll(ec echo.Context) error {
 
 func ScheduleRoom(ec echo.Context) error {
 	c := ec.(*types.Context)
-	schedule, err := c.Plugin().Schedule()
+
+	schedule, err, room := c.Plugin().Schedule(c.Param("room"))
 	if err != nil {
 		return err
 	}
-
-	room := checkMapping(ec, c.Param("room"))
-
-	room = c.Plugin().ConvertChars(room)
 
 	var applicableSlots []*types.ScheduleSlot
 	for _, slot := range schedule.Slots {
@@ -40,7 +37,8 @@ func ScheduleRoom(ec echo.Context) error {
 
 func ScheduleRoomNow(ec echo.Context) error {
 	c := ec.(*types.Context)
-	schedule, err := c.Plugin().Schedule()
+
+	schedule, err, room := c.Plugin().Schedule(c.Param("room"))
 	if err != nil {
 		return err
 	}
@@ -48,10 +46,6 @@ func ScheduleRoomNow(ec echo.Context) error {
 	returnSchedule := &types.ScheduleNow{}
 
 	day, sec := determineNow()
-
-	room := checkMapping(ec, c.Param("room"))
-
-	room = c.Plugin().ConvertChars(room)
 
 	for _, slot := range schedule.Slots {
 		if slot.Room == room && slot.Day == day && slot.Start < sec && slot.End > sec {
@@ -70,15 +64,4 @@ func determineNow() (int, int64) {
 	year, month, day := now.Date()
 	sod := time.Date(year, month, day, 0, 0, 0, 0, now.Location())
 	return int(now.Weekday()), int64(now.Sub(sod).Seconds())
-}
-
-func checkMapping(ec echo.Context, room string) string {
-	c := ec.(*types.Context)
-	rooms := c.Rooms.Rooms
-
-	if rooms != nil && rooms[room] != "" {
-		return rooms[room]
-	}
-
-	return room
 }

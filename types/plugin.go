@@ -13,8 +13,7 @@ type Plugin interface {
 	/*
 		Schedule Returns the schedule object that includes all the schedule data.
 	*/
-	Schedule() (*Schedule, error)
-	ConvertChars(room string) string
+	Schedule(room string) (*Schedule, error, string)
 }
 
 func LoadPlugin(path string) (Plugin, error) {
