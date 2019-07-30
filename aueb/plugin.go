@@ -35,11 +35,13 @@ var mapping = &RoomMap{}
 type Plugin struct {
 }
 
-func (Plugin) Schedule(room string) (*types.Schedule, error, string) {
-
+func (Plugin) Initialize() {
 	if len(mapping.Rooms) == 0 {
 		mapping, _ = loadMapping("mapping.yml")
 	}
+}
+
+func (Plugin) Schedule(room string) (*types.Schedule, error, string) {
 
 	resp := &types.Schedule{}
 	for _, lesson := range getEntireSchedule() {

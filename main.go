@@ -27,6 +27,8 @@ func main() {
 		log.Panic(err)
 	}
 
+	plugin.Initialize()
+
 	e := echo.New()
 	e.HideBanner = true
 	e.HidePort = true

@@ -13,6 +13,7 @@ type Plugin interface {
 	/*
 		Schedule Returns the schedule object that includes all the schedule data.
 	*/
+	Initialize()
 	Schedule(room string) (*Schedule, error, string)
 }
 
