@@ -78,7 +78,12 @@ func isExams(exams types.Exam) bool {
 
 	res2 := checkDates(start, end)
 
-	return res1 || res2
+	start = exams.September.Start
+	end = exams.September.End
+
+	res3 := checkDates(start, end)
+
+	return res1 || res2 || res3
 }
 
 func isBreak(breaks types.Break) bool {

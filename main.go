@@ -28,6 +28,7 @@ func main() {
 	}
 
 	plugin.Initialize()
+	rest.Initialize()
 
 	e := echo.New()
 	e.HideBanner = true
@@ -43,6 +44,18 @@ func main() {
 	e.GET("/api/schedule/:room", rest.ScheduleRoom)
 	e.GET("/api/schedule/:room/now", rest.ScheduleRoomNow)
 	e.GET("/api/calendarInfo", rest.CalendarInfo)
+	e.POST("/api/announcement", rest.CreateAnnouncement)
+	e.DELETE("/api/announcement", rest.DeleteAnnouncement)
+	e.PUT("/api/announcement", rest.UpdateAnnouncement)
+	e.GET("/api/announcement", rest.Announcement)
+	e.POST("/api/announcement/:room", rest.CreateRoomAnn)
+	e.GET("/api/announcement/:room", rest.GetRoomAnn)
+	e.DELETE("/api/announcement/:room", rest.DeleteRoomAnn)
+	e.PUT("/api/announcement/:room", rest.UpdateRoomAnn)
+	e.POST("/api/comment", rest.CreateComment)
+	e.DELETE("/api/comment", rest.DeleteComment)
+	e.PUT("/api/comment", rest.UpdateComment)
+	e.GET("/api/comment", rest.Comment)
 
 	// Should go in effect only in development mode.
 	// In production this should just serve the files.
