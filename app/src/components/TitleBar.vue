@@ -30,7 +30,7 @@
         methods: {
             getTime: function () {
                 setInterval(() => {
-                    let date = new Date()
+                    let date = new Date();
 
                     this.date = date.toLocaleString()
                 })

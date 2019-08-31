@@ -3,7 +3,7 @@
         <div id="current" class="text-center w-25 current schedule">
 
             <h3>Τώρα <i class="fas fa-users-class"></i></h3>
-            <p class="mt-4 pt-2 subject" v-if="current['now'] != null">
+            <p class="mt-4 pt-2" v-if="current['now'] != null">
                 {{current['now']}}
             </p>
             <p class="mt-4 pt-2 subject" v-else>
@@ -13,7 +13,7 @@
 
         <div id="next" class="text-center w-25 next schedule">
             <h3>Επόμενο <i class="fas fa-users-class nextsub"></i></h3>
-            <p class="mt-4 pt-2 subject" v-if="current['now'] != null">
+            <p class="mt-4 pt-2" v-if="current['now'] != null">
                 {{current['now']}}
             </p>
             <p class="mt-4 pt-2 subject" v-else>

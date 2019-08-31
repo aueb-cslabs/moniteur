@@ -4,19 +4,18 @@ body {
     font-size: 1.2em;
     font-family: "Calibri", sans-serif;
 
-    height: 150px;
+    height: 160px;
 
     margin-top: 80px;
-
     border-radius: 50px;
   }
 
   .wrapper {
-    width: 1200px;
+    width: 1300px;
   }
 
   .current {
-    margin-left: 110px;
+    margin-left: 80px;
     float: left;
   }
 
@@ -24,10 +23,6 @@ body {
     margin-left: 10px;
     float: left;
 
-  }
-  .subject {
-    position: relative;
-    //top: 20%
   }
 
   .fa-users-class {
