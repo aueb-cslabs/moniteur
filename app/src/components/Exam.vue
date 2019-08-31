@@ -1,6 +1,6 @@
 <template>
-    <div class="exams text-center" v-if="isExam">
-        <p>
+    <div class="exams text-center" >
+        <p class="exam-text" v-if="isExam">
             <i class="fas fa-feather"></i> Πραγματοποιείται εξέταση!
         </p>
     </div>

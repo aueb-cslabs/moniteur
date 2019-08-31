@@ -1,16 +1,17 @@
 body {
   .exams {
-    background: #28a745;
-
     font-size: 1.2em;
     font-family: Calibri, sans-serif;
 
     width: 280px;
     height: 30px;
 
-    margin-top: 50px;
+    margin-top: 20px;
     margin-left: 260px;
+  }
 
+  .exam-text {
+    background: #28a745;
     border-radius: 20px;
   }
 }
