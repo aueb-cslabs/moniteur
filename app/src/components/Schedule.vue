@@ -39,11 +39,11 @@
 
         methods: {
             getNow: function () {
-                fetch("http://localhost:1323/api/schedule/a/now")
-                    .then(response => response.json())
-                    .then(json => {
-                        this.current = json;
-                    })
+                setInterval(() => {
+                    fetch("http://localhost:1323/api/schedule/a/now")
+                        .then(response => response.json())
+                        .then(json => this.current = json)
+                }, 5000)
             }
         }
     }
