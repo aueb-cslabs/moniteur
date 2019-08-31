@@ -8,17 +8,37 @@
             <a class="navbar-brand">AUEB CSLabs</a>
         </nav>
         <a class="navbar-brand">
-            {{ new Date() }}
+            {{date}}
         </a>
     </nav>
 </template>
 
 <script>
     export default {
-        name: "TitleBar"
+        name: "TitleBar",
+
+        data() {
+            return {
+                date: ''
+            }
+        },
+
+        created() {
+            this.getTime();
+        },
+
+        methods: {
+            getTime: function () {
+                setInterval(() => {
+                    let date = new Date()
+
+                    this.date = date.toLocaleString()
+                })
+            }
+        }
     }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+@import "../css/TitleBar.scss";
 </style>
