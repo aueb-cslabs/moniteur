@@ -2,6 +2,7 @@
   <div class="moniteur">
     <TitleBar/>
     <Exam/>
+    <Announcement/>
     <Schedule/>
   </div>
 </template>
@@ -10,10 +11,12 @@
 import TitleBar from './components/TitleBar.vue'
 import Schedule from "./components/Schedule";
 import Exam from "./components/Exam";
+import Announcement from "./components/Announcement";
 
 export default {
   name: 'app',
   components: {
+    Announcement,
     TitleBar,
     Schedule,
     Exam

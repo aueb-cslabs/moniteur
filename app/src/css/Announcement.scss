@@ -1,0 +1,24 @@
+body {
+  .announcements {
+    font-size: 1.2em;
+    font-family: Calibri, sans-serif;
+
+    width: 700px;
+    height: 30px;
+
+    margin-top: 20px;
+    margin-left: 50px;
+
+    text-align: center;
+  }
+
+  .ann-text {
+    background: #494148;
+    height: auto;
+    border-radius: 20px;
+  }
+
+  .fa-scroll-old {
+    color: #db5245;
+  }
+}
