@@ -1,0 +1,41 @@
+body {
+  .schedule {
+    background: #494148;
+    font-size: 1.2em;
+    font-family: "Calibri", sans-serif;
+
+    height: 150px;
+
+    margin-top: 80px;
+
+    border-radius: 50px;
+  }
+
+  .wrapper {
+    width: 1200px;
+  }
+
+  .current {
+    margin-left: 110px;
+    float: left;
+  }
+
+  .next {
+    margin-left: 10px;
+    float: left;
+
+  }
+  .subject {
+    position: relative;
+    //top: 20%
+  }
+
+  .fa-users-class {
+    margin-top: 10px;
+    color: #38f204;
+  }
+
+  .nextsub {
+    color: #5ac1f2;
+  }
+}
