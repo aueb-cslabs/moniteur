@@ -1,0 +1,21 @@
+body {
+  .roomAnnouncements {
+    width: 600px;
+    height: 30px;
+
+    margin-top: 20px;
+    margin-left: 100px;
+
+    text-align: center;
+  }
+
+  .room-ann-text {
+    background: #45a399;
+    height: auto;
+    border-radius: 20px;
+  }
+
+  .fa-bullhorn {
+    color: #a73c2e;
+  }
+}

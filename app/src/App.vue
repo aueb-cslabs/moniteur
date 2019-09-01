@@ -4,6 +4,7 @@
     <Exam/>
     <Announcement/>
     <Schedule/>
+    <RoomAnnouncement/>
   </div>
 </template>
 
@@ -12,10 +13,12 @@ import TitleBar from './components/TitleBar.vue'
 import Schedule from "./components/Schedule";
 import Exam from "./components/Exam";
 import Announcement from "./components/Announcement";
+import RoomAnnouncement from "./components/RoomAnnouncement";
 
 export default {
   name: 'app',
   components: {
+    RoomAnnouncement,
     Announcement,
     TitleBar,
     Schedule,
