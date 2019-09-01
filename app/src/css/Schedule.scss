@@ -5,25 +5,28 @@ body {
 
     height: 160px;
 
-    margin-top: 50px;
+    margin: 50px auto;
     border-radius: 50px;
   }
 
   .wrapper {
     width: 800px;
-    height: 200px;
+    height: 210px;
+
+    margin: 0 auto;
   }
 
   .current {
-    margin-left: 100px;
     float: left;
 
     width: 300px;
     height: 160px;
+
+    margin: 50px auto auto 100px;
   }
 
   .next {
-    margin-left: 10px;
+    margin: 50px auto auto 10px;
 
     width: 300px;
     height: 160px;
