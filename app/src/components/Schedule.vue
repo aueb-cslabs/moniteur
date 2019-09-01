@@ -1,6 +1,6 @@
 <template v-if="current">
     <div class="wrapper">
-        <div id="current" class="text-center w-25 current schedule">
+        <div id="current" class="text-center current schedule">
 
             <h3>Τώρα <i class="fas fa-users-class"></i></h3>
             <p class="mt-4 pt-2 common fade-in" v-if="current['now'] != null">
@@ -11,7 +11,7 @@
             </p>
         </div>
 
-        <div id="next" class="text-center w-25 next schedule">
+        <div id="next" class="text-center next schedule">
             <h3>Επόμενο <i class="fas fa-users-class nextsub"></i></h3>
             <p class="mt-4 pt-2 common fade-in" v-if="current['now'] != null">
                 {{current['now']}}
