@@ -6,6 +6,9 @@
     <Schedule/>
     <RoomAnnouncement/>
     <Comment/>
+    <footer class="mt-5 text-center" style="color: #9c9890">
+        Η οθόνη δεν ειναι touchscreen. Μην αγγίζετε!
+    </footer>
   </div>
 </template>
 
