@@ -5,6 +5,7 @@
     <Announcement/>
     <Schedule/>
     <RoomAnnouncement/>
+    <Comment/>
   </div>
 </template>
 
@@ -14,10 +15,12 @@ import Schedule from "./components/Schedule";
 import Exam from "./components/Exam";
 import Announcement from "./components/Announcement";
 import RoomAnnouncement from "./components/RoomAnnouncement";
+import Comment from "./components/Comment";
 
 export default {
   name: 'app',
   components: {
+    Comment,
     RoomAnnouncement,
     Announcement,
     TitleBar,
