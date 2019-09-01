@@ -1,6 +1,6 @@
 <template>
     <div class="exams text-center" >
-        <p class="exam-text" v-if="isExam">
+        <p class="exam-text common fade-in" v-if="isExam">
             <i class="fas fa-feather"></i> Πραγματοποιείται εξέταση!
         </p>
     </div>
@@ -19,6 +19,7 @@
 </script>
 
 <style lang="scss">
-@import "../css/Exam.scss";
+    @import "../css/Exam.scss";
+    @import "../css/common.scss";
 
 </style>
