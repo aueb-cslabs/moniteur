@@ -1,6 +1,6 @@
 <template>
     <div class="roomAnnouncements">
-        <p class="mt-4 common room-ann-text" v-if="roomAnnouncement != null">
+        <p class="mt-2 common room-ann-text" v-if="roomAnnouncement != null">
             <i class="far fa-bullhorn"></i> {{roomAnnouncement}}
         </p>
     </div>
