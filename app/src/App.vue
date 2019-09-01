@@ -1,14 +1,17 @@
 <template>
   <div class="moniteur">
     <TitleBar/>
-    <Exam/>
-    <Announcement/>
-    <Schedule/>
-    <RoomAnnouncement/>
-    <Comment/>
-    <footer class="mt-5 text-center" style="color: #9c9890">
-        Η οθόνη δεν ειναι touchscreen. Μην αγγίζετε!
-    </footer>
+
+    <div class="flex-container">
+      <Exam/>
+      <Announcement/>
+      <Schedule/>
+      <RoomAnnouncement/>
+      <Comment/>
+      <footer class="mt-5 text-center" style="color: #9c9890">
+          Η οθόνη δεν ειναι touchscreen. Μην αγγίζετε!
+      </footer>
+    </div>
   </div>
 </template>
 
