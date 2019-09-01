@@ -6,7 +6,7 @@
     <Schedule/>
     <RoomAnnouncement/>
     <Comment/>
-    <footer class="mt-5 pt-2 text-center" style="color: #9c9890">
+    <footer class="mt-5 pt-3 text-center" style="color: #9c9890">
         Η οθόνη δεν ειναι touchscreen. Μην αγγίζετε!
     </footer>
   </div>
