@@ -1,6 +1,6 @@
 <template>
     <div class="comments">
-        <p class="mt-4 common comments-text" v-if="comment != null">
+        <p class="mt-4 common comments-text fade-in" v-if="comment != null">
            {{comment}}
         </p>
     </div>
