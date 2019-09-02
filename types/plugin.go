@@ -10,9 +10,6 @@ Plugin The interface that plugins need to implement so that they can
 provide data to moniteur.
 */
 type Plugin interface {
-	/*
-		Schedule Returns the schedule object that includes all the schedule data.
-	*/
 	Initialize()
 	Schedule() (*Schedule, error)
 	ScheduleRoom(room string) (*Schedule, error, string)
