@@ -1,7 +1,7 @@
 <template>
     <div class="announcements">
         <p class="mt-4 common ann-text fade-in" v-if="announcement != null">
-            <i class="fas fa-scroll-old"></i> {{announcement}}
+            <i class="fas fa-scroll-old"></i> {{announcement['msg']}}
         </p>
     </div>
     
@@ -38,5 +38,4 @@
 <style lang="scss">
     @import "../css/Announcement.scss";
     @import "../css/common.scss";
-
 </style>
