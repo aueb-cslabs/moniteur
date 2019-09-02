@@ -1,0 +1,21 @@
+body {
+  .announcements {
+    width: 90%;
+    height: 30px;
+
+    margin-top: 0.5em;
+
+    font-size: 1.4em;
+    text-align: center;
+  }
+
+  .ann-text {
+    background: #494148;
+    height: auto;
+    border-radius: 20px;
+  }
+
+  .fa-scroll-old {
+    color: #db5245;
+  }
+}

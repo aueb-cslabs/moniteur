@@ -40,6 +40,10 @@ func main() {
 		}
 	})
 
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:8080"},
+	}))
+
 	e.GET("/api/schedule/all", rest.ScheduleAll)
 	e.GET("/api/schedule/:room", rest.ScheduleRoom)
 	e.GET("/api/schedule/:room/now", rest.ScheduleRoomNow)
