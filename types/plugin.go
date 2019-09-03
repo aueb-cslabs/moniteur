@@ -13,6 +13,7 @@ type Plugin interface {
 	Initialize()
 	Schedule() (*Schedule, error)
 	ScheduleRoom(room string) (*Schedule, error, string)
+	ExamsSchedule() (*Schedule, error)
 }
 
 func LoadPlugin(path string) (Plugin, error) {

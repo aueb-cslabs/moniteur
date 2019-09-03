@@ -60,6 +60,7 @@ func main() {
 	e.DELETE("/api/comment", rest.DeleteComment)
 	e.PUT("/api/comment", rest.UpdateComment)
 	e.GET("/api/comment", rest.Comment)
+	e.GET("/api/exams/all", rest.ExamsScheduleAll)
 
 	// Should go in effect only in development mode.
 	// In production this should just serve the files.

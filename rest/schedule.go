@@ -59,6 +59,15 @@ func ScheduleRoomNow(ec echo.Context) error {
 	return c.JSON(http.StatusOK, returnSchedule)
 }
 
+func ExamsScheduleAll(ec echo.Context) error {
+	c := ec.(*types.Context)
+	schedule, err := c.Plugin().ExamsSchedule()
+	if err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, schedule)
+}
+
 func determineNow() (int, int64) {
 	now := time.Now()
 	year, month, day := now.Date()
