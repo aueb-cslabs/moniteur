@@ -54,7 +54,7 @@
             },
 
             checkNext: function (schedule) {
-                if(schedule['now'] != null) {
+                if(schedule['now'] != null && schedule['next'] != null) {
                     if(schedule['now']['end'] !== schedule['next'][0]['start']) {
                         schedule['next'] = null;
                     }
