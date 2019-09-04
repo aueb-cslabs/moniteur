@@ -4,7 +4,10 @@
 
             <h3>Τώρα <i class="fas fa-users-class"></i></h3>
             <p class="mt-2 common fade-in" v-if="current['now'] != null">
-                <u>{{current['now']['start']/60/60}} - {{current['now']['end']/60/60}}</u><br>
+                <u>
+                    {{time['now_start'].getUTCHours()}}:{{getMinutes(this.time['now_start'])}}
+                    - {{time['now_end'].getUTCHours()}}:{{getMinutes(this.time['now_end'])}}
+                </u><br>
                 {{current['now']['title']}}<br>
                 {{current['now']['host']}}
             </p>
@@ -19,7 +22,10 @@
         <div id="next" class="text-center next schedule">
             <h3>Επόμενο <i class="fas fa-users-class nextsub"></i></h3>
             <p class="mt-2 common fade-in" v-if="current['next'] != null">
-                <u>{{current['next'][0]['start']/60/60}} - {{current['next'][0]['end']/60/60}}</u><br>
+                <u>
+                    {{time['next_start'].getUTCHours()}}:{{getMinutes(this.time['next_start'])}}
+                    - {{time['next_end'].getUTCHours()}}:{{getMinutes(this.time['next_end'])}}
+                </u><br>
                 {{current['next'][0]['title']}}<br>
                 {{current['next'][0]['host']}}
             </p>
@@ -42,7 +48,8 @@
         data() {
             return {
                 current: [],
-                isExam: {}
+                isExam: {},
+                time: {}
             }
         },
 
@@ -75,7 +82,9 @@
                         .then(response => response.json())
                         .then(json => {
                             this.current = json;
+
                             this.checkNext(this.current);
+                            this.convertSecToTime();
 
                             if(this.current['now'] != null) {
                                 EventBus.$emit('exam', this.isExam);
@@ -94,6 +103,7 @@
                         .then(json => {
                             this.current = json;
                             this.checkNext(this.current);
+                            this.convertSecToTime();
                         })
                 }, 30000)
             },
@@ -108,6 +118,38 @@
                         schedule['next'] = null;
                     }
                 }
+            },
+
+            convertSecToTime: function() {
+                let d = new Date(0);
+                if(this.current['now'] != null) {
+                    d = new Date(0);
+                    d.setSeconds(this.current['now']['start']);
+                    this.time['now_start'] = d;
+
+
+                    d = new Date(0);
+                    d.setSeconds(this.current['now']['end']);
+                    this.time['now_end'] = d;
+                }
+
+                if(this.current['next'] != null) {
+                    d = new Date(0);
+                    d.setSeconds(this.current['next'][0]['start']);
+                    this.time['next_start'] = d;
+
+                    d = new Date(0);
+                    d.setSeconds(this.current['next'][0]['end']);
+                    this.time['next_end'] = d;
+                }
+            },
+
+            /* Returns minutes with leading zero
+             * if minutes < 10
+             */
+            getMinutes: function (time) {
+                let min = time.getUTCMinutes();
+                return (min < 10) ? ("0" + min) : min;
             }
         }
     }
