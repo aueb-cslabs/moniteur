@@ -11,10 +11,12 @@ import (
 	"time"
 )
 
+// CalendarGroup Defines the api paths for all the calendar information
 func CalendarGroup(g *echo.Group) {
 	g.GET("", calendarInfo)
 }
 
+// calendarInfo Method that GETs the state of the day
 func calendarInfo(ec echo.Context) error {
 	c := ec.(*types.Context)
 
@@ -28,6 +30,7 @@ func calendarInfo(ec echo.Context) error {
 	return c.JSON(http.StatusOK, info)
 }
 
+// currentDate Method that returns the date in dd/mm/yyyy format.
 func currentDate() string {
 	now := time.Now()
 	dateF := strconv.Itoa(now.Day()) + "/" + strconv.Itoa(int(now.Month())) + "/" + strconv.Itoa(now.Year())
@@ -35,6 +38,7 @@ func currentDate() string {
 	return dateF
 }
 
+// checkDates Method that checks every if a date is between two date limits
 func checkDates(start string, end string) bool {
 	startA := strings.Split(start, "/")
 	endA := strings.Split(end, "/")
@@ -49,6 +53,7 @@ func checkDates(start string, end string) bool {
 	return now.After(startDate) && now.Before(endDate)
 }
 
+// convertDate Method that breaks up a date
 func convertDate(date []string) (int, time.Month, int) {
 	day, _ := strconv.Atoi(date[0])
 	month, _ := strconv.Atoi(date[1])
@@ -57,6 +62,7 @@ func convertDate(date []string) (int, time.Month, int) {
 	return year, time.Month(month), day
 }
 
+// isNormal Method that returns a boolean that indicates if the university is in normal period
 func isNormal(semester types.Semester) bool {
 	start := semester.Winter.Start
 	end := semester.Winter.End
@@ -71,6 +77,7 @@ func isNormal(semester types.Semester) bool {
 	return res1 || res2
 }
 
+// isNormal Method that returns a boolean that indicates if the university is in exams period
 func isExams(exams types.Exam) bool {
 	start := exams.Winter.Start
 	end := exams.Winter.End
@@ -90,6 +97,7 @@ func isExams(exams types.Exam) bool {
 	return res1 || res2 || res3
 }
 
+// isNormal Method that returns a boolean that indicates if the university is in break
 func isBreak(breaks types.Break) bool {
 	start := breaks.Winter.Start
 	end := breaks.Winter.End
@@ -117,6 +125,7 @@ func isBreak(breaks types.Break) bool {
 	return res1 || res2 || res3 || res4
 }
 
+// isNormal Method that returns a boolean that indicates if it is weekend
 func isWeekend() bool {
 	now := time.Now()
 	day := int(now.Weekday())
@@ -127,6 +136,7 @@ func isWeekend() bool {
 	return false
 }
 
+// saturateHolidAPI Method that saturates public Holid API for national holidays
 func saturateHolidAPI() bool {
 	resp, _ := http.Get("http://api.holid.co/v1/GR/Europe/Athens")
 	bts, _ := ioutil.ReadAll(resp.Body)

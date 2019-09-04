@@ -7,12 +7,14 @@ import (
 	"time"
 )
 
+// ExamsGroup Defines the api paths for all the exams
 func ExamsGroup(g *echo.Group) {
 	g.GET("/all", examsScheduleAll)
 	g.GET("/:room", examsScheduleRoomToday)
 	g.GET("/:room/now", examsScheduleRoomTodayNow)
 }
 
+// examsScheduleAll Method that returns the exams schedule
 func examsScheduleAll(ec echo.Context) error {
 	c := ec.(*types.Context)
 	schedule, err := c.Plugin().ExamsSchedule()
@@ -22,6 +24,7 @@ func examsScheduleAll(ec echo.Context) error {
 	return c.JSON(http.StatusOK, schedule)
 }
 
+// examsScheduleRoomToday Method that returns the exams schedule for today and that specific room
 func examsScheduleRoomToday(ec echo.Context) error {
 	c := ec.(*types.Context)
 
@@ -44,6 +47,7 @@ func examsScheduleRoomToday(ec echo.Context) error {
 	return c.JSON(http.StatusOK, schedule)
 }
 
+// examsScheduleRoomTodayNow Method that returns the exams schedule for today, the current time and that specific room
 func examsScheduleRoomTodayNow(ec echo.Context) error {
 	c := ec.(*types.Context)
 

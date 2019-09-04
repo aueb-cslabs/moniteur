@@ -7,12 +7,14 @@ import (
 	"time"
 )
 
+// ScheduleGroup Defines the api paths for the normal schedule
 func ScheduleGroup(g *echo.Group) {
 	g.GET("/all", scheduleAll)
 	g.GET("/:room", scheduleRoom)
 	g.GET("/:room/now", scheduleRoomNow)
 }
 
+// scheduleAll Method that returns the normal schedule
 func scheduleAll(ec echo.Context) error {
 	c := ec.(*types.Context)
 	schedule, err := c.Plugin().Schedule()
@@ -22,6 +24,7 @@ func scheduleAll(ec echo.Context) error {
 	return c.JSON(http.StatusOK, schedule)
 }
 
+// scheduleRoom Method that returns the normal schedule for that specific room
 func scheduleRoom(ec echo.Context) error {
 	c := ec.(*types.Context)
 
@@ -41,6 +44,7 @@ func scheduleRoom(ec echo.Context) error {
 	return c.JSON(http.StatusOK, schedule)
 }
 
+// scheduleRoomNow Method that returns the normal schedule for that specific room and this current time
 func scheduleRoomNow(ec echo.Context) error {
 	c := ec.(*types.Context)
 
@@ -65,6 +69,7 @@ func scheduleRoomNow(ec echo.Context) error {
 	return c.JSON(http.StatusOK, returnSchedule)
 }
 
+// determineNow Method that determines the current time as a Unix timestamp and the current weekday
 func determineNow() (int, int64) {
 	now := time.Now()
 	year, month, day := now.Date()

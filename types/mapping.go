@@ -5,10 +5,12 @@ import (
 	"io/ioutil"
 )
 
+// RoomMap contains a map for english-greek room name mapping
 type RoomMap struct {
 	Rooms map[string]string `yaml:"rooms,omitempty"`
 }
 
+// LoadMapping reads a yaml file and returns RoomsMap struct
 func LoadMapping(file string) (*RoomMap, error) {
 	byt, err := ioutil.ReadFile(file)
 	if err != nil {

@@ -8,6 +8,7 @@ import (
 
 var com *types.Announcement
 
+// CommentGroup Defines the api paths for all the comments
 func CommentGroup(g *echo.Group) {
 	g.POST("", createComment)
 	g.DELETE("", deleteComment)
@@ -15,23 +16,27 @@ func CommentGroup(g *echo.Group) {
 	g.GET("", comment)
 }
 
+// createComment Method that accepts POSTs a general comment
 func createComment(e echo.Context) error {
 	_ = e.Bind(&com)
 
 	return e.NoContent(http.StatusOK)
 }
 
+// deleteComment Method that accepts DELETEs a general comment
 func deleteComment(e echo.Context) error {
 	com = nil
 
 	return e.NoContent(http.StatusOK)
 }
 
+// comment Method that accepts GETs a general comment
 func comment(e echo.Context) error {
 
 	return e.JSON(http.StatusOK, com)
 }
 
+// updateComment Method that accepts PUTs a general comment
 func updateComment(e echo.Context) error {
 	_ = e.Bind(&com)
 
