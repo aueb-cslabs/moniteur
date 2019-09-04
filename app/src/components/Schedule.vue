@@ -119,6 +119,13 @@
                         schedule['next'] = null;
                     }
                 }
+
+                if(schedule['next'] != null) {
+                    let date =  new Date();
+                    if(date.getHours() < 8) {
+                        schedule['next'] = null;
+                    }
+                }
             },
 
             convertSecToTime: function() {
