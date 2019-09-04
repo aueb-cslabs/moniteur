@@ -4,6 +4,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/aueb-cslabs/moniteur/types"
 	"github.com/tealeg/xlsx"
@@ -34,6 +35,7 @@ type RoomMap struct {
 // PLUGIN The plugin to be read by the moniteur agent.
 var PLUGIN = Plugin{}
 var mapping = &RoomMap{}
+var exams []byte
 
 type Plugin struct {
 }
@@ -43,6 +45,8 @@ func (Plugin) Initialize() {
 	if len(mapping.Rooms) == 0 {
 		mapping, _ = loadMapping("mapping.yml")
 	}
+	exams = download()
+	go scheduleExamsDownload()
 }
 
 // Schedule Method that returns current schedule from Schedule Master
@@ -60,7 +64,25 @@ func (Plugin) ScheduleRoom(room string) (*types.Schedule, error, string) {
 }
 
 func (Plugin) ExamsSchedule() (*types.Schedule, error) {
-	return getExamsSchedule(), nil
+	schedule := getExamsSchedule()
+	var err error
+	if len(exams) == 0 {
+		err = errors.New("exams schedule not available")
+	}
+	return schedule, err
+}
+
+func (Plugin) ExamsScheduleRoom(room string) (*types.Schedule, error, string) {
+	room, changed := checkMapping(room)
+	if !changed {
+		room = convertChars(room)
+	}
+	schedule := getExamsSchedule()
+	var err error
+	if len(exams) == 0 {
+		err = errors.New("exams schedule not available")
+	}
+	return schedule, err, room
 }
 
 // retriever Method that converts Schedule Master json to our json format
@@ -110,6 +132,76 @@ func getEntireSchedule() []*Lesson {
 	var slots []*Lesson
 	_ = json.Unmarshal(bts, &slots)
 	return slots
+}
+
+func getExamsSchedule() *types.Schedule {
+	t := time.Now()
+	year := t.Year()
+	schedule := &types.Schedule{}
+
+	if len(exams) != 0 {
+		file, _ := xlsx.OpenBinary(exams)
+		rows := file.Sheet[fmt.Sprintf("%d", year-1)].Rows
+		var dayName string
+		var day int
+		var month int
+
+		for i := 0; i < len(rows); i++ {
+			var rooms []string
+			var semester string
+			var lessonName string
+			var examiner string
+
+			if strings.Contains(rows[i].Cells[0].Value, "*") {
+				continue
+			}
+
+			if strings.Contains(rows[i].Cells[0].Value, "ΗΜΕΡΟΜΗΝΙΑ") {
+				continue
+			}
+
+			if rows[i].Cells[0].Value == "" {
+				continue
+			}
+
+			if strings.Contains(rows[i].Cells[4].Value, "ΠΡΥΤΑΝΕΙΑ") {
+				break
+			}
+
+			if !strings.Contains(rows[i].Cells[1].Value, ":") {
+				examsDate := strings.Split(rows[i].Cells[0].Value, " ")
+				dayName = examsDate[0]
+				day, _ = strconv.Atoi(examsDate[1])
+				month = determineMonth(examsDate[2])
+
+			} else {
+
+				rooms = strings.Split(rows[i].Cells[0].Value, ", ")
+				timestamp := strings.Split(rows[i].Cells[1].Value, "-")
+				semester = rows[i].Cells[2].Value
+				lessonName = rows[i].Cells[3].Value
+				examiner = rows[i].Cells[4].Value
+				start := convertTime(timestamp[0])
+				end := convertTime(timestamp[1])
+				for j := range rooms {
+					slot := &types.ScheduleSlot{}
+					slot.Room = rooms[j]
+					slot.Day = determineDay(dayName)
+					slot.Start = start
+					slot.End = end
+					slot.Title = lessonName
+					slot.Host = examiner
+					slot.Semester = semester
+					slot.DayNum = day
+					slot.MonthNum = int(month)
+					schedule.Slots = append(schedule.Slots, slot)
+				}
+			}
+		}
+	} else {
+		return nil
+	}
+	return schedule
 }
 
 // determineDay Method that converts the Day (from the greek language) to an int
@@ -185,83 +277,6 @@ func determineMonth(month string) int {
 	return 0
 }
 
-func getExamsSchedule() *types.Schedule {
-	t := time.Now()
-	date := t.Format("20060102")
-	month := t.Month()
-	year := t.Year()
-	link := fmt.Sprintf("https://aueb.gr/sites/default/files/aueb/%s_Exams_%s.xlsx", month, date)
-	resp, _ := http.Get(link)
-	schedule := &types.Schedule{}
-
-	if resp.StatusCode == 200 {
-		bts, _ := ioutil.ReadAll(resp.Body)
-		file, _ := xlsx.OpenBinary(bts)
-		rows := file.Sheet[fmt.Sprintf("%d", year-1)].Rows
-		var dayName string
-		var day int
-		var month int
-
-		for i := 0; i < len(rows); i++ {
-			var rooms []string
-			var semester string
-			var lessonName string
-			var examiner string
-
-			if strings.Contains(rows[i].Cells[0].Value, "*") {
-				continue
-			}
-
-			if strings.Contains(rows[i].Cells[0].Value, "ΗΜΕΡΟΜΗΝΙΑ") {
-				continue
-			}
-
-			if rows[i].Cells[0].Value == "" {
-				continue
-			}
-
-			if strings.Contains(rows[i].Cells[4].Value, "ΠΡΥΤΑΝΕΙΑ") {
-				break
-			}
-
-			if !strings.Contains(rows[i].Cells[1].Value, ":") {
-				examsDate := strings.Split(rows[i].Cells[0].Value, " ")
-				dayName = examsDate[0]
-				day, _ = strconv.Atoi(examsDate[1])
-				month = determineMonth(examsDate[2])
-				fmt.Println(dayName, day, month)
-
-			} else {
-
-				rooms = strings.Split(rows[i].Cells[0].Value, ", ")
-				timestamp := strings.Split(rows[i].Cells[1].Value, "-")
-				semester = rows[i].Cells[2].Value
-				lessonName = rows[i].Cells[3].Value
-				examiner = rows[i].Cells[4].Value
-				start := convertTime(timestamp[0])
-				end := convertTime(timestamp[1])
-				for j := range rooms {
-					slot := &types.ScheduleSlot{}
-					slot.Room = rooms[j]
-					slot.Day = determineDay(dayName)
-					slot.Start = start
-					slot.End = end
-					slot.Title = lessonName
-					slot.Host = examiner
-					slot.Semester = semester
-					slot.DayNum = day
-					slot.MonthNum = int(month)
-					schedule.Slots = append(schedule.Slots, slot)
-					fmt.Println(slot)
-				}
-			}
-		}
-	} else {
-		return nil
-	}
-	return schedule
-}
-
 func convertTime(timestamp string) int64 {
 	convert := strings.Split(timestamp, ":")
 	var hourF float64
@@ -274,4 +289,45 @@ func convertTime(timestamp string) int64 {
 	}
 
 	return int64(hourF * 3600)
+}
+
+func scheduleExamsDownload() {
+	for {
+		current := determineNow()
+
+		if current >= 50400 && current <= 54000 {
+			ret := download()
+
+			if ret != nil {
+				exams = ret
+			} else {
+				time.Sleep(time.Second * 300)
+			}
+		} else {
+			time.Sleep(time.Hour)
+		}
+	}
+}
+
+func download() []byte {
+	var ret []byte
+
+	t := time.Now()
+	date := t.Format("20060102")
+	month := t.Month()
+	link := fmt.Sprintf("https://aueb.gr/sites/default/files/aueb/%s_Exams_%s.xlsx", month, date)
+	resp, _ := http.Get(link)
+
+	if resp.StatusCode == 200 {
+		ret, _ = ioutil.ReadAll(resp.Body)
+	}
+
+	return ret
+}
+
+func determineNow() int64 {
+	now := time.Now()
+	year, month, day := now.Date()
+	sod := time.Date(year, month, day, 0, 0, 0, 0, now.Location())
+	return int64(now.Sub(sod).Seconds())
 }
