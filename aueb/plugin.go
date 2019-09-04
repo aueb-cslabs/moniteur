@@ -53,9 +53,9 @@ func (Plugin) Initialize(examsLink string) {
 		mapping, _ = loadMapping("mapping.yml")
 	}
 	link = examsLink
-	exams = download()
+	exams, _ = download()
 	configureLink()
-	exams = download()
+	exams, _ = download()
 	go scheduleExamsDownload()
 }
 
@@ -313,9 +313,9 @@ func scheduleExamsDownload() {
 
 		if current >= 50400 && current <= 54000 {
 			configureLink()
-			ret := download()
+			ret, same := download()
 
-			if ret != nil {
+			if !same {
 				exams = ret
 			} else {
 				time.Sleep(time.Second * 300)
@@ -327,7 +327,7 @@ func scheduleExamsDownload() {
 }
 
 // download Method that downloads the exam schedule from AUEB
-func download() []byte {
+func download() ([]byte, bool) {
 	var ret []byte
 
 	resp, _ := http.Get(link)
@@ -335,10 +335,10 @@ func download() []byte {
 	if resp.StatusCode == 200 {
 		ret, _ = ioutil.ReadAll(resp.Body)
 	} else {
-		return exams
+		return exams, true
 	}
 
-	return ret
+	return ret, false
 }
 
 // determineNow Method that determines the current time as a Unix timestamp
