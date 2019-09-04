@@ -7,12 +7,26 @@
 </template>
 
 <script>
+    import {EventBus} from "./EventBus";
+
     export default {
         name: "Exam",
 
         data() {
             return {
-                isExam: true
+                isExam: ''
+            }
+        },
+
+        created() {
+            this.registerExamListener();
+        },
+
+        methods: {
+            registerExamListener: function () {
+               EventBus.$on('exam', exam => {
+                   this.isExam = exam;
+               });
             }
         }
     }
