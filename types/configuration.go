@@ -7,7 +7,8 @@ import (
 
 // Configuration contains all the configuration parameters.
 type Configuration struct {
-	Plugin string `json:"plugin"`
+	Plugin    string `yaml:"plugin"`
+	ExamsLink string `yaml:"exams"`
 }
 
 // LoadConfiguration reads a configuration file and returns a struct.

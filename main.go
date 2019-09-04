@@ -27,7 +27,7 @@ func main() {
 		log.Panic(err)
 	}
 
-	plugin.Initialize()
+	plugin.Initialize(config.ExamsLink)
 	rest.Initialize()
 
 	e := echo.New()

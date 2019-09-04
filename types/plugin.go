@@ -10,7 +10,7 @@ Plugin The interface that plugins need to implement so that they can
 provide data to moniteur.
 */
 type Plugin interface {
-	Initialize()
+	Initialize(examsLink string)
 	Schedule() (*Schedule, error)
 	ScheduleRoom(room string) (*Schedule, error, string)
 	ExamsSchedule() (*Schedule, error)

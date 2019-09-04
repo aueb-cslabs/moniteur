@@ -34,17 +34,27 @@ type RoomMap struct {
 
 // PLUGIN The plugin to be read by the moniteur agent.
 var PLUGIN = Plugin{}
+
+// Provides map for english-greek room name translation
 var mapping = &RoomMap{}
+
+// The xlsx file that AUEB provides that contains the exams schedule
 var exams []byte
+
+// The link that corresponds to the exams file
+var link string
 
 type Plugin struct {
 }
 
 // Initialize Method that initializes crucial functions for the plugin
-func (Plugin) Initialize() {
+func (Plugin) Initialize(examsLink string) {
 	if len(mapping.Rooms) == 0 {
 		mapping, _ = loadMapping("mapping.yml")
 	}
+	link = examsLink
+	exams = download()
+	configureLink()
 	exams = download()
 	go scheduleExamsDownload()
 }
@@ -63,6 +73,7 @@ func (Plugin) ScheduleRoom(room string) (*types.Schedule, error, string) {
 	return retriever(), nil, room
 }
 
+// ExamsSchedule Method that returns current exams schedule if that exists
 func (Plugin) ExamsSchedule() (*types.Schedule, error) {
 	schedule := getExamsSchedule()
 	var err error
@@ -72,6 +83,7 @@ func (Plugin) ExamsSchedule() (*types.Schedule, error) {
 	return schedule, err
 }
 
+// ExamsScheduleRoom Method that returns current exams schedule if that exists and the room that corresponds to it
 func (Plugin) ExamsScheduleRoom(room string) (*types.Schedule, error, string) {
 	room, changed := checkMapping(room)
 	if !changed {
@@ -134,6 +146,7 @@ func getEntireSchedule() []*Lesson {
 	return slots
 }
 
+// getExamsSchedule Method that retrieves the exam schedule from AUEB
 func getExamsSchedule() *types.Schedule {
 	t := time.Now()
 	year := t.Year()
@@ -247,6 +260,7 @@ func checkMapping(room string) (string, bool) {
 	return room, false
 }
 
+// determineMonth Method that converts the Month (from the greek language) to an int
 func determineMonth(month string) int {
 	switch month {
 	case "ΙΑΝΟΥΑΡΙΟΥ":
@@ -277,6 +291,7 @@ func determineMonth(month string) int {
 	return 0
 }
 
+// convertTime Method that converts time to int64
 func convertTime(timestamp string) int64 {
 	convert := strings.Split(timestamp, ":")
 	var hourF float64
@@ -291,11 +306,13 @@ func convertTime(timestamp string) int64 {
 	return int64(hourF * 3600)
 }
 
+// scheduleExamsDownload Method that checks every so often for new exam schedule
 func scheduleExamsDownload() {
 	for {
 		current := determineNow()
 
 		if current >= 50400 && current <= 54000 {
+			configureLink()
 			ret := download()
 
 			if ret != nil {
@@ -309,25 +326,33 @@ func scheduleExamsDownload() {
 	}
 }
 
+// download Method that downloads the exam schedule from AUEB
 func download() []byte {
 	var ret []byte
 
-	t := time.Now()
-	date := t.Format("20060102")
-	month := t.Month()
-	link := fmt.Sprintf("https://aueb.gr/sites/default/files/aueb/%s_Exams_%s.xlsx", month, date)
 	resp, _ := http.Get(link)
 
 	if resp.StatusCode == 200 {
 		ret, _ = ioutil.ReadAll(resp.Body)
+	} else {
+		return exams
 	}
 
 	return ret
 }
 
+// determineNow Method that determines the current time as a Unix timestamp
 func determineNow() int64 {
 	now := time.Now()
 	year, month, day := now.Date()
 	sod := time.Date(year, month, day, 0, 0, 0, 0, now.Location())
 	return int64(now.Sub(sod).Seconds())
+}
+
+// configureLink Method that constructs link based on the date
+func configureLink() {
+	t := time.Now()
+	date := t.Format("20060102")
+	month := t.Month()
+	link = fmt.Sprintf("https://aueb.gr/sites/default/files/aueb/%s_Exams_%s.xlsx", month, date)
 }
