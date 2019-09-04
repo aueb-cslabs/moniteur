@@ -1,35 +1,43 @@
 package rest
 
 import (
-	"fmt"
 	"github.com/aueb-cslabs/moniteur/types"
 	"github.com/labstack/echo"
 	"net/http"
 )
 
-var announcement *types.Announcement
+var message *types.Announcement
 
-func CreateAnnouncement(e echo.Context) error {
-	_ = e.Bind(&announcement)
+func AnnouncementsGroup(g *echo.Group) {
+	g.POST("", createAnnouncement)
+	g.DELETE("", deleteAnnouncement)
+	g.PUT("", updateAnnouncement)
+	g.GET("", announcement)
+	g.POST("/:room", createRoomAnn)
+	g.GET("/:room", getRoomAnn)
+	g.DELETE("/:room", deleteRoomAnn)
+	g.PUT("/:room", updateRoomAnn)
+}
 
-	fmt.Println(announcement)
+func createAnnouncement(e echo.Context) error {
+	_ = e.Bind(&message)
 
 	return e.NoContent(http.StatusOK)
 }
 
-func DeleteAnnouncement(e echo.Context) error {
-	announcement = nil
+func deleteAnnouncement(e echo.Context) error {
+	message = nil
 
 	return e.NoContent(http.StatusOK)
 }
 
-func Announcement(e echo.Context) error {
+func announcement(e echo.Context) error {
 
 	return e.JSON(http.StatusOK, announcement)
 }
 
-func UpdateAnnouncement(e echo.Context) error {
-	_ = e.Bind(&announcement)
+func updateAnnouncement(e echo.Context) error {
+	_ = e.Bind(&message)
 
 	return e.NoContent(http.StatusOK)
 }

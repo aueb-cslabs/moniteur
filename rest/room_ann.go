@@ -12,7 +12,7 @@ func Initialize() {
 	announcements = make(map[string]*types.Announcement)
 }
 
-func CreateRoomAnn(e echo.Context) error {
+func createRoomAnn(e echo.Context) error {
 	ann := &types.Announcement{}
 	_ = e.Bind(ann)
 
@@ -21,7 +21,7 @@ func CreateRoomAnn(e echo.Context) error {
 	return e.NoContent(http.StatusOK)
 }
 
-func UpdateRoomAnn(e echo.Context) error {
+func updateRoomAnn(e echo.Context) error {
 	ann := &types.Announcement{}
 	_ = e.Bind(ann)
 
@@ -30,12 +30,12 @@ func UpdateRoomAnn(e echo.Context) error {
 	return e.NoContent(http.StatusOK)
 }
 
-func DeleteRoomAnn(e echo.Context) error {
+func deleteRoomAnn(e echo.Context) error {
 	delete(announcements, e.Param("room"))
 
 	return e.NoContent(http.StatusOK)
 }
 
-func GetRoomAnn(e echo.Context) error {
+func getRoomAnn(e echo.Context) error {
 	return e.JSON(http.StatusOK, announcements[e.Param("room")])
 }

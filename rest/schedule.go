@@ -7,7 +7,13 @@ import (
 	"time"
 )
 
-func ScheduleAll(ec echo.Context) error {
+func ScheduleGroup(g *echo.Group) {
+	g.GET("/all", scheduleAll)
+	g.GET("/:room", scheduleRoom)
+	g.GET("/:room/now", scheduleRoomNow)
+}
+
+func scheduleAll(ec echo.Context) error {
 	c := ec.(*types.Context)
 	schedule, err := c.Plugin().Schedule()
 	if err != nil {
@@ -16,7 +22,7 @@ func ScheduleAll(ec echo.Context) error {
 	return c.JSON(http.StatusOK, schedule)
 }
 
-func ScheduleRoom(ec echo.Context) error {
+func scheduleRoom(ec echo.Context) error {
 	c := ec.(*types.Context)
 
 	schedule, err, room := c.Plugin().ScheduleRoom(c.Param("room"))
@@ -35,7 +41,7 @@ func ScheduleRoom(ec echo.Context) error {
 	return c.JSON(http.StatusOK, schedule)
 }
 
-func ScheduleRoomNow(ec echo.Context) error {
+func scheduleRoomNow(ec echo.Context) error {
 	c := ec.(*types.Context)
 
 	schedule, err, room := c.Plugin().ScheduleRoom(c.Param("room"))
@@ -57,15 +63,6 @@ func ScheduleRoomNow(ec echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, returnSchedule)
-}
-
-func ExamsScheduleAll(ec echo.Context) error {
-	c := ec.(*types.Context)
-	schedule, err := c.Plugin().ExamsSchedule()
-	if err != nil {
-		return err
-	}
-	return c.JSON(http.StatusOK, schedule)
 }
 
 func determineNow() (int, int64) {

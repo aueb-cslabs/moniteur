@@ -11,7 +11,11 @@ import (
 	"time"
 )
 
-func CalendarInfo(ec echo.Context) error {
+func CalendarGroup(g *echo.Group) {
+	g.GET("", calendarInfo)
+}
+
+func calendarInfo(ec echo.Context) error {
 	c := ec.(*types.Context)
 
 	info := &types.Info{}

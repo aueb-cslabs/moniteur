@@ -34,6 +34,8 @@ func main() {
 	e.HideBanner = true
 	e.HidePort = true
 
+	api := e.Group("/api")
+
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			return next(types.NewContext(c, plugin, calendar))
@@ -44,23 +46,11 @@ func main() {
 		AllowOrigins: []string{"http://localhost:8080"},
 	}))
 
-	e.GET("/api/schedule/all", rest.ScheduleAll)
-	e.GET("/api/schedule/:room", rest.ScheduleRoom)
-	e.GET("/api/schedule/:room/now", rest.ScheduleRoomNow)
-	e.GET("/api/calendarInfo", rest.CalendarInfo)
-	e.POST("/api/announcement", rest.CreateAnnouncement)
-	e.DELETE("/api/announcement", rest.DeleteAnnouncement)
-	e.PUT("/api/announcement", rest.UpdateAnnouncement)
-	e.GET("/api/announcement", rest.Announcement)
-	e.POST("/api/announcement/:room", rest.CreateRoomAnn)
-	e.GET("/api/announcement/:room", rest.GetRoomAnn)
-	e.DELETE("/api/announcement/:room", rest.DeleteRoomAnn)
-	e.PUT("/api/announcement/:room", rest.UpdateRoomAnn)
-	e.POST("/api/comment", rest.CreateComment)
-	e.DELETE("/api/comment", rest.DeleteComment)
-	e.PUT("/api/comment", rest.UpdateComment)
-	e.GET("/api/comment", rest.Comment)
-	e.GET("/api/exams/all", rest.ExamsScheduleAll)
+	rest.CalendarGroup(api.Group("/calendarInfo"))
+	rest.AnnouncementsGroup(api.Group("/announcement"))
+	rest.CommentGroup(api.Group("/comment"))
+	rest.ScheduleGroup(api.Group("/schedule"))
+	rest.ExamsGroup(api.Group("/exams"))
 
 	// Should go in effect only in development mode.
 	// In production this should just serve the files.
