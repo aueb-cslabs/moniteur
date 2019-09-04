@@ -60,6 +60,7 @@
                 this.fetchExamSched();
             } else {
                 this.fetchNormSched();
+                EventBus.$emit('exam', false);
             }
         },
 
@@ -89,7 +90,7 @@
                             if(this.current['now'] != null) {
                                 EventBus.$emit('exam', this.isExam);
                             } else {
-                                EventBus.$delete('exam');
+                                EventBus.$emit('exam', false);
                             }
                         })
                 }, 30000)
