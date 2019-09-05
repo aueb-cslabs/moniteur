@@ -109,17 +109,10 @@
                 }, 30000)
             },
 
-            /* Check if next class start time equals with
-             * current class class end time. If not then
-             * show there is no class in the next 2 hours.
+            /* Checks if it's morning. If not don't render next
+             * class until the time is 8AM
              */
             checkNext: function (schedule) {
-                if(schedule['now'] != null && schedule['next'] != null) {
-                    if(schedule['now']['end'] !== schedule['next'][0]['start']) {
-                        schedule['next'] = null;
-                    }
-                }
-
                 if(schedule['next'] != null) {
                     let date =  new Date();
                     if(date.getHours() < 8) {
