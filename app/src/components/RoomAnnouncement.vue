@@ -23,7 +23,7 @@
         methods: {
             getAnnouncement: function () {
                 setInterval(() => {
-                    fetch("http://localhost:27522/api/announcement/" + this.data.getRoom())
+                    fetch("http://localhost:27522/api/announcement/" + this.$root.$data['room'])
                         .then(response => response.json())
                         .then(roomAnn => {
                             this.roomAnnouncement = roomAnn;

@@ -6,14 +6,14 @@ Vue.config.productionTip = false;
 const shared = {
   getRoom() {
     let link =  window.location.href.toString();
-    let room = link.substring(link.lastIndexOf("/")+1);
+    const room = link.substring(link.lastIndexOf("/")+1);
     return room
   }
 };
 
 new Vue({
   data : {
-    shared: shared.getRoom()
+    room: shared.getRoom()
   },
   render: h => h(App),
 }).$mount('#app');
