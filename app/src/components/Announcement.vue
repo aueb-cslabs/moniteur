@@ -24,7 +24,7 @@
         methods: {
             getAnnouncement: function () {
                 setInterval(() => {
-                    fetch("http://localhost:1323/api/announcement")
+                    fetch("http://localhost:27522/api/announcement")
                         .then(response => response.json())
                         .then(ann => {
                             this.announcement = ann;
