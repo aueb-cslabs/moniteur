@@ -27,6 +27,7 @@ import Comment from "./components/Comment";
 
 export default {
   name: 'app',
+
   components: {
     Comment,
     RoomAnnouncement,
@@ -35,6 +36,7 @@ export default {
     Schedule,
     Exam
   }
+
 }
 </script>
 
