@@ -68,7 +68,7 @@
             /* Checks if we are in examination period */
             checkExam: function () {
                 setInterval(() => {
-                    fetch("http://localhost:1323/api/calendarInfo")
+                    fetch("http://localhost:27522/api/calendarInfo")
                         .then(res => res.json())
                         .then(json => {
                             this.isExam = json['exams'];
@@ -79,7 +79,7 @@
             /* Fetches examination schedule */
             fetchExamSched: function() {
                 setInterval(() => {
-                    fetch("http://localhost:1323/api/exams/a/now")
+                    fetch("http://localhost:27522/api/exams/a/now")
                         .then(response => response.json())
                         .then(json => {
                             this.current = json;
@@ -99,7 +99,7 @@
             /* Fetches normal schedule */
             fetchNormSched: function() {
                 setInterval(() => {
-                    fetch("http://localhost:1323/api/schedule/a/now")
+                    fetch("http://localhost:27522/api/schedule/a/now")
                         .then(response => response.json())
                         .then(json => {
                             this.current = json;

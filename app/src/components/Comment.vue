@@ -23,7 +23,7 @@
         methods: {
             getComment: function () {
                 setInterval(() => {
-                    fetch("http://localhost:1323/api/comment")
+                    fetch("http://localhost:27522/api/comment")
                         .then(response => response.json())
                         .then(comment => {
                             this.comment = comment;
