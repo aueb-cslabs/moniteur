@@ -1,9 +1,8 @@
 <template>
     <div class="wrapper">
         <div id="current" class="text-center current schedule">
-
             <h3>Τώρα <i class="fas fa-users-class"></i></h3>
-            <p class="mt-2 common fade-in" v-if="current['now'] != null">
+            <p class="center common fade-in" v-if="current['now'] != null">
                 <u>
                     {{time['now_start'].getUTCHours()}}:{{getMinutes(this.time['now_start'])}}
                     - {{time['now_end'].getUTCHours()}}:{{getMinutes(this.time['now_end'])}}
@@ -11,17 +10,17 @@
                 {{current['now']['title']}}<br>
                 {{current['now']['host']}}
             </p>
-            <p class="mt-4 pt-2 common fade-in subject" v-else-if="isExam">
-                Δεν θα πραγματοποιείται εξέταση.
+            <p class="center common fade-in subject" v-else-if="isExam">
+                Δεν πραγματοποιείται εξέταση.
             </p>
-            <p class="mt-4 pt-2 common fade-in subject" v-else>
+            <p class="center common fade-in subject" v-else>
                 Δεν πραγματοποιείται μάθημα.
             </p>
         </div>
 
         <div id="next" class="text-center next schedule">
             <h3>Επόμενο <i class="fas fa-users-class nextsub"></i></h3>
-            <p class="mt-2 common fade-in" v-if="current['next'] != null">
+            <p class="center common fade-in" v-if="current['next'] != null">
                 <u>
                     {{time['next_start'].getUTCHours()}}:{{getMinutes(this.time['next_start'])}}
                     - {{time['next_end'].getUTCHours()}}:{{getMinutes(this.time['next_end'])}}
@@ -29,10 +28,10 @@
                 {{current['next'][0]['title']}}<br>
                 {{current['next'][0]['host']}}
             </p>
-            <p class="mt-4 pt-2 common fade-in subject" v-else-if="isExam">
+            <p class="center common fade-in subject" v-else-if="isExam">
                 Δεν θα πραγματοποιείται εξέταση.
             </p>
-            <p class="mt-4 pt-2 common fade-in subject" v-else>
+            <p class="center common fade-in subject" v-else>
                 Δεν θα πραγματοποιείται μάθημα.
             </p>
         </div>

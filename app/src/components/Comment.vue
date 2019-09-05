@@ -1,7 +1,7 @@
 <template>
     <div class="comments">
-        <p class="mt-4 common comments-text fade-in" v-if="comment != null">
-           {{comment}}
+        <p class="mt-2 common comments-text fade-in" v-if="comment != null">
+           {{comment['msg']}}
         </p>
     </div>
 </template>

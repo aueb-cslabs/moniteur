@@ -6,10 +6,12 @@
       <Exam/>
       <Announcement/>
       <Schedule/>
-      <RoomAnnouncement/>
-      <Comment/>
-      <footer class="mt-5 text-center" style="color: #9c9890">
-          Η οθόνη δεν ειναι touchscreen. Μην αγγίζετε!
+      <div class="bottom align-items-center">
+        <RoomAnnouncement/>
+        <Comment/>
+      </div>
+      <footer class="mt-5 text-center">
+        Η οθόνη δεν ειναι touchscreen. Μην αγγίζετε!
       </footer>
     </div>
   </div>
