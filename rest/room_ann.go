@@ -16,8 +16,12 @@ func Initialize() {
 
 // createRoomAnn Method that accepts POSTs a room announcement
 func createRoomAnn(e echo.Context) error {
+	post := &types.AnnouncementPost{}
+	_ = e.Bind(post)
+
 	ann := &types.Announcement{}
-	_ = e.Bind(ann)
+	ann.End = types.ConvertDateToUnix(post.End)
+	ann.Msg = post.Msg
 
 	announcements[e.Param("room")] = ann
 
@@ -26,8 +30,12 @@ func createRoomAnn(e echo.Context) error {
 
 // updateRoomAnn Method that accepts PUTs a room announcement
 func updateRoomAnn(e echo.Context) error {
+	post := &types.AnnouncementPost{}
+	_ = e.Bind(post)
+
 	ann := &types.Announcement{}
-	_ = e.Bind(ann)
+	ann.End = types.ConvertDateToUnix(post.End)
+	ann.Msg = post.Msg
 
 	announcements[e.Param("room")] = ann
 

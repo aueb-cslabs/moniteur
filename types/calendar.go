@@ -3,6 +3,9 @@ package types
 import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"strconv"
+	"strings"
+	"time"
 )
 
 // Calendar contains semesters, exams and breaks in an academic year
@@ -57,4 +60,15 @@ func LoadCalendar(file string) (*Calendar, error) {
 		return nil, err
 	}
 	return calendar, err
+}
+
+func ConvertDateToUnix(date string) int64 {
+	now := time.Now()
+	broken := strings.Split(date, "/")
+	day, _ := strconv.Atoi(broken[0])
+	month, _ := strconv.Atoi(broken[1])
+	year, _ := strconv.Atoi(broken[2])
+	endDate := time.Date(year, time.Month(month), day+1, 0, 0, 0, 0, now.Location())
+	unix := endDate.Unix()
+	return unix
 }

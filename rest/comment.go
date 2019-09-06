@@ -18,7 +18,12 @@ func CommentGroup(g *echo.Group) {
 
 // createComment Method that accepts POSTs a general comment
 func createComment(e echo.Context) error {
-	_ = e.Bind(&com)
+	post := types.AnnouncementPost{}
+	_ = e.Bind(&post)
+
+	com = &types.Announcement{}
+	com.End = types.ConvertDateToUnix(post.End)
+	com.Msg = post.Msg
 
 	return e.NoContent(http.StatusOK)
 }
@@ -38,7 +43,12 @@ func comment(e echo.Context) error {
 
 // updateComment Method that accepts PUTs a general comment
 func updateComment(e echo.Context) error {
-	_ = e.Bind(&com)
+	post := types.AnnouncementPost{}
+	_ = e.Bind(&post)
+
+	com = &types.Announcement{}
+	com.End = types.ConvertDateToUnix(post.End)
+	com.Msg = post.Msg
 
 	return e.NoContent(http.StatusOK)
 }
