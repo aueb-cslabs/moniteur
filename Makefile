@@ -6,10 +6,10 @@
 
 .build-go: .build-moniteur .build-aueb-plugin
 
-.build-react:
-	cd app; yarn install; yarn build
+.build-vue:
+	cd app; npm install; npm run build
 
-.build: .build-go .build-react
+.build: .build-go .build-vue
 
 default: .build
 
