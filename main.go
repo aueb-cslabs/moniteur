@@ -51,6 +51,7 @@ func main() {
 	rest.CommentGroup(api.Group("/comment"))
 	rest.ScheduleGroup(api.Group("/schedule"))
 	rest.ExamsGroup(api.Group("/exams"))
+	api.GET("/:room", rest.Room)
 
 	// Should go in effect only in development mode.
 	// In production this should just serve the files.

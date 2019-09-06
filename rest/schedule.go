@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+var room string
+
 // ScheduleGroup Defines the api paths for the normal schedule
 func ScheduleGroup(g *echo.Group) {
 	g.GET("/all", scheduleAll)
@@ -75,4 +77,11 @@ func determineNow() (int, int64) {
 	year, month, day := now.Date()
 	sod := time.Date(year, month, day, 0, 0, 0, 0, now.Location())
 	return int(now.Weekday()), int64(now.Sub(sod).Seconds())
+}
+
+func Room(e echo.Context) error {
+	c := e.(*types.Context)
+	_, _, room := c.Plugin().ScheduleRoom(c.Param("room"))
+
+	return c.JSON(http.StatusOK, room)
 }

@@ -5,9 +5,9 @@
                  alt="logo" height="44" />
         </a>
         <nav class="navbar-nav mr-auto">
-<!--            <a class="navbar-brand mt-2">AUEB CSLabs</a>-->
             <img class="ml-2" v-bind:src="'https://www.dept.aueb.gr/schools_department_photos/cs.png'"
                  alt="cs_logo" height="55" />
+            <a class="ml-4 navbar-brand mt-2">{{room}}</a>
         </nav>
         <a class="navbar-brand">
             {{date}}
@@ -21,12 +21,14 @@
 
         data() {
             return {
-                date: ''
+                date: '',
+                room: ''
             }
         },
 
         created() {
             this.getTime();
+            this.getRoom();
         },
 
         methods: {
@@ -36,6 +38,14 @@
 
                     this.date = date.toLocaleString()
                 })
+            },
+
+            getRoom: function () {
+                fetch("http://localhost:27522/api/" + this.$root.$data['room'])
+                    .then(res => res.json())
+                    .then(json => {
+                        this.room = json.toString()
+                    })
             }
         }
     }
