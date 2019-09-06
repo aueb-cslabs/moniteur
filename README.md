@@ -7,7 +7,7 @@ Still WIP, but there is a working beta!
 
 There are two sides of to a story always, so let's start with the back-end.
 
-###Backend
+## Backend
 
 Moniteur is written in golang. Minimum version required is 1.11.
 
@@ -19,13 +19,13 @@ Moniteur has 3 config files, two of them are mandatory.
 
 There are example files in the repo.
 
-###Frontend
+## Frontend
 
 Moniteur is written in VueJS.
 
 For the frontend to work properly you **need to have overrides enabled**.
 
-###Building
+## Building
 
 Install latest golang and npm or yarn.
 
@@ -46,7 +46,7 @@ Make Command | Result
 .build-vue | Builds frontend
 .build | Builds everything!
 
-###Deployment
+## Deployment
 
 **DEPLOYMENT ONLY ON LINUX SYSTEMS**
 
@@ -88,11 +88,11 @@ So the steps that follow apply only to Apache2 and Ubuntu 16.04.
 8. Start Apache2: ```sudo systemctl start apache2```
 9. Enable Apache2 on startup: ```sudo systemctl enable apache2```
 
-###How to use
+## How to use
 
 Open up any browser and enter: ```http://moniteur.url/room```
 
-###AUEB Case of Use
+## AUEB Case of Use
 
 Currently AUEB CSLabs have installed Raspberry Pi 3 and monitors.
 
