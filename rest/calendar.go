@@ -74,7 +74,7 @@ func isNormal(semester types.Semester) bool {
 
 	res2 := checkDates(start, end)
 
-	return res1 || res2
+	return (res1 || res2) && !isWeekend()
 }
 
 // isNormal Method that returns a boolean that indicates if the university is in exams period
@@ -94,7 +94,7 @@ func isExams(exams types.Exam) bool {
 
 	res3 := checkDates(start, end)
 
-	return res1 || res2 || res3
+	return (res1 || res2 || res3) && !isWeekend()
 }
 
 // isNormal Method that returns a boolean that indicates if the university is in break
