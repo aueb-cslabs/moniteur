@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper" v-if="normal">
         <div id="current" class="text-center current schedule">
             <h3>Τώρα <i class="fas fa-users-class"></i></h3>
             <p class="center common fade-in" v-if="current['now'] != null">
@@ -36,6 +36,12 @@
             </p>
         </div>
     </div>
+    <div class="wrapper" v-else>
+        <div class="center-message message mt-0">
+            <h3 class="common fade-on subject" v-if="isBreak">Αργία ή διακοπές. Καλή ξεκούραση!</h3>
+            <h3 class="center-message common fade-on subject" v-if="isWeekend">Καλό Σαββατοκύριακο!</h3>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -48,12 +54,18 @@
             return {
                 current: [],
                 isExam: {},
-                time: {}
+                time: {},
+                isWeekend: {},
+                isBreak: {},
+                normal: {}
             }
         },
 
         created() {
             this.checkExam();
+            this.checkWeekend();
+            this.checkBreak();
+            this.checkDefault();
 
             if (this.isExam) {
                 this.fetchExamSched();
@@ -73,6 +85,35 @@
                             this.isExam = json['exams'];
                         });
                 }, 86400);
+            },
+
+            /* Checks if it is weekend */
+            checkWeekend: function () {
+                setInterval(() => {
+                    fetch("http://localhost:27522/api/calendarInfo")
+                        .then(res => res.json())
+                        .then(json => {
+                            this.isWeekend = json['weekend'];
+                        });
+                }, 7200000);
+            },
+
+            /* Checks if there is a break or a national holiday */
+            checkBreak: function () {
+                setInterval(() => {
+                    fetch("http://localhost:27522/api/calendarInfo")
+                        .then(res => res.json())
+                        .then(json => {
+                            this.isBreak = json['break'];
+                        })
+                }, 7200000);
+            },
+
+            /* Checks for normal period */
+            checkDefault: function () {
+                setInterval(() => {
+                    this.normal = !this.isWeekend && !this.isBreak
+                }, 7200000);
             },
 
             /* Fetches examination schedule */
