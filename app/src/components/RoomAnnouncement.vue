@@ -18,6 +18,7 @@
 
         created() {
             this.getAnnouncement();
+            this.removeRoomAnnouncement();
         },
 
         methods: {
@@ -29,6 +30,19 @@
                             this.roomAnnouncement = roomAnn;
                         })
                 }, 5000)
+            },
+
+            removeRoomAnnouncement: function () {
+                setInterval(() => {
+                    if (this.roomAnnouncement != null) {
+                        let timestamp = Math.round(+new Date()/1000);
+                        if (timestamp >= this.roomAnnouncement['end']) {
+                            fetch("http://localhost:27522/api/announcement" + this.$root.$data['room'], {
+                                method: 'delete'
+                            })
+                        }
+                    }
+                }, 3600000);
             }
         }
     }

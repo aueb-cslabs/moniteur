@@ -18,6 +18,7 @@
 
         created() {
             this.getComment();
+            this.removeComment();
         },
 
         methods: {
@@ -29,6 +30,19 @@
                             this.comment = comment;
                         })
                 }, 5000)
+            },
+
+            removeComment: function () {
+                setInterval(() => {
+                    if (this.roomAnnouncement != null) {
+                        let timestamp = Math.round(+new Date()/1000);
+                        if (timestamp >= this.roomAnnouncement['end']) {
+                            fetch("http://localhost:27522/api/comment", {
+                                method: 'delete'
+                            })
+                        }
+                    }
+                }, 3600000);
             }
         }
     }

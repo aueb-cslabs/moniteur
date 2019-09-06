@@ -19,6 +19,7 @@
 
         created() {
             this.getAnnouncement();
+            this.removeAnnouncement();
         },
 
         methods: {
@@ -29,7 +30,20 @@
                         .then(ann => {
                             this.announcement = ann;
                         })
-                }, 5000)
+                }, 5000);
+            },
+
+            removeAnnouncement: function () {
+                setInterval(() => {
+                    if (this.announcement != null) {
+                        let timestamp = Math.round(+new Date()/1000);
+                        if (timestamp >= this.announcement['end']) {
+                            fetch("http://localhost:27522/api/announcement", {
+                                method: 'delete'
+                            })
+                        }
+                    }
+                }, 3600000);
             }
         }
     }
