@@ -84,7 +84,7 @@ So the steps that follow apply only to Apache2 and Ubuntu 16.04.
         RewriteCond %{REQUEST_FILENAME} -d
         RewriteRule ^.*$ - [NC,L]
    
-        RewriteRule ^(.*) /index.html [LC, L]
+        RewriteRule ^(.*) /index.html [NC, L]
    #</IfModule>
    ```
 8. Start Apache2: ```sudo systemctl start apache2```
