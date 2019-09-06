@@ -5,7 +5,9 @@ Spelled like a nice, regular-old *"monitor"*.
 
 Still WIP, but there is a working beta!
 
-There are two sides of to a story always, so let's start with the back-end.
+There are two sides to a story always, so let's start with the back-end.
+
+**Bug reports and feedback is appriciated!**
 
 ## Backend
 
