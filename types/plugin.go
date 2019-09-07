@@ -15,6 +15,7 @@ type Plugin interface {
 	ScheduleRoom(room string) (*Schedule, error, string)
 	ExamsSchedule() (*Schedule, error)
 	ExamsScheduleRoom(room string) (*Schedule, error, string)
+	AuthorizeUser(username string, password string) (bool, error)
 }
 
 func LoadPlugin(path string) (Plugin, error) {

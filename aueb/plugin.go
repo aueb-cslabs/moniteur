@@ -57,6 +57,12 @@ func (Plugin) Initialize(examsLink string) {
 	configureLink()
 	exams, _ = download()
 	go scheduleExamsDownload()
+
+	ldapConf = LdapConfiguration{}
+	if err := loadLdapConfig(&ldapConf); err != nil {
+		panic(err)
+	}
+
 }
 
 // Schedule Method that returns current schedule from Schedule Master
@@ -95,6 +101,10 @@ func (Plugin) ExamsScheduleRoom(room string) (*types.Schedule, error, string) {
 		err = errors.New("exams schedule not available")
 	}
 	return schedule, err, room
+}
+
+func (Plugin) AuthorizeUser(username string, password string) (bool, error) {
+	return authenticateLdap(username, password)
 }
 
 // retriever Method that converts Schedule Master json to our json format
