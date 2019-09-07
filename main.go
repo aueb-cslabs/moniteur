@@ -42,6 +42,7 @@ func main() {
 		}
 	})
 
+	//For CORS to work, please define the EXACT link that you will use!!!
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"http://localhost:8080"},
 	}))

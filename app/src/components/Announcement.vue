@@ -25,7 +25,7 @@
         methods: {
             getAnnouncement: function () {
                 setInterval(() => {
-                    fetch("http://localhost:27522/api/announcement")
+                    fetch(this.$root.$data['api']+":27522/api/announcement")
                         .then(response => response.json())
                         .then(ann => {
                             this.announcement = ann;
@@ -38,7 +38,7 @@
                     if (this.announcement != null) {
                         let timestamp = Math.round(+new Date()/1000);
                         if (timestamp >= this.announcement['end']) {
-                            fetch("http://localhost:27522/api/announcement", {
+                            fetch(this.$root.$data['api']+":27522/api/announcement", {
                                 method: 'delete'
                             })
                         }

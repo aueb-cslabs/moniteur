@@ -24,7 +24,7 @@
         methods: {
             getComment: function () {
                 setInterval(() => {
-                    fetch("http://localhost:27522/api/comment")
+                    fetch(this.$root.$data['api']+":27522/api/comment")
                         .then(response => response.json())
                         .then(comment => {
                             this.comment = comment;
@@ -37,7 +37,7 @@
                     if (this.roomAnnouncement != null) {
                         let timestamp = Math.round(+new Date()/1000);
                         if (timestamp >= this.roomAnnouncement['end']) {
-                            fetch("http://localhost:27522/api/comment", {
+                            fetch(this.$root.$data['api']+":27522/api/comment", {
                                 method: 'delete'
                             })
                         }

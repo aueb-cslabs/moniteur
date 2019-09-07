@@ -41,7 +41,7 @@
             },
 
             getRoom: function () {
-                fetch("http://localhost:27522/api/" + this.$root.$data['room'])
+                fetch(this.$root.$data['api']+":27522/api/" + this.$root.$data['room'])
                     .then(res => res.json())
                     .then(json => {
                         this.room = json.toString()

@@ -79,7 +79,7 @@
             /* Checks if we are in examination period */
             checkExam: function () {
                 setInterval(() => {
-                    fetch("http://localhost:27522/api/calendarInfo")
+                    fetch(this.$root.$data['api']+":27522/api/calendarInfo")
                         .then(res => res.json())
                         .then(json => {
                             this.isExam = json['exams'];
@@ -90,7 +90,7 @@
             /* Checks if it is weekend */
             checkWeekend: function () {
                 setInterval(() => {
-                    fetch("http://localhost:27522/api/calendarInfo")
+                    fetch(this.$root.$data['api']+":27522/api/calendarInfo")
                         .then(res => res.json())
                         .then(json => {
                             this.isWeekend = json['weekend'];
@@ -101,7 +101,7 @@
             /* Checks if there is a break or a national holiday */
             checkBreak: function () {
                 setInterval(() => {
-                    fetch("http://localhost:27522/api/calendarInfo")
+                    fetch(this.$root.$data['api']+":27522/api/calendarInfo")
                         .then(res => res.json())
                         .then(json => {
                             this.isBreak = json['break'];
@@ -119,7 +119,7 @@
             /* Fetches examination schedule */
             fetchExamSched: function() {
                 setInterval(() => {
-                    fetch("http://localhost:27522/api/exams/" + this.$root.$data['room'] + "/now")
+                    fetch(this.$root.$data['api']+":27522/api/exams/" + this.$root.$data['room'] + "/now")
                         .then(response => response.json())
                         .then(json => {
                             this.current = json;
@@ -139,7 +139,7 @@
             /* Fetches normal schedule */
             fetchNormSched: function() {
                 setInterval(() => {
-                    fetch("http://localhost:27522/api/schedule/" + this.$root.$data['room']+ "/now")
+                    fetch(this.$root.$data['api']+":27522/api/schedule/" + this.$root.$data['room']+ "/now")
                         .then(response => response.json())
                         .then(json => {
                             this.current = json;

@@ -7,13 +7,18 @@ const shared = {
   getRoom() {
     let link =  window.location.href.toString();
     const room = link.substring(link.lastIndexOf("/")+1);
-    return room
+    return room;
+  },
+
+  getAPI() {
+    return "http://localhost";
   }
 };
 
 new Vue({
   data : {
-    room: shared.getRoom()
+    room: shared.getRoom(),
+    api: shared.getAPI()
   },
   render: h => h(App),
 }).$mount('#app');
