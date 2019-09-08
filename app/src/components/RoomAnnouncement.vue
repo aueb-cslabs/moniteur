@@ -18,7 +18,6 @@
 
         created() {
             this.getAnnouncement();
-            this.removeRoomAnnouncement();
         },
 
         methods: {

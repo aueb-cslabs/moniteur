@@ -19,7 +19,6 @@
 
         created() {
             this.getAnnouncement();
-            this.removeAnnouncement();
         },
 
         methods: {

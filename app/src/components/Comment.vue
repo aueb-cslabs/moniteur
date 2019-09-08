@@ -18,7 +18,6 @@
 
         created() {
             this.getComment();
-            this.removeComment();
         },
 
         methods: {
