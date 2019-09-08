@@ -9,6 +9,7 @@ import (
 type Configuration struct {
 	Plugin    string `yaml:"plugin"`
 	ExamsLink string `yaml:"exams"`
+	Secret    string `yaml:"secret"`
 }
 
 // LoadConfiguration reads a configuration file and returns a struct.

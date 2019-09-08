@@ -10,9 +10,9 @@ var com *types.Announcement
 
 // CommentGroup Defines the api paths for all the comments
 func CommentGroup(g *echo.Group) {
-	g.POST("", createComment)
-	g.DELETE("", deleteComment)
-	g.PUT("", updateComment)
+	g.POST("", Validate(createComment))
+	g.DELETE("", Validate(deleteComment))
+	g.PUT("", Validate(updateComment))
 	g.GET("", comment)
 }
 

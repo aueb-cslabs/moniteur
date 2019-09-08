@@ -10,14 +10,14 @@ var message *types.Announcement
 
 // AnnouncementsGroup Defines the api paths for all the announcements
 func AnnouncementsGroup(g *echo.Group) {
-	g.POST("", createAnnouncement)
-	g.DELETE("", deleteAnnouncement)
-	g.PUT("", updateAnnouncement)
+	g.POST("", Validate(createAnnouncement))
+	g.DELETE("", Validate(deleteAnnouncement))
+	g.PUT("", Validate(updateAnnouncement))
 	g.GET("", announcement)
-	g.POST("/:room", createRoomAnn)
+	g.POST("/:room", Validate(createRoomAnn))
 	g.GET("/:room", getRoomAnn)
-	g.DELETE("/:room", deleteRoomAnn)
-	g.PUT("/:room", updateRoomAnn)
+	g.DELETE("/:room", Validate(deleteRoomAnn))
+	g.PUT("/:room", Validate(updateRoomAnn))
 }
 
 // createAnnouncement Method that accepts POSTs a general announcement

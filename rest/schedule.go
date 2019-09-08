@@ -81,7 +81,7 @@ func determineNow() (int, int64) {
 
 func Room(e echo.Context) error {
 	c := e.(*types.Context)
-	_, _, room := c.Plugin().ScheduleRoom(c.Param("room"))
+	_, _, room := c.Plugin().ScheduleRoom(c.Param("id"))
 
 	return c.JSON(http.StatusOK, room)
 }

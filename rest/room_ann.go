@@ -6,14 +6,6 @@ import (
 	"net/http"
 )
 
-// Map that connects rooms and announcements
-var announcements map[string]*types.Announcement
-
-// Initialize Method
-func Initialize() {
-	announcements = make(map[string]*types.Announcement)
-}
-
 // createRoomAnn Method that accepts POSTs a room announcement
 func createRoomAnn(e echo.Context) error {
 	post := &types.AnnouncementPost{}
