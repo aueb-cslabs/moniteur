@@ -1,44 +1,81 @@
-Moniteur
-=======
+<a href="https://cslab.aueb.gr"><img src="https://www.aueb.gr/press/logos/2_AUEB-white-HR.jpg" title="AUEB CSLab" alt="AUEB"></a>
 
-Spelled like a nice, regular-old *"monitor"*.
+> **English README coming in a few days!**
 
-Still WIP, but there is a working beta!
+# Moniteur
 
-There are two sides to a story always, so let's start with the back-end.
+Το moniteur είναι ένα από σύστημα παρουσίασης του ακαδημαϊκού ημερολογίου καθώς και του εξαμηνιαίου και εξετασταίου προγράμματος.
 
-**Bug reports and feedback is appriciated!**
+> Still WIP, but there is a working beta!
 
-## Backend
+![](https://i.imgur.com/mu2FIDY.png)
 
-Moniteur is written in golang. Minimum version required is 1.11.
+---
 
-Moniteur has 3 config files, two of them are mandatory.
+## Περιεχόμενα
 
-* config.yml, This file contains the plugin location and the exams link.
-* calendar.yml, This file contains the academic calendar
-* mapping.yml, This file is *NOT* required. It contains the room mapping for english-greek link translation.
+- [Τεχνολογίες](#τεχνολογίες)
+- [Κατασκευή](#κατασκευή)
+- [Εγκατάσταση](#εγκατάσταση)
+- [Documentation](#documentation)
+- [Δυνατότητες](#δυνατότητες)
+- [FAQ](#faq)
+- [Team](#support)
+- [License](#license)
 
-There are example files in the repo.
+---
 
-## Frontend
+## Τεχνολογίες
 
-Moniteur is written in VueJS.
+Το Moniteur έχει αξιοποιήσει τις τελευταίες τεχνολογίες που είναι διαθέσιμες για την δημιουργία αυτού του fullstack project.
 
-For the frontend to work properly you **need to have overrides enabled**.
+Το Moniteur αποτελείται από τρία συστατικά συστατικά το backend, το frontend και το plugin.
 
-## Building
+### Backend
 
-Install latest golang and npm or yarn.
+Το backend έχει υλοποιηθεί σε [Go](https://golang.org/) αξιοποιώντας αρκετά depedencies. Αναλυτικά τα εξής:
 
-Steps for building moniteur:
+* [Labstack Echo](https://echo.labstack.com/)
+* [JWT-Go](https://github.com/dgrijalva/jwt-go)
+* [yaml](https://github.com/go-yaml/yaml)
 
-1. Navigate to project folder.
-2. Rename all the api links in the Vue project (app folder) from localhost to the URL that moniteur is gonna hit.
-3. Add that URL to CORS config in main.go.
-4. Build the project using make.
- 
-Make use of the makefile to build the project.
+Για την λειτουργία του απαιτείται η δημιουργία ενός [Plugin](#Plugin).
+
+---
+
+### Plugin
+
+Το plugin έχει υλοποιηθεί και αυτό σε [Go](https://golang.org/). Ο κάθε οργανισμός που θέλει να αξιοποιήσει το Moniteur υλοποιεί όλη την λογική του σε αυτό το plugin.
+
+Στην δική μας περίπτωση έχουμε χρησιμοποιήσει τα depedencies:
+
+* [ldap](https://github.com/go-ldap/ldap)
+* [xslsx-Go](https://github.com/tealeg/xlsx)
+
+---
+
+### Frontend
+
+Το frontend έχει υλοποιηθεί σε [VueJS](https://vuejs.org/).
+
+---
+
+## Κατασκευή
+
+Για την κατασκευή του project χρειαζόμαστε το moniteur, το plugin του moniteur καθώς και το frontend.
+
+
+> **Για την κατασκευή του Moniteur ΑΠΑΙΤΕΙΤΑΙ Linux λειτουργικό σύστημα.**
+
+> **Ελάχιστη έκδοση Go 1.12.**
+
+Τα βήματα είναι τα εξής:
+
+1. Εγκαθιστούμε golang, npm.
+2. Πάμε στο φάκελο του project.
+3. Επεξεργαζόμαστε το αρχείο [main.go](main.go) και προσθέτουμε [εδώ](https://github.com/aueb-cslabs/moniteur/blob/4bd80c4e78fdcf2af2a2569343c6261a5ed474bf/main.go#L48) το URL που θα είναι το frontend μας.
+4. Επεξεργαζόμαστε το αρχείο [main.js](app/src/main.js) και αλλάζουμε [εδώ](https://github.com/aueb-cslabs/moniteur/blob/4bd80c4e78fdcf2af2a2569343c6261a5ed474bf/app/src/main.js#L14) το URL που είναι το backend μας και θα χτυπάει το API.
+5. Αξιοποιούμε το Makefile για να χτίσουμε το Moniteur. Παρακάτω αναλύονται οι εντολές του Makefile.
 
 Make Command | Result
 ------------- | -------------------
@@ -48,34 +85,46 @@ Make Command | Result
 .build-vue | Builds frontend
 .build | Builds everything!
 
-## Deployment
+---
 
-**DEPLOYMENT ONLY ON LINUX SYSTEMS**
+## Εγκατάσταση
 
-After building everything, these are the steps in order to deploy Moniteur successfully.
+> **Για την εγκατάσταση ΑΠΑΙΤΕΙΤΑΙ Linux λειτουργικό σύστημα.**
 
-For the backend:
+Μετά την κατασκευή έχουμε τα εξής βήματα για να εγκαταστήσουμε το Moniteur.
 
-1. Navigate to project folder
-2. Create logs folder: ```mkdir logs```
-3. Install tmux: ```sudo apt install tmux```
-4. Create container: ```tmux new -s moniteur```
-5. Start moniteur backend: ```./bin/moniteur```
-6. Exit container: ```Press Ctrl B + D```
+### Backend
 
-For the frontend:
+Το Moniteur χρειάζεται 2 **υποχρεωτικά** αρχεία yml που περιέχουν το configuration του.
 
-Moniteur frontend has been tested on Apache2 and Ubuntu 16.04 for the time being.
+* [config.yml](config.example.yml), περιέχει την διαδρομή του plugin και του link του προγράμματος των εξετάσεων.
+* [calendar.yml](calendar.example.yml), περιέχει το ακαδημαϊκό ημερολόγιο του έτους.
 
-So the steps that follow apply only to Apache2 and Ubuntu 16.04.
+Στην περίπτωση του AUEB Plugin χρειαζόμαστε 2 ακόμα config αρχεία.
 
-1. Install Apache2: ```sudo apt install apache2```
-2. Stop the service if running: ```sudo systemctl stop apache2```
-3. Copy all the files from dist folder: ```sudo cp -R /somewhere/moniteur/app/dist/* /var/www/html/```
-4. Enable overrides on Apache2: ```sudo a2enmod rewrite```
-5. Navigate over the html folder: ```cd /var/www/html/```
-6. Create .htaccess file: ```nano .htaccess```
-7. Paste the following: 
+* [mapping.yml](mapping.example.yml), περιέχει το mapping των αιθουσών για την μετάφραση των αιθουσών για την λειτουργία με το [AUEB Schedule Master](http://schedule.aueb.gr/).
+* [ldap.yml](ldap.example.yml), περιέχει τα στοιχεία του ldap server και τους χρήστες που έχουν πρόσβαση στο admin panel του Moniteur.
+
+Μόλις δημιουργήσουμε τα παραπάνω αρχεία ακολουθούμε τα παρακάτω.
+
+1. Πάμε στον φάκελο του Moniteur.
+2. Δημιουργούμε τον φάκελο logs: ```mkdir logs```
+3. Εγκαθιστούμε tmux: ```sudo apt install tmux```
+4. Δημιουργούμε tmux container: ```tmux new -s moniteur```
+5. Εκκινούμε το Moniteur: ```./bin/moniteur```
+6. Έξοδος από tmux container: ```Press Ctrl B + D```
+
+### Frontend
+
+> **To Moniteur έχει δοκιμαστεί σε Apach2 και Ubuntu 16.04! Τα βήματα που ακολουθούν είναι για το συγκεκριμένο configuration!**
+
+1. Εγκαθιστούμε Apache2: ```sudo apt install apache2```
+2. Σταματάμε το service: ```sudo systemctl stop apache2```
+3. Αντιγράφουμε τα αρχεία από τον dist φάκελο: ```sudo cp -R /somewhere/moniteur/app/dist/* /var/www/html/```
+4. Ενεργοποιούμε overrides στον Apache2: ```sudo a2enmod rewrite```
+5. Μετακινούμαστε στον φάκελο html: ```cd /var/www/html/```
+6. Δημιουργούμε .htaccess αρχείο: ```nano .htaccess```
+7. Αντιγράφουμε το επόμενο block: 
     ```
    #<IfModule mod_rewrite.c>
         RewriteEngine on
@@ -87,15 +136,47 @@ So the steps that follow apply only to Apache2 and Ubuntu 16.04.
         RewriteRule ^(.*) /index.html [NC, L]
    #</IfModule>
    ```
-8. Start Apache2: ```sudo systemctl start apache2```
-9. Enable Apache2 on startup: ```sudo systemctl enable apache2```
+8. Αποθηκεύουμε το αρχείο ```Ctrl + X. After Y & enter```
+9. Εκκινούμε Apache2: ```sudo systemctl start apache2```
+10. Ενεροποιούμε Apache2 στην εκκίνηση του λειτουργικού: ```sudo systemctl enable apache2```
 
-## How to use
+---
 
-Open up any browser and enter: ```http://moniteur.url/room```
+## Documentation
 
-## AUEB Case of Use
+**Έρχεται GoDoc που περιέχει όλο το documentation του κώδικα!**
 
-Currently AUEB CSLabs have installed Raspberry Pi 3 and monitors.
+---
 
-Every lab displays its program, announcements and exams from Moniteur using the Pi.
+## Δυνατότητες
+
+Το Moniteur παρέχει REST δυνατότητες στους χρήστες του και το frontend προβάλει όλες τις πληροφορίες ανά αίθουσα.
+
+Ο πιο απλός τρόπος χρήσης του Moniteur για έναν απλό χρήστη είναι να χτυπήσει το link: ```http://moniteur.url/roomID```
+
+Το Moniteur αυτομάτως θα προβάλει όλες τις απαραίτητες πληροφορίες για αυτή την αίθουσα.
+
+Για τους admins του Moniteur προσφέρονται οι δυνατότες δημιουργίας γενικών ανακοινώσεων, ανακοίνωση ανά αίθουσα και γενικοί σχολιασμοί. Για την πρόσβαση στο admin panel απαιτείται αυθεντικοποίηση στο ```http://moniteur.url/admin```.
+
+Αμέσως προσφέρονται POST, PUT και DELETE κλήσεις για τον διαχειρισμό του Moniteur.
+
+> **Αναλυτικότερα παραδείγματα θα προστεθούν μόλις ολοκληρωθεί το Moniteur!**
+
+---
+
+## FAQ
+
+> **Θα προστεθεί FAQ τις ερχόμενες μέρες, αν χρειαστεί.**
+---
+
+## Team
+
+Το Moniteur δημιουργήθηκε στα πλαίσια των αναγκών των εκπαιδευτικών εργαστιρίων πληροφορικής (CSLab) του AUEB.
+
+Η ανάπτυξη πραγματοποιήθηκε από το [Moniteur Team](https://github.com/orgs/aueb-cslabs/teams/moniteur).
+
+---
+
+## License
+
+> **Έρχεται σύντομα.**
