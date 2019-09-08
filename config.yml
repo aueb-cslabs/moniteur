@@ -1,2 +1,3 @@
 plugin: bin/aueb-plugin.so
 exams: https://aueb.gr/sites/default/files/aueb/September_Exams_20190903.xlsx
+secret: changethesecret

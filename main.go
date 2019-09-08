@@ -2,6 +2,7 @@
 
 package main
 
+import "C"
 import (
 	"github.com/aueb-cslabs/moniteur/rest"
 	"github.com/aueb-cslabs/moniteur/types"
@@ -27,12 +28,12 @@ func main() {
 		log.Panic(err)
 	}
 
-	plugin.Initialize(config.ExamsLink)
-	rest.Initialize()
-
 	e := echo.New()
 	e.HideBanner = true
 	e.HidePort = true
+
+	plugin.Initialize(config.ExamsLink)
+	rest.Initialize(config.Secret)
 
 	api := e.Group("/api")
 
@@ -41,8 +42,6 @@ func main() {
 			return next(types.NewContext(c, plugin, calendar))
 		}
 	})
-
-	_, _ = plugin.AuthorizeUser("", "")
 
 	//For CORS to work, please define the EXACT link that you will use!!!
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
@@ -54,7 +53,8 @@ func main() {
 	rest.CommentGroup(api.Group("/comment"))
 	rest.ScheduleGroup(api.Group("/schedule"))
 	rest.ExamsGroup(api.Group("/exams"))
-	api.GET("/:room", rest.Room)
+	api.GET("/room/:id", rest.Room)
+	api.POST("/authenticate", rest.Authenticate)
 
 	// Should go in effect only in development mode.
 	// In production this should just serve the files.
