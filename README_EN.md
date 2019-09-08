@@ -12,7 +12,7 @@ Moniteur is a system for providing real time information during the academic yea
 
 ---
 
-## Περιεχόμενα
+## Contents
 
 - [Technologies](#techonologies)
 - [Building](#building)
