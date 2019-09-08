@@ -4,6 +4,7 @@ import (
 	"github.com/aueb-cslabs/moniteur/types"
 	"github.com/labstack/echo"
 	"net/http"
+	"time"
 )
 
 var message *types.Announcement
@@ -55,4 +56,16 @@ func updateAnnouncement(e echo.Context) error {
 	message.Msg = post.Msg
 
 	return e.NoContent(http.StatusOK)
+}
+
+func checkAnnouncementExpiration() {
+	for {
+		if message != nil {
+			now := time.Now().Unix()
+			if message.End >= now {
+				message = nil
+			}
+		}
+		time.Sleep(time.Hour * 8)
+	}
 }

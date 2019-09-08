@@ -31,19 +31,6 @@
                             this.announcement = ann;
                         })
                 }, 5000);
-            },
-
-            removeAnnouncement: function () {
-                setInterval(() => {
-                    if (this.announcement != null) {
-                        let timestamp = Math.round(+new Date()/1000);
-                        if (timestamp >= this.announcement['end']) {
-                            fetch(this.$root.$data['api']+":27522/api/announcement", {
-                                method: 'delete'
-                            })
-                        }
-                    }
-                }, 3600000);
             }
         }
     }

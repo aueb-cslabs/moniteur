@@ -12,4 +12,7 @@ func Initialize(sec string) {
 	announcements = make(map[string]*types.Announcement)
 	authorized = make(map[string]*types.AuthTokenClaim)
 	secret = sec
+	go checkAnnouncementExpiration()
+	go checkCommentExpiration()
+	go checkRoomAnnouncementsExpiration()
 }

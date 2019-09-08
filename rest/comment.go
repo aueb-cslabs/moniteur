@@ -4,6 +4,7 @@ import (
 	"github.com/aueb-cslabs/moniteur/types"
 	"github.com/labstack/echo"
 	"net/http"
+	"time"
 )
 
 var com *types.Announcement
@@ -51,4 +52,16 @@ func updateComment(e echo.Context) error {
 	com.Msg = post.Msg
 
 	return e.NoContent(http.StatusOK)
+}
+
+func checkCommentExpiration() {
+	for {
+		if com != nil {
+			now := time.Now().Unix()
+			if com.End >= now {
+				com = nil
+			}
+		}
+		time.Sleep(time.Hour * 8)
+	}
 }

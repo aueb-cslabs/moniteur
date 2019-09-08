@@ -4,6 +4,7 @@ import (
 	"github.com/aueb-cslabs/moniteur/types"
 	"github.com/labstack/echo"
 	"net/http"
+	"time"
 )
 
 // createRoomAnn Method that accepts POSTs a room announcement
@@ -44,4 +45,16 @@ func deleteRoomAnn(e echo.Context) error {
 // getRoomAnn Method that accepts GETs a room announcement
 func getRoomAnn(e echo.Context) error {
 	return e.JSON(http.StatusOK, announcements[e.Param("room")])
+}
+
+func checkRoomAnnouncementsExpiration() {
+	for {
+		for i, k := range announcements {
+			now := time.Now().Unix()
+			if now >= k.End {
+				delete(announcements, i)
+			}
+		}
+		time.Sleep(time.Minute)
+	}
 }
