@@ -1,6 +1,6 @@
 <a href="https://cslab.aueb.gr"><img src="https://www.aueb.gr/press/logos/2_AUEB-white-HR.jpg" title="AUEB CSLab" alt="AUEB"></a>
 
-> **English README coming in a few days!**
+> **If you want to view the english version click [here](README_EN.md)**
 
 # Moniteur
 
@@ -116,7 +116,7 @@ Make Command | Result
 
 ### Frontend
 
-> **To Moniteur έχει δοκιμαστεί σε Apach2 και Ubuntu 16.04! Τα βήματα που ακολουθούν είναι για το συγκεκριμένο configuration!**
+> **To Moniteur έχει δοκιμαστεί σε Apache2 και Ubuntu 16.04! Τα βήματα που ακολουθούν είναι για το συγκεκριμένο configuration!**
 
 1. Εγκαθιστούμε Apache2: ```sudo apt install apache2```
 2. Σταματάμε το service: ```sudo systemctl stop apache2```
@@ -136,7 +136,7 @@ Make Command | Result
         RewriteRule ^(.*) /index.html [NC, L]
    #</IfModule>
    ```
-8. Αποθηκεύουμε το αρχείο ```Ctrl + X. After Y & enter```
+8. Αποθηκεύουμε το αρχείο: ```Ctrl + X. After Y & enter```
 9. Εκκινούμε Apache2: ```sudo systemctl start apache2```
 10. Ενεροποιούμε Apache2 στην εκκίνηση του λειτουργικού: ```sudo systemctl enable apache2```
 
@@ -167,6 +167,7 @@ Make Command | Result
 ## FAQ
 
 > **Θα προστεθεί FAQ τις ερχόμενες μέρες, αν χρειαστεί.**
+
 ---
 
 ## Team
