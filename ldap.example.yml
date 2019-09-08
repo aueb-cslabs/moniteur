@@ -1,0 +1,14 @@
+address: link-of-ldap-server
+port:
+use_tls:
+base_dn:
+bind_username:
+bind_password:
+search_class:
+username_attribute:
+full_name_attribute:
+affiliation_attribute:
+fix_full_name_case:
+authorized_users:
+  #ALL AUTHENTICATED USERS IN THIS FORM
+  username: Y
