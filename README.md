@@ -20,7 +20,7 @@
 - [Documentation](#documentation)
 - [Δυνατότητες](#δυνατότητες)
 - [FAQ](#faq)
-- [Team](#support)
+- [Team](#team)
 - [License](#license)
 
 ---
