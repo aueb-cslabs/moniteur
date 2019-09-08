@@ -24,7 +24,11 @@ func AnnouncementsGroup(g *echo.Group) {
 // createAnnouncement Method that accepts POSTs a general announcement
 func createAnnouncement(e echo.Context) error {
 	post := types.AnnouncementPost{}
-	_ = e.Bind(&post)
+	err := e.Bind(&post)
+
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
 
 	message = &types.Announcement{}
 	message.End = types.ConvertDateToUnix(post.End)
@@ -49,7 +53,11 @@ func announcement(e echo.Context) error {
 // updateAnnouncement Method that accepts PUTs a general announcement
 func updateAnnouncement(e echo.Context) error {
 	post := types.AnnouncementPost{}
-	_ = e.Bind(&post)
+	err := e.Bind(&post)
+
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
 
 	message = &types.Announcement{}
 	message.End = types.ConvertDateToUnix(post.End)

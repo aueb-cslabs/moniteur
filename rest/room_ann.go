@@ -10,7 +10,11 @@ import (
 // createRoomAnn Method that accepts POSTs a room announcement
 func createRoomAnn(e echo.Context) error {
 	post := &types.AnnouncementPost{}
-	_ = e.Bind(post)
+	err := e.Bind(post)
+
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
 
 	ann := &types.Announcement{}
 	ann.End = types.ConvertDateToUnix(post.End)
@@ -24,7 +28,11 @@ func createRoomAnn(e echo.Context) error {
 // updateRoomAnn Method that accepts PUTs a room announcement
 func updateRoomAnn(e echo.Context) error {
 	post := &types.AnnouncementPost{}
-	_ = e.Bind(post)
+	err := e.Bind(post)
+
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
 
 	ann := &types.Announcement{}
 	ann.End = types.ConvertDateToUnix(post.End)

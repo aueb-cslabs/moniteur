@@ -7,8 +7,6 @@ import (
 	"time"
 )
 
-var room string
-
 // ScheduleGroup Defines the api paths for the normal schedule
 func ScheduleGroup(g *echo.Group) {
 	g.GET("/all", scheduleAll)

@@ -14,7 +14,12 @@ func Authenticate(e echo.Context) error {
 	ctx := e.(*types.Context)
 	user := &types.User{}
 
-	_ = e.Bind(user)
+	err := e.Bind(user)
+
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
+
 	res, ldapErr := ctx.Plugin().AuthorizeUser(user.Username, user.Password)
 
 	if res {
@@ -41,7 +46,8 @@ func Authenticate(e echo.Context) error {
 
 		authorized[authToken.Token] = authTokenClaim
 
-		e.Response().Header().Set("authorization", "Bearer "+authToken.Token)
+		e.Response().Header().Set("Authorization", "Bearer "+authToken.Token)
+		e.Response().Header().Set("Username", user.Username)
 
 		return e.NoContent(http.StatusOK)
 	} else {
@@ -62,7 +68,7 @@ func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 				if token.Valid {
 					claim := authorized[bearerToken[1]]
 
-					name := c.Request().Header.Get("username")
+					name := c.Request().Header.Get("Username")
 
 					if claim != nil {
 						expiresAt := claim.StandardClaims.ExpiresAt
