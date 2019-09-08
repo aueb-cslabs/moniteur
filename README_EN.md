@@ -70,11 +70,12 @@ In order to build Moniteur we need moniteur, the plugin and the frontend.
 
 The steps for building are:
 
-1. We install golang, npm.
-2. Navigate to the project folder.
-3. Edit [main.go](main.go) and add [here](https://github.com/aueb-cslabs/moniteur/blob/4bd80c4e78fdcf2af2a2569343c6261a5ed474bf/main.go#L48) the URL that the frontend is going to hit.
-4. Edit [main.js](app/src/main.js) and change [here](https://github.com/aueb-cslabs/moniteur/blob/4bd80c4e78fdcf2af2a2569343c6261a5ed474bf/app/src/main.js#L14) the URL that the backend is going to use to access the API.
-5. Take advantage of the Makefile to build Moniteur. We analyze all the make function in the following table.
+1. We install [golang](https://tecadmin.net/install-go-on-ubuntu/), [npm](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04) using nvm method.
+2. Clone το project ```git clone https://github.com/aueb-cslabs/moniteur.git```
+3. Navigate to the project folder.
+4. Edit [main.go](main.go) and add [here](https://github.com/aueb-cslabs/moniteur/blob/4bd80c4e78fdcf2af2a2569343c6261a5ed474bf/main.go#L48) the URL that the frontend is going to hit.
+5. Edit [main.js](app/src/main.js) and change [here](https://github.com/aueb-cslabs/moniteur/blob/4bd80c4e78fdcf2af2a2569343c6261a5ed474bf/app/src/main.js#L14) the URL that the backend is going to use to access the API.
+6. Take advantage of the Makefile to build Moniteur. We analyze all the make function in the following table.
 
 Make Command | Result
 ------------- | -------------------
