@@ -1,11 +1,11 @@
 <template>
     <nav class="navbar navbar-expand navbar-dark">
         <a class='navbar-brand'>
-            <img v-bind:src="'https://www.aueb.gr/press/logos/1_AUEB-pantone-HR.jpg'"
+            <img v-bind:src="this.$root.$data['LOGO_LINK']"
                  alt="logo" height="44" />
         </a>
         <nav class="navbar-nav mr-auto">
-            <img class="ml-2" v-bind:src="'https://www.dept.aueb.gr/schools_department_photos/cs.png'"
+            <img class="ml-2" v-bind:src="this.$root.$data['DEPARTMENT_LINK']"
                  alt="cs_logo" height="55" />
             <a class="ml-4 navbar-brand mt-2">{{room}}</a>
         </nav>
