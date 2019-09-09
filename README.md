@@ -76,7 +76,8 @@
 3. Πάμε στο φάκελο του project.
 4. Επεξεργαζόμαστε το αρχείο [main.go](main.go) και προσθέτουμε [εδώ](https://github.com/aueb-cslabs/moniteur/blob/4bd80c4e78fdcf2af2a2569343c6261a5ed474bf/main.go#L48) το URL που θα είναι το frontend μας.
 5. Επεξεργαζόμαστε το αρχείο [main.js](app/src/main.js) και αλλάζουμε [εδώ](https://github.com/aueb-cslabs/moniteur/blob/4bd80c4e78fdcf2af2a2569343c6261a5ed474bf/app/src/main.js#L14) το URL που είναι το backend μας και θα χτυπάει το API.
-6. Αξιοποιούμε το Makefile για να χτίσουμε το Moniteur. Παρακάτω αναλύονται οι εντολές του Makefile.
+6. Επεξεργαζόμαστε το ίδιο αρχείο και αλλάζουμε [εδώ](https://github.com/aueb-cslabs/moniteur/blob/53c6353cf93c8bea37359cd3c4e13f199ab8715e/app/src/main.js#L18) την πόρτα που είναι το API του backend μας.
+7. Αξιοποιούμε το Makefile για να χτίσουμε το Moniteur. Παρακάτω αναλύονται οι εντολές του Makefile.
 
 Make Command | Result
 ------------- | -------------------

@@ -75,7 +75,8 @@ The steps for building are:
 3. Navigate to the project folder.
 4. Edit [main.go](main.go) and add [here](https://github.com/aueb-cslabs/moniteur/blob/4bd80c4e78fdcf2af2a2569343c6261a5ed474bf/main.go#L48) the URL that the frontend is going to hit.
 5. Edit [main.js](app/src/main.js) and change [here](https://github.com/aueb-cslabs/moniteur/blob/4bd80c4e78fdcf2af2a2569343c6261a5ed474bf/app/src/main.js#L14) the URL that the backend is going to use to access the API.
-6. Take advantage of the Makefile to build Moniteur. We analyze all the make function in the following table.
+6. Edit the same file and change [here](https://github.com/aueb-cslabs/moniteur/blob/53c6353cf93c8bea37359cd3c4e13f199ab8715e/app/src/main.js#L18) the port of the backend that the API is.
+7. Take advantage of the Makefile to build Moniteur. We analyze all the make function in the following table.
 
 Make Command | Result
 ------------- | -------------------
