@@ -70,6 +70,6 @@ func checkCommentExpiration() {
 				com = nil
 			}
 		}
-		time.Sleep(time.Hour * 8)
+		time.Sleep(time.Hour)
 	}
 }

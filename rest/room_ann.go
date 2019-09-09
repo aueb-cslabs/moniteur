@@ -63,6 +63,6 @@ func checkRoomAnnouncementsExpiration() {
 				delete(announcements, i)
 			}
 		}
-		time.Sleep(time.Minute)
+		time.Sleep(time.Hour)
 	}
 }

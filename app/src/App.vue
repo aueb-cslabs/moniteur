@@ -42,6 +42,6 @@ export default {
 
 <style lang="scss">
 @import "~bootstrap/scss/bootstrap.scss";
-@import "css/App.scss";
+@import "scss/App.scss";
 @import "fontawesome-pro-5.6.0-web/css/all.min.css";
 </style>

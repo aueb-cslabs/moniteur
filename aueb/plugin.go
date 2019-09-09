@@ -32,17 +32,16 @@ type RoomMap struct {
 	Rooms map[string]string `yaml:"rooms,omitempty"`
 }
 
-// PLUGIN The plugin to be read by the moniteur agent.
-var PLUGIN = Plugin{}
-
-// Provides map for english-greek room name translation
-var mapping = &RoomMap{}
-
-// The xlsx file that AUEB provides that contains the exams schedule
-var exams []byte
-
-// The link that corresponds to the exams file
-var link string
+var (
+	// PLUGIN The plugin to be read by the moniteur agent.
+	PLUGIN = Plugin{}
+	// Provides map for english-greek room name translation
+	mapping = &RoomMap{}
+	// The xlsx file that AUEB provides that contains the exams schedule
+	exams []byte
+	// The link that corresponds to the exams file
+	link string
+)
 
 type Plugin struct {
 }

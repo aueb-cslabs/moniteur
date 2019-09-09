@@ -46,10 +46,7 @@ func Authenticate(e echo.Context) error {
 
 		authorized[authToken.Token] = authTokenClaim
 
-		e.Response().Header().Set("Authorization", "Bearer "+authToken.Token)
-		e.Response().Header().Set("Username", user.Username)
-
-		return e.NoContent(http.StatusOK)
+		return e.JSON(http.StatusOK, authToken)
 	} else {
 		return e.JSON(http.StatusUnauthorized, ldapErr)
 	}

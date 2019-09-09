@@ -12,13 +12,18 @@ const shared = {
 
   getAPI() {
     return "http://localhost";
+  },
+
+  getPort() {
+    return ":27522"
   }
 };
 
 new Vue({
   data : {
     room: shared.getRoom(),
-    api: shared.getAPI()
+    api: shared.getAPI(),
+    port: shared.getPort()
   },
   render: h => h(App),
 }).$mount('#app');

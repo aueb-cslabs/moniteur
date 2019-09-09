@@ -74,6 +74,6 @@ func checkAnnouncementExpiration() {
 				message = nil
 			}
 		}
-		time.Sleep(time.Hour * 8)
+		time.Sleep(time.Hour)
 	}
 }

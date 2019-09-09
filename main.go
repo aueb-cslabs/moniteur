@@ -10,6 +10,7 @@ import (
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
 	"net/url"
+	"strconv"
 	"strings"
 )
 
@@ -72,6 +73,6 @@ func main() {
 	e.Use(middleware.ProxyWithConfig(proxyConfig))
 	// End block
 
-	e.Logger.Fatal(e.Start(":27522"))
+	e.Logger.Fatal(e.Start(":" + strconv.Itoa(config.Port)))
 
 }

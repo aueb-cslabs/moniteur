@@ -24,7 +24,7 @@
         methods: {
             getAnnouncement: function () {
                 setInterval(() => {
-                    fetch(this.$root.$data['api']+":27522/api/announcement")
+                    fetch(this.$root.$data['api'] + this.$root.$data['port'] + "/api/announcement")
                         .then(response => response.json())
                         .then(ann => {
                             this.announcement = ann;
@@ -36,6 +36,6 @@
 </script>
 
 <style lang="scss">
-    @import "../css/Announcement.scss";
-    @import "../css/common.scss";
+    @import "../scss/Announcement.scss";
+    @import "../scss/common.scss";
 </style>

@@ -33,7 +33,7 @@
 </script>
 
 <style lang="scss">
-    @import "../css/Exam.scss";
-    @import "../css/common.scss";
+    @import "../scss/Exam.scss";
+    @import "../scss/common.scss";
 
 </style>

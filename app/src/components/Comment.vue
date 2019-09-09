@@ -23,7 +23,7 @@
         methods: {
             getComment: function () {
                 setInterval(() => {
-                    fetch(this.$root.$data['api']+":27522/api/comment")
+                    fetch(this.$root.$data['api'] + this.$root.$data['port'] + "/api/comment")
                         .then(response => response.json())
                         .then(comment => {
                             this.comment = comment;
@@ -35,5 +35,5 @@
 </script>
 
 <style lang="scss">
-    @import "../css/Comment.scss";
+    @import "../scss/Comment.scss";
 </style>

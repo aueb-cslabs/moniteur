@@ -10,6 +10,7 @@ type Configuration struct {
 	Plugin    string `yaml:"plugin"`
 	ExamsLink string `yaml:"exams"`
 	Secret    string `yaml:"secret"`
+	Port      int    `yaml:"port"`
 }
 
 // LoadConfiguration reads a configuration file and returns a struct.

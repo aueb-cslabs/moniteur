@@ -41,7 +41,7 @@
             },
 
             getRoom: function () {
-                fetch(this.$root.$data['api']+":27522/api/room/" + this.$root.$data['room'])
+                fetch(this.$root.$data['api'] + this.$root.$data['port'] + "/api/room/" + this.$root.$data['room'])
                     .then(res => res.json())
                     .then(json => {
                         this.room = json.toString()
@@ -52,5 +52,5 @@
 </script>
 
 <style lang="scss">
-@import "../css/TitleBar.scss";
+@import "../scss/TitleBar.scss";
 </style>
