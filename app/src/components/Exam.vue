@@ -1,7 +1,7 @@
 <template>
     <div class="exams text-center" >
         <p class="exam-text common fade-in" v-if="isExam">
-            <i class="fas fa-exclamation-triangle"></i> Πραγματοποιείται εξέταση!
+            <i class="fas fa-exclamation-triangle"></i> {{ $t("message.examMsg") }}
         </p>
     </div>
 </template>

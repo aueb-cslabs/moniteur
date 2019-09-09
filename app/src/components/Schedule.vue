@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper" v-if="normal">
         <div id="current" class="text-center current schedule">
-            <h3>Τώρα <i class="fas fa-users-class"></i></h3>
+            <h3> {{ $t("message.nowMsg") }} <i class="fas fa-users-class"></i></h3>
             <p class="center common fade-in" v-if="current['now'] != null">
                 <u>
                     {{time['now_start'].getUTCHours()}}:{{getMinutes(this.time['now_start'])}}
@@ -11,15 +11,15 @@
                 {{current['now']['host']}}
             </p>
             <p class="center common fade-in subject" v-else-if="isExam">
-                Δεν πραγματοποιείται εξέταση.
+                {{ $t("message.noExamNow") }}
             </p>
             <p class="center common fade-in subject" v-else>
-                Δεν πραγματοποιείται μάθημα.
+                {{ $t("message.noLessonNow") }}
             </p>
         </div>
 
         <div id="next" class="text-center next schedule">
-            <h3>Επόμενο <i class="fas fa-users-class nextsub"></i></h3>
+            <h3> {{ $t("message.nextMsg") }} <i class="fas fa-users-class nextsub"></i></h3>
             <p class="center common fade-in" v-if="current['next'] != null">
                 <u>
                     {{time['next_start'].getUTCHours()}}:{{getMinutes(this.time['next_start'])}}
@@ -29,17 +29,17 @@
                 {{current['next'][0]['host']}}
             </p>
             <p class="center common fade-in subject" v-else-if="isExam">
-                Δεν θα πραγματοποιείται εξέταση.
+                {{ $t("message.noExamNext") }}
             </p>
             <p class="center common fade-in subject" v-else>
-                Δεν θα πραγματοποιείται μάθημα.
+                {{ $t("message.noLessonNext") }}
             </p>
         </div>
     </div>
     <div class="wrapper" v-else>
         <div class="center-message message mt-0">
-            <h3 class="common fade-on subject" v-if="isBreak">Αργία ή διακοπές. Καλή ξεκούραση!</h3>
-            <h3 class="center-message common fade-on subject" v-if="isWeekend">Καλό Σαββατοκύριακο!</h3>
+            <h3 class="common fade-on subject" v-if="isBreak">{{ $t("message.holiday") }}</h3>
+            <h3 class="center-message common fade-on subject" v-if="isWeekend">{{ $t("message.weekend") }}</h3>
         </div>
     </div>
 </template>

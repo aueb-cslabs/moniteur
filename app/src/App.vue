@@ -11,7 +11,7 @@
         <Comment/>
       </div>
       <footer class="mt-5 text-center">
-        Η οθόνη δεν ειναι touchscreen. Μην αγγίζετε!
+        {{ $t("message.touchscreen")}}
       </footer>
     </div>
   </div>
