@@ -16,14 +16,14 @@ const shared = {
 const messages = {
   en: {
     message: {
-      touchscreen: "The monitor has no touch functionality. Don't touch!",
-      examMsg: "Examination!",
+      touchscreen: "The monitor has no touch functionality. Refrain from touching it!",
+      examMsg: "Ongoing course examination!",
       nowMsg: "Now ",
-      noExamNow: "No examination right now.",
-      noLessonNow: "No lesson carried out right now.",
+      noExamNow: "No course examination right now.",
+      noLessonNow: "No lesson right now.",
       nextMsg: "Next ",
-      noExamNext: "No examination after.",
-      noLessonNext: "No lesson carried out afterwards.",
+      noExamNext: "No course examination with take place the following hours.",
+      noLessonNext: "No lesson with take place the following hours.",
       holiday: "Holidays.",
       weekend: "Have a nice weekend!"
     }

@@ -79,7 +79,9 @@ The steps for building are:
 7. Edit the same file and change [here](https://github.com/aueb-cslabs/moniteur/blob/e4236dc8f72e7ebe71484e4f6a6f055acdc1e4bc/app/src/main.js#L58) and change the logo.
 8. Edit the same file and change [here](https://github.com/aueb-cslabs/moniteur/blob/e4236dc8f72e7ebe71484e4f6a6f055acdc1e4bc/app/src/main.js#L59) and add an extra logo if you need it.
 9. Edit the same file and change [here](https://github.com/aueb-cslabs/moniteur/blob/e4236dc8f72e7ebe71484e4f6a6f055acdc1e4bc/app/src/main.js#L48) and change the locale to en.
-10. Take advantage of the Makefile to build Moniteur. We analyze all the make function in the following table.
+10. If you want to change the background colour, change the hex value [here](https://github.com/aueb-cslabs/moniteur/blob/ea173109c674e28df6f66bcdc77142412b7475b9/app/src/main.js#L60).
+11. If you want to change the navbar colour, change the hex value [here](https://github.com/aueb-cslabs/moniteur/blob/ea173109c674e28df6f66bcdc77142412b7475b9/app/src/main.js#L61).
+12. Take advantage of the Makefile to build Moniteur. We analyze all the make function in the following table.
 
 Make Command | Result
 ------------- | -------------------

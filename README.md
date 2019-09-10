@@ -80,7 +80,9 @@
 7. Επεξεργαζόμαστε το ίδιο αρχείο και αλλάζουμε [εδώ](https://github.com/aueb-cslabs/moniteur/blob/e4236dc8f72e7ebe71484e4f6a6f055acdc1e4bc/app/src/main.js#L58) το logo μας.
 8. Επεξεργαζόμαστε το ίδιο αρχείο και αλλάζουμε [εδώ](https://github.com/aueb-cslabs/moniteur/blob/e4236dc8f72e7ebe71484e4f6a6f055acdc1e4bc/app/src/main.js#L59) και προσθέτουμε προαιρετκά extra logo.
 9. Επεξεργαζόμαστε το ίδιο αρχείο και αλλάζουμε [εδώ](https://github.com/aueb-cslabs/moniteur/blob/e4236dc8f72e7ebe71484e4f6a6f055acdc1e4bc/app/src/main.js#L48) και βάζουμε το locale στο el.
-10. Αξιοποιούμε το Makefile για να χτίσουμε το Moniteur. Παρακάτω αναλύονται οι εντολές του Makefile.
+10. Αν θέλουμε να αλλάξουμε το background χρώμα, αλλάζουμε τον δεκαεξαδικό κωδικό [εδώ](https://github.com/aueb-cslabs/moniteur/blob/ea173109c674e28df6f66bcdc77142412b7475b9/app/src/main.js#L60).
+11. Αν θέλουμε να αλλάξουμε το χρώμα του navbar, αλλάζουμε τον δεκαεξαδικό κωδικό [εδώ](https://github.com/aueb-cslabs/moniteur/blob/ea173109c674e28df6f66bcdc77142412b7475b9/app/src/main.js#L61).
+12. Αξιοποιούμε το Makefile για να χτίσουμε το Moniteur. Παρακάτω αναλύονται οι εντολές του Makefile.
 
 Make Command | Result
 ------------- | -------------------
