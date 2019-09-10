@@ -28,6 +28,12 @@ import Comment from "./components/Comment";
 export default {
   name: 'app',
 
+  created() {
+    let r = document.documentElement;
+
+    r.style.setProperty("--background", this.$root.$data['BACKGROUND']);
+  },
+
   components: {
     Comment,
     RoomAnnouncement,

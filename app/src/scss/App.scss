@@ -1,5 +1,9 @@
+:root {
+  --background: #FFFFFF;
+}
+
 html, body {
-  background: #1d1c1d;
+  background: var(--background);
   color: white;
 
   font-family: 'Lato', sans-serif;

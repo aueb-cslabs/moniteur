@@ -29,6 +29,10 @@
         created() {
             this.getTime();
             this.getRoom();
+
+            let r = document.documentElement;
+
+            r.style.setProperty("--navbar", this.$root.$data['NAVBAR']);
         },
 
         methods: {

@@ -56,7 +56,9 @@ new Vue({
     api: "http://localhost",
     port: ":27522",
     LOGO_LINK: 'https://www.aueb.gr/press/logos/1_AUEB-pantone-HR.jpg',
-    DEPARTMENT_LINK: 'https://www.dept.aueb.gr/schools_department_photos/cs.png'
+    DEPARTMENT_LINK: 'https://www.dept.aueb.gr/schools_department_photos/cs.png',
+    BACKGROUND: "#1d1c1d",
+    NAVBAR: "#762124"
   },
   render: h => h(App),
 }).$mount('#app');

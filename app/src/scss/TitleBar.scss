@@ -1,4 +1,8 @@
+:root{
+  --navbar: #FFFFFF;
+}
+
 nav {
-  background: #762124;
+  background: var(--navbar);
 }
 
