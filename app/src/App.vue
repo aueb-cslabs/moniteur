@@ -30,8 +30,7 @@ export default {
 
   created() {
     let r = document.documentElement;
-
-    r.style.setProperty("--background", this.$root.$data['BACKGROUND']);
+    r.style.setProperty("--background", this.$root.$data['background_color']);
   },
 
   components: {
@@ -42,12 +41,11 @@ export default {
     Schedule,
     Exam
   }
-
 }
 </script>
 
 <style lang="scss">
 @import "~bootstrap/scss/bootstrap.scss";
+@import "~@fortawesome/fontawesome-free/css/all.css";
 @import "scss/App.scss";
-@import "fontawesome-pro-5.6.0-web/css/all.min.css";
 </style>

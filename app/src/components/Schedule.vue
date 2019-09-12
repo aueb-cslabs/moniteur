@@ -80,7 +80,7 @@
             /* Checks if we are in examination period */
             checkExam: function () {
                 setInterval(() => {
-                    axios.get(this.$root.$data['api']+":27522/api/calendarInfo")
+                    axios.get(this.$root.$data['api']+"/api/calendarInfo")
                         .then(res => this.isExam = res.data['exams']);
                 }, 86400);
             },
@@ -88,7 +88,7 @@
             /* Checks if it is weekend */
             checkWeekend: function () {
                 setInterval(() => {
-                    axios.get(this.$root.$data['api']+":27522/api/calendarInfo")
+                    axios.get(this.$root.$data['api']+"/api/calendarInfo")
                         .then(res => this.isWeekend = res.data['weekend']);
                 }, 7200000);
             },
@@ -96,7 +96,7 @@
             /* Checks if there is a break or a national holiday */
             checkBreak: function () {
                 setInterval(() => {
-                    axios.get(this.$root.$data['api']+":27522/api/calendarInfo")
+                    axios.get(this.$root.$data['api']+"/api/calendarInfo")
                         .then(res => this.isBreak = res.data['break']);
                 }, 7200000);
             },
@@ -111,7 +111,7 @@
             /* Fetches examination schedule */
             fetchExamSched: function() {
                 setInterval(() => {
-                    axios.get(this.$root.$data['api']+":27522/api/exams/" + this.$root.$data['room'] + "/now")
+                    axios.get(this.$root.$data['api']+"/api/exams/" + this.$root.$data['room'] + "/now")
                         .then(res => {
                             this.current = res.data;
 
@@ -130,7 +130,7 @@
             /* Fetches normal schedule */
             fetchNormSched: function() {
                 setInterval(() => {
-                    axios.get(this.$root.$data['api']+":27522/api/schedule/" + this.$root.$data['room']+ "/now")
+                    axios.get(this.$root.$data['api']+"/api/schedule/" + this.$root.$data['room'] + "/now")
                         .then(res => {
                             this.current = res.data;
                             this.checkNext(this.current);

@@ -1,8 +1,10 @@
 :root{
-  --navbar: #FFFFFF;
+  --navbar-color: #FFFFFF;
+  --navbar-bg-color: #FFFFFF;
 }
 
 nav {
-  background: var(--navbar);
+  background: var(--navbar-bg-color);
+  color: var(--navbar-color)
 }
 

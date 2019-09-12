@@ -2,16 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueI18n from 'vue-i18n'
 
+import config from './config'
+
 Vue.config.productionTip = false;
 Vue.use(VueI18n);
 
-const shared = {
-  getRoom() {
-    let link =  window.location.href.toString();
-    const room = link.substring(link.lastIndexOf("/")+1);
-    return room;
-  }
-};
+const room = () => {
+  let url =  new URL(window.location.href.toString());
+  return url.searchParams.get('room');
+}
 
 const messages = {
   en: {
@@ -52,13 +51,8 @@ const i18n = new VueI18n({
 new Vue({
   i18n,
   data : {
-    room: shared.getRoom(),
-    api: "http://localhost",
-    port: ":27522",
-    LOGO_LINK: 'https://www.aueb.gr/press/logos/1_AUEB-pantone-HR.jpg',
-    DEPARTMENT_LINK: 'https://www.dept.aueb.gr/schools_department_photos/cs.png',
-    BACKGROUND: "#1d1c1d",
-    NAVBAR: "#762124"
+    ...config,
+    room: room(),
   },
   render: h => h(App),
 }).$mount('#app');

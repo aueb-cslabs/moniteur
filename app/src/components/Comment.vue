@@ -25,7 +25,7 @@
         methods: {
             getComment: function () {
                 setInterval(() => {
-                    axios.get(this.$root.$data['api'] + ":27522/api/comment")
+                    axios.get(this.$root.$data['api'] + "/api/comment")
                         .then(res => this.comment = res.data)
                 }, 5000)
             }

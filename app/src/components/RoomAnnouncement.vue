@@ -25,8 +25,8 @@
         methods: {
             getAnnouncement: function () {
                 setInterval(() => {
-                    axios.get(this.$root.$data['api']+":27522/api/announcement/" + this.$root.$data['room'])
-                        .then(res => this.roomAnnouncement = res.data);
+                    axios.get(this.$root.$data['api']+"/api/announcement/" + this.$root.$data['room'])
+                         .then(res => this.roomAnnouncement = res.data);
                 }, 5000)
             }
         }
