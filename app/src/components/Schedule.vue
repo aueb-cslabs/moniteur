@@ -45,7 +45,8 @@
 </template>
 
 <script>
-    import { EventBus} from "./EventBus";
+    import { EventBus } from "./EventBus";
+    import axios from 'axios';
 
     export default {
         name: "Schedule",
@@ -79,33 +80,24 @@
             /* Checks if we are in examination period */
             checkExam: function () {
                 setInterval(() => {
-                    fetch(this.$root.$data['api'] + this.$root.$data['port'] + "/api/calendarInfo")
-                        .then(res => res.json())
-                        .then(json => {
-                            this.isExam = json['exams'];
-                        });
+                    axios.get(this.$root.$data['api']+":27522/api/calendarInfo")
+                        .then(res => this.isExam = res.data['exams']);
                 }, 86400);
             },
 
             /* Checks if it is weekend */
             checkWeekend: function () {
                 setInterval(() => {
-                    fetch(this.$root.$data['api'] + this.$root.$data['port'] + "/api/calendarInfo")
-                        .then(res => res.json())
-                        .then(json => {
-                            this.isWeekend = json['weekend'];
-                        });
+                    axios.get(this.$root.$data['api']+":27522/api/calendarInfo")
+                        .then(res => this.isWeekend = res.data['weekend']);
                 }, 7200000);
             },
 
             /* Checks if there is a break or a national holiday */
             checkBreak: function () {
                 setInterval(() => {
-                    fetch(this.$root.$data['api'] + this.$root.$data['port'] + "/api/calendarInfo")
-                        .then(res => res.json())
-                        .then(json => {
-                            this.isBreak = json['break'];
-                        })
+                    axios.get(this.$root.$data['api']+":27522/api/calendarInfo")
+                        .then(res => this.isBreak = res.data['break']);
                 }, 7200000);
             },
 
@@ -119,10 +111,9 @@
             /* Fetches examination schedule */
             fetchExamSched: function() {
                 setInterval(() => {
-                    fetch(this.$root.$data['api'] + this.$root.$data['port'] + "/api/exams/" + this.$root.$data['room'] + "/now")
-                        .then(response => response.json())
-                        .then(json => {
-                            this.current = json;
+                    axios.get(this.$root.$data['api']+":27522/api/exams/" + this.$root.$data['room'] + "/now")
+                        .then(res => {
+                            this.current = res.data;
 
                             this.checkNext(this.current);
                             this.convertSecToTime();
@@ -132,20 +123,19 @@
                             } else {
                                 EventBus.$emit('exam', false);
                             }
-                        })
+                        });
                 }, 30000)
             },
 
             /* Fetches normal schedule */
             fetchNormSched: function() {
                 setInterval(() => {
-                    fetch(this.$root.$data['api'] + this.$root.$data['port'] + "/api/schedule/" + this.$root.$data['room']+ "/now")
-                        .then(response => response.json())
-                        .then(json => {
-                            this.current = json;
+                    axios.get(this.$root.$data['api']+":27522/api/schedule/" + this.$root.$data['room']+ "/now")
+                        .then(res => {
+                            this.current = res.data;
                             this.checkNext(this.current);
                             this.convertSecToTime();
-                        })
+                        });
                 }, 30000)
             },
 

@@ -7,6 +7,8 @@
 </template>
 
 <script>
+    import axios from 'axios';
+
     export default {
         name: "RoomAnnouncement",
 
@@ -23,11 +25,8 @@
         methods: {
             getAnnouncement: function () {
                 setInterval(() => {
-                    fetch(this.$root.$data['api'] + this.$root.$data['port'] + "/api/announcement/" + this.$root.$data['room'])
-                        .then(response => response.json())
-                        .then(roomAnn => {
-                            this.roomAnnouncement = roomAnn;
-                        })
+                    axios.get(this.$root.$data['api']+":27522/api/announcement/" + this.$root.$data['room'])
+                        .then(res => this.roomAnnouncement = res.data);
                 }, 5000)
             }
         }

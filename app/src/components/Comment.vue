@@ -7,6 +7,8 @@
 </template>
 
 <script>
+    import axios from "axios";
+
     export default {
         name: "Comment",
 
@@ -23,11 +25,8 @@
         methods: {
             getComment: function () {
                 setInterval(() => {
-                    fetch(this.$root.$data['api'] + this.$root.$data['port'] + "/api/comment")
-                        .then(response => response.json())
-                        .then(comment => {
-                            this.comment = comment;
-                        })
+                    axios.get(this.$root.$data['api'] + ":27522/api/comment")
+                        .then(res => this.comment = res.data)
                 }, 5000)
             }
         }
