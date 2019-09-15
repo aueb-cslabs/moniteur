@@ -77,6 +77,7 @@ func determineNow() (int, int64) {
 	return int(now.Weekday()), int64(now.Sub(sod).Seconds())
 }
 
+// Room returns the room name based on the mapping
 func Room(e echo.Context) error {
 	c := e.(*types.Context)
 	_, _, room := c.Plugin().ScheduleRoom(c.Param("id"))

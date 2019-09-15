@@ -7,6 +7,6 @@ type AnnouncementPost struct {
 }
 
 type Announcement struct {
-	End int64  `json:"end"`
-	Msg string `json:"msg"`
+	End int64  `json:"end" yaml:"end"`
+	Msg string `json:"msg" yaml:"msg"`
 }

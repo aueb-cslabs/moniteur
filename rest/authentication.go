@@ -10,6 +10,7 @@ import (
 	"time"
 )
 
+// Authenticate user authentication based on plugin authentication and generates JWT auth token
 func Authenticate(e echo.Context) error {
 	ctx := e.(*types.Context)
 	user := &types.User{}
@@ -52,6 +53,7 @@ func Authenticate(e echo.Context) error {
 	}
 }
 
+// Validate user validation of JWT token
 func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		authHeader := c.Request().Header.Get("authorization")
@@ -95,6 +97,7 @@ func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
+// jwtKey checks if the token is signed
 func jwtKey(token *jwt.Token) (interface{}, error) {
 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 		return nil, errors.New("unexpected error")

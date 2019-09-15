@@ -11,6 +11,7 @@ import (
 
 var ldapConf LdapConfiguration
 
+// LdapConfiguration struct that contains all the info needed in order to establish connection with AUEB LDAP server
 type LdapConfiguration struct {
 	Address string `yaml:"address"`
 	Port    int    `yaml:"port"`
@@ -27,6 +28,7 @@ type LdapConfiguration struct {
 	AuthorizedUsers map[string]string `yaml:"authorized_users"`
 }
 
+// loadLdapConfig loads the config in the struct above from ldap.yml
 func loadLdapConfig(ldapConf *LdapConfiguration) error {
 	all, err := ioutil.ReadFile("ldap.yml")
 	if err != nil {
@@ -35,6 +37,7 @@ func loadLdapConfig(ldapConf *LdapConfiguration) error {
 	return yaml.Unmarshal(all, ldapConf)
 }
 
+// initLdapConnection connects to AUEB LDAP server
 func initLdapConnection() (*ldap.Conn, error) {
 	var l *ldap.Conn
 	var err error
@@ -57,6 +60,9 @@ func initLdapConnection() (*ldap.Conn, error) {
 	return l, l.Bind(ldapConf.BindUsername, ldapConf.BindPassword)
 }
 
+// authenticateLdap authenticates a user using his LDAP credentials
+// if user enters correct credentials the function returns true,
+// in every other case false
 func authenticateLdap(username string, password string) (bool, error) {
 	l, err := initLdapConnection()
 	if err != nil {
