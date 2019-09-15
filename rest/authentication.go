@@ -57,43 +57,38 @@ func Authenticate(e echo.Context) error {
 func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		authHeader := c.Request().Header.Get("authorization")
-		if authHeader != "" {
-			bearerToken := strings.Split(authHeader, " ")
-			if len(bearerToken) == 2 {
-				token, err := jwt.Parse(bearerToken[1], jwtKey)
-				if err != nil {
-					return c.JSON(http.StatusUnauthorized, err)
-				}
-				if token.Valid {
-					claim := authorized[bearerToken[1]]
-
-					name := c.Request().Header.Get("Username")
-
-					if claim != nil {
-						expiresAt := claim.StandardClaims.ExpiresAt
-						username := claim.Username
-
-						nowUnix := time.Now().Unix()
-
-						if nowUnix < expiresAt {
-							if name == username {
-								return next(c)
-							} else {
-								return c.NoContent(http.StatusUnauthorized)
-							}
-						} else {
-							delete(authorized, bearerToken[1])
-							return c.NoContent(http.StatusUnauthorized)
-						}
-					}
-				}
-			} else {
-				return c.NoContent(http.StatusUnauthorized)
-			}
-		} else {
+		if authHeader == "" {
 			return c.NoContent(http.StatusUnauthorized)
 		}
-		return c.NoContent(http.StatusUnauthorized)
+		bearerToken := strings.Split(authHeader, " ")
+		if len(bearerToken) != 2 {
+			return c.NoContent(http.StatusUnauthorized)
+		}
+		token, err := jwt.Parse(bearerToken[1], jwtKey)
+		if err != nil {
+			return c.JSON(http.StatusUnauthorized, err)
+		}
+		if !token.Valid {
+			return c.NoContent(http.StatusUnauthorized)
+		}
+		claim := authorized[bearerToken[1]]
+		name := c.Request().Header.Get("Username")
+		if claim == nil {
+			return c.NoContent(http.StatusUnauthorized)
+		}
+		expiresAt := claim.StandardClaims.ExpiresAt
+		username := claim.Username
+
+		nowUnix := time.Now().Unix()
+		if nowUnix >= expiresAt {
+			delete(authorized, bearerToken[1])
+			return c.NoContent(http.StatusUnauthorized)
+		}
+		if name != username {
+			return c.NoContent(http.StatusUnauthorized)
+		} else {
+			return next(c)
+		}
 	}
 }
 
