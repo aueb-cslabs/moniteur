@@ -6,6 +6,7 @@ import "C"
 import (
 	"github.com/aueb-cslabs/moniteur/rest"
 	"github.com/aueb-cslabs/moniteur/types"
+	"github.com/aueb-cslabs/moniteur/utils"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
@@ -33,8 +34,9 @@ func main() {
 	e.HideBanner = true
 	e.HidePort = true
 
+	existing, _ := utils.Read()
 	plugin.Initialize(config.ExamsLink)
-	rest.Initialize(config.Secret)
+	rest.Initialize(config.Secret, existing)
 
 	api := e.Group("/api")
 

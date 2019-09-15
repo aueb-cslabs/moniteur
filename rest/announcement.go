@@ -2,6 +2,7 @@ package rest
 
 import (
 	"github.com/aueb-cslabs/moniteur/types"
+	"github.com/aueb-cslabs/moniteur/utils"
 	"github.com/labstack/echo"
 	"net/http"
 	"time"
@@ -34,12 +35,16 @@ func createAnnouncement(e echo.Context) error {
 	message.End = types.ConvertDateToUnix(post.End)
 	message.Msg = post.Msg
 
+	writeAnnouncement()
+
 	return e.NoContent(http.StatusOK)
 }
 
 // deleteAnnouncement Method that accepts DELETEs a general announcement
 func deleteAnnouncement(e echo.Context) error {
 	message = nil
+
+	writeAnnouncement()
 
 	return e.NoContent(http.StatusOK)
 }
@@ -63,17 +68,26 @@ func updateAnnouncement(e echo.Context) error {
 	message.End = types.ConvertDateToUnix(post.End)
 	message.Msg = post.Msg
 
+	writeAnnouncement()
+
 	return e.NoContent(http.StatusOK)
 }
 
+// checkAnnouncementExpiration checks every hour if the current announcement has expired
 func checkAnnouncementExpiration() {
 	for {
 		if message != nil {
 			now := time.Now().Unix()
-			if message.End >= now {
+			if message.End <= now {
 				message = nil
+				writeAnnouncement()
 			}
 		}
 		time.Sleep(time.Hour)
 	}
+}
+
+// writeAnnouncement writes announcement to existing.yml
+func writeAnnouncement() {
+	_ = utils.WriteAnnouncement(message)
 }

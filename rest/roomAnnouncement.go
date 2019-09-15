@@ -2,6 +2,7 @@ package rest
 
 import (
 	"github.com/aueb-cslabs/moniteur/types"
+	"github.com/aueb-cslabs/moniteur/utils"
 	"github.com/labstack/echo"
 	"net/http"
 	"time"
@@ -22,6 +23,8 @@ func createRoomAnn(e echo.Context) error {
 
 	announcements[e.Param("room")] = ann
 
+	writeRoomAnnouncements()
+
 	return e.NoContent(http.StatusOK)
 }
 
@@ -40,12 +43,16 @@ func updateRoomAnn(e echo.Context) error {
 
 	announcements[e.Param("room")] = ann
 
+	writeRoomAnnouncements()
+
 	return e.NoContent(http.StatusOK)
 }
 
 // deleteRoomAnn Method that accepts DELETEs a room announcement
 func deleteRoomAnn(e echo.Context) error {
 	delete(announcements, e.Param("room"))
+
+	writeRoomAnnouncements()
 
 	return e.NoContent(http.StatusOK)
 }
@@ -55,6 +62,7 @@ func getRoomAnn(e echo.Context) error {
 	return e.JSON(http.StatusOK, announcements[e.Param("room")])
 }
 
+// checkRoomAnnouncementsExpiration checks every hour if any room announcement has expired
 func checkRoomAnnouncementsExpiration() {
 	for {
 		for i, k := range announcements {
@@ -65,4 +73,9 @@ func checkRoomAnnouncementsExpiration() {
 		}
 		time.Sleep(time.Hour)
 	}
+}
+
+// writeRoomAnnouncements writes room announcement to existing.yml
+func writeRoomAnnouncements() {
+	_ = utils.WriteRoomAnnouncement(announcements)
 }

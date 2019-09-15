@@ -1,7 +1,9 @@
 package rest
 
 import (
+	"fmt"
 	"github.com/aueb-cslabs/moniteur/types"
+	"github.com/aueb-cslabs/moniteur/utils"
 	"github.com/labstack/echo"
 	"net/http"
 	"time"
@@ -30,6 +32,8 @@ func createComment(e echo.Context) error {
 	com.End = types.ConvertDateToUnix(post.End)
 	com.Msg = post.Msg
 
+	writeComment()
+
 	return e.NoContent(http.StatusOK)
 }
 
@@ -37,11 +41,14 @@ func createComment(e echo.Context) error {
 func deleteComment(e echo.Context) error {
 	com = nil
 
+	writeComment()
+
 	return e.NoContent(http.StatusOK)
 }
 
 // comment Method that accepts GETs a general comment
 func comment(e echo.Context) error {
+	fmt.Println(com)
 
 	return e.JSON(http.StatusOK, com)
 }
@@ -59,17 +66,25 @@ func updateComment(e echo.Context) error {
 	com.End = types.ConvertDateToUnix(post.End)
 	com.Msg = post.Msg
 
+	writeComment()
+
 	return e.NoContent(http.StatusOK)
 }
 
+// checkCommentExpiration checks every hour if the current comment has expired
 func checkCommentExpiration() {
 	for {
 		if com != nil {
 			now := time.Now().Unix()
-			if com.End >= now {
+			if com.End <= now {
 				com = nil
 			}
 		}
 		time.Sleep(time.Hour)
 	}
+}
+
+// writeComment writes comment to existing.yml
+func writeComment() {
+	_ = utils.WriteComment(com)
 }
