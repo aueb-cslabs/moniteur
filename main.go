@@ -17,7 +17,7 @@ import (
 
 func main() {
 
-	config, err := types.LoadConfiguration("config.yml")
+	config, err := types.LoadConfiguration("config/config.yml")
 	if err != nil {
 		log.Panic(err)
 	}
@@ -25,7 +25,7 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-	calendar, err := types.LoadCalendar("calendar.yml")
+	calendar, err := types.LoadCalendar("config/calendar.yml")
 	if err != nil {
 		log.Panic(err)
 	}

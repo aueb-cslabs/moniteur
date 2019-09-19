@@ -33,5 +33,5 @@ func write(msg interface{}) error {
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile("existing.yml", byt, 0644)
+	return ioutil.WriteFile("config/existing.yml", byt, 0644)
 }

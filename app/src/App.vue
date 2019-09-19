@@ -1,5 +1,5 @@
 <template>
-  <div class="moniteur">
+  <!--<div class="moniteur">
     <TitleBar/>
 
     <div class="flex-container">
@@ -14,24 +14,26 @@
         {{ $t("message.touchscreen")}}
       </footer>
     </div>
-  </div>
+
+  </div>-->
+  <router-view></router-view>
 </template>
 
 <script>
-import TitleBar from './components/TitleBar.vue'
+/*import TitleBar from './components/TitleBar.vue'
 import Schedule from "./components/Schedule";
 import Exam from "./components/Exam";
 import Announcement from "./components/Announcement";
 import RoomAnnouncement from "./components/RoomAnnouncement";
-import Comment from "./components/Comment";
+import Comment from "./components/Comment";*/
 
 export default {
   name: 'app',
 
   created() {
-    let r = document.documentElement;
-    r.style.setProperty("--background", this.$root.$data['background_color']);
-  },
+    /*let r = document.documentElement;
+    r.style.setProperty("&#45;&#45;background", this.$root.$data['background_color']);*/
+  }/*,
 
   components: {
     Comment,
@@ -40,7 +42,7 @@ export default {
     TitleBar,
     Schedule,
     Exam
-  }
+  }*/
 }
 </script>
 

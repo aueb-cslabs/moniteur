@@ -1,6 +1,8 @@
 package types
 
-import "github.com/dgrijalva/jwt-go"
+import (
+	"github.com/dgrijalva/jwt-go"
+)
 
 // AuthToken Bearer auth token
 type AuthToken struct {

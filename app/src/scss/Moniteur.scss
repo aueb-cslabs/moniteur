@@ -1,0 +1,14 @@
+body {
+  background: var(--background);
+  color: white;
+
+  .moniteur {
+    width: 100%;
+    height: 100%;
+  }
+
+  .bottom {
+    position: absolute;
+    bottom: 7%;
+  }
+}

@@ -111,7 +111,7 @@
             /* Fetches examination schedule */
             fetchExamSched: function() {
                 setInterval(() => {
-                    axios.get(this.$root.$data['api']+"/api/exams/" + this.$root.$data['room'] + "/now")
+                    axios.get(this.$root.$data['api']+"/api/exams/" + this.$route.params.id)
                         .then(res => {
                             this.current = res.data;
 
@@ -130,7 +130,7 @@
             /* Fetches normal schedule */
             fetchNormSched: function() {
                 setInterval(() => {
-                    axios.get(this.$root.$data['api']+"/api/schedule/" + this.$root.$data['room'] + "/now")
+                    axios.get(this.$root.$data['api']+"/api/schedule/" + this.$route.params.id + "/now")
                         .then(res => {
                             this.current = res.data;
                             this.checkNext(this.current);

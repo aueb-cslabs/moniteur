@@ -45,7 +45,7 @@
             },
 
             getRoom: function () {
-                fetch(this.$root.$data['api'] + "/api/room/" + this.$root.$data['room'])
+                fetch(this.$root.$data['api'] + "/api/room/" + this.$route.params.id)
                     .then(res => res.json())
                     .then(json => {
                         this.room = json.toString()

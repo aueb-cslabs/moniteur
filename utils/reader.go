@@ -8,7 +8,7 @@ import (
 
 // Read function that reads existing.yml that contains all the announcements from previous moniteur execution
 func Read() (*types.Reader, error) {
-	byt, err := ioutil.ReadFile("existing.yml")
+	byt, err := ioutil.ReadFile("config/existing.yml")
 	if err != nil {
 		return nil, err
 	}
