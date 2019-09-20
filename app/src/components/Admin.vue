@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!auth" class="login">
+    <div v-if="!this.authToken.auth" class="login">
         <Login/>
     </div>
     <div v-else class="actions">
@@ -35,7 +35,7 @@
             r.style.setProperty("--navbar-bg-color", this.$root.$data['navbar_background_color']);
             r.style.setProperty("--navbar-color", this.$root.$data['navbar_color']);
 
-            this.auth = authToken.auth;
+            //this.auth = authToken.auth;
         },
 
         components: {

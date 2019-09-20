@@ -91,19 +91,34 @@
             checkForm: function (e) {
                 if (this.form.msg === '' && this.form.end === '') {
                     this.error = "Form cannot be empty!";
+                    e.preventDefault();
                     return;
                 }
                 if (this.form.msg === '') {
                     this.error = "No message provided!";
+                    e.preventDefault();
                     return;
                 }
                 if (this.form.end === '') {
                     this.error = "No date provided!";
+                    e.preventDefault();
+                    return;
+                }
+                if (!this.isGoodDate(this.form.end)) {
+                    this.error = "Invalid date!";
+                    e.preventDefault();
                     return;
                 }
                 this.error = null;
                 this.send();
+                this.form.msg = '';
+                this.form.end = '';
                 e.preventDefault();
+            },
+
+            isGoodDate: function(dt){
+                let reGoodDate = /([0-3]?\d\/{1})([01]?\d\/{1})([12]{1}\d{3}\/?)/g;
+                return reGoodDate.test(dt);
             }
         }
     }

@@ -22,6 +22,9 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" v-if="this.$parent.$data['authToken'].auth">
+                        <a class="nav-link">Logged in {{this.$parent.$data['authToken'].username}}</a>
+                    </li>
                     <li class="nav-link">
                         <a class="nav-text" v-on:click="logout">Logout</a>
                     </li>

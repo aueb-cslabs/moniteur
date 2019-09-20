@@ -48,11 +48,14 @@
                         this.$parent.$data['authToken'].token = response.data['token_type'] + " " + response.data['access_token'];
                         this.$parent.$data['authToken'].expiration = response.data['expires_in'];
                         this.$parent.$data['authToken'].auth = true;
+                        this.$parent.$data['config'].Authorization = response.data['token_type'] + " " + response.data['access_token'];
+                        this.$parent.$data['config'].Username = this.loginForm.username;
                         this.error = "";
                     }
                     else {
                         this.error = "Invalid username or password.";
                     }
+                    this.$parent.checkLogin();
                 });
             },
 

@@ -1,6 +1,7 @@
 package types
 
 import (
+	"errors"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"strconv"
@@ -62,13 +63,16 @@ func LoadCalendar(file string) (*Calendar, error) {
 	return calendar, err
 }
 
-func ConvertDateToUnix(date string) int64 {
+func ConvertDateToUnix(date string) (int64, error) {
 	now := time.Now()
 	broken := strings.Split(date, "/")
+	if len(broken) < 3 {
+		return 0, errors.New("Invalid date")
+	}
 	day, _ := strconv.Atoi(broken[0])
 	month, _ := strconv.Atoi(broken[1])
 	year, _ := strconv.Atoi(broken[2])
 	endDate := time.Date(year, time.Month(month), day+1, 0, 0, 0, 0, now.Location())
 	unix := endDate.Unix()
-	return unix
+	return unix, nil
 }

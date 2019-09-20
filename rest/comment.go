@@ -28,7 +28,10 @@ func createComment(e echo.Context) error {
 	}
 
 	com = &types.Announcement{}
-	com.End = types.ConvertDateToUnix(post.End)
+	com.End, err = types.ConvertDateToUnix(post.End)
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
 	com.Msg = post.Msg
 
 	writeComment()
@@ -60,7 +63,10 @@ func updateComment(e echo.Context) error {
 	}
 
 	com = &types.Announcement{}
-	com.End = types.ConvertDateToUnix(post.End)
+	com.End, err = types.ConvertDateToUnix(post.End)
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
 	com.Msg = post.Msg
 
 	writeComment()

@@ -32,7 +32,10 @@ func createAnnouncement(e echo.Context) error {
 	}
 
 	message = &types.Announcement{}
-	message.End = types.ConvertDateToUnix(post.End)
+	message.End, err = types.ConvertDateToUnix(post.End)
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
 	message.Msg = post.Msg
 
 	writeAnnouncement()
@@ -65,7 +68,10 @@ func updateAnnouncement(e echo.Context) error {
 	}
 
 	message = &types.Announcement{}
-	message.End = types.ConvertDateToUnix(post.End)
+	message.End, err = types.ConvertDateToUnix(post.End)
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
 	message.Msg = post.Msg
 
 	writeAnnouncement()

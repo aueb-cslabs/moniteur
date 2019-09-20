@@ -18,7 +18,10 @@ func createRoomAnn(e echo.Context) error {
 	}
 
 	ann := &types.Announcement{}
-	ann.End = types.ConvertDateToUnix(post.End)
+	ann.End, err = types.ConvertDateToUnix(post.End)
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
 	ann.Msg = post.Msg
 
 	announcements[e.Param("room")] = ann
@@ -38,7 +41,10 @@ func updateRoomAnn(e echo.Context) error {
 	}
 
 	ann := &types.Announcement{}
-	ann.End = types.ConvertDateToUnix(post.End)
+	ann.End, err = types.ConvertDateToUnix(post.End)
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
 	ann.Msg = post.Msg
 
 	announcements[e.Param("room")] = ann
