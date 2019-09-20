@@ -1,7 +1,6 @@
 package rest
 
 import (
-	"fmt"
 	"github.com/aueb-cslabs/moniteur/types"
 	"github.com/aueb-cslabs/moniteur/utils"
 	"github.com/labstack/echo"
@@ -48,8 +47,6 @@ func deleteComment(e echo.Context) error {
 
 // comment Method that accepts GETs a general comment
 func comment(e echo.Context) error {
-	fmt.Println(com)
-
 	return e.JSON(http.StatusOK, com)
 }
 

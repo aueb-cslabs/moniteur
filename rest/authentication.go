@@ -2,6 +2,7 @@ package rest
 
 import (
 	"errors"
+	"fmt"
 	"github.com/aueb-cslabs/moniteur/types"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
@@ -46,6 +47,8 @@ func Authenticate(e echo.Context) error {
 		authToken.ExpiresIn = expiresAt
 
 		authorized[authToken.Token] = authTokenClaim
+
+		fmt.Println(authToken)
 
 		return e.JSON(http.StatusOK, authToken)
 	} else {

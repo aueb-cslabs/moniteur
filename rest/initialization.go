@@ -14,9 +14,11 @@ func Initialize(sec string, existing *types.Reader) {
 	announcements = make(map[string]*types.Announcement)
 	authorized = make(map[string]*types.AuthTokenClaim)
 	secret = sec
-	com = existing.Comment
-	announcements = existing.RoomAnnouncements
-	message = existing.Announcement
+	if existing != nil {
+		com = existing.Comment
+		announcements = existing.RoomAnnouncements
+		message = existing.Announcement
+	}
 	go checkAnnouncementExpiration()
 	go checkCommentExpiration()
 	go checkRoomAnnouncementsExpiration()
