@@ -58,6 +58,7 @@ func main() {
 	rest.ExamsGroup(api.Group("/exams"))
 	api.GET("/room/:id", rest.Room)
 	api.POST("/authenticate", rest.Authenticate)
+	api.POST("/invalidate", rest.Invalidate)
 
 	// Should go in effect only in development mode.
 	// In production this should just serve the files.

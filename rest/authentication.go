@@ -95,6 +95,35 @@ func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
+func Invalidate(e echo.Context) error {
+	authToken := e.Request().Header.Get("Authorization")
+	user := e.Request().Header.Get("Username")
+
+	if authToken == "" {
+		return e.NoContent(http.StatusBadRequest)
+	}
+	bearerToken := strings.Split(authToken, " ")
+	if len(bearerToken) != 2 {
+		return e.NoContent(http.StatusBadRequest)
+	}
+	token, err := jwt.Parse(bearerToken[1], jwtKey)
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
+	if !token.Valid {
+		return c.NoContent(http.StatusUnauthorized)
+	}
+	claim := authorized[bearerToken[1]]
+	if claim == nil {
+		return e.NoContent(http.StatusBadRequest)
+	}
+	if claim.Username == user {
+		delete(authorized, bearerToken[1])
+		return e.NoContent(http.StatusOK)
+	}
+	return e.NoContent(http.StatusBadRequest)
+}
+
 // jwtKey checks if the token is signed
 func jwtKey(token *jwt.Token) (interface{}, error) {
 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
