@@ -6,15 +6,19 @@ body {
   height: 100%;
 }
 
-.login {
+.actions {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   height: 100%;
 }
 
+.admin {
+  width: 85%;
+}
+
 nav {
   background: var(--navbar-bg-color);
-  color: var(--navbar-color)
+  color: #000000;
 }

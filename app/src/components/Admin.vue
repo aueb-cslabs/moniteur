@@ -1,38 +1,30 @@
 <template>
     <div v-if="!auth" class="login">
-        <p>Login to Moniteur</p>
-        <div class="row">
-            <form @submit="login">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="username" class="form-control" id="username" v-model="loginForm.username" placeholder="Enter username">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" v-model="loginForm.password" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
-            </form>
-        </div>
+        <Login/>
     </div>
-    <div v-else>
-        <nav class="navbar navbar-expand navbar-dark">
-            <a class='navbar-brand'>
-                <img v-bind:src="this.$root.$data['logo_url']"
-                     alt="logo" height="60" />
-            </a>
-            <nav class="navbar-nav mr-auto">
-                <img class="ml-2" v-bind:src="this.$root.$data['secondary_logo_url']"
-                     alt="cs_logo" height="60" />
-                <a class="ml-4 navbar-brand mt-2">{{room}}</a>
-            </nav>
-            <nav class=""
-        </nav>
+    <div v-else class="actions">
+        <AdminBar/>
+        <div class="admin">
+            <div v-if="announcementBool">
+                <AdminAnnouncement/>
+            </div>
+            <div v-if="roomAnnouncementBool">
+                <AdminRoomAnnouncement/>
+            </div>
+            <div v-if="commentBool">
+                <AdminComment/>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-    import axios from "axios";
+    import authToken from "../auth";
+    import Login from "./Login";
+    import AdminBar from "./AdminBar";
+    import AdminAnnouncement from "./AdminAnnouncement";
+    import AdminComment from "./AdminComment";
+    import AdminRoomAnnouncement from "./AdminRoomAnnouncement";
 
     export default {
         name: 'Administration',
@@ -42,38 +34,50 @@
             r.style.setProperty("--background", this.$root.$data['background_color']);
             r.style.setProperty("--navbar-bg-color", this.$root.$data['navbar_background_color']);
             r.style.setProperty("--navbar-color", this.$root.$data['navbar_color']);
+
+            this.auth = authToken.auth;
+        },
+
+        components: {
+            Login,
+            AdminBar,
+            AdminAnnouncement,
+            AdminComment,
+            AdminRoomAnnouncement
         },
 
         data() {
             return {
-                token: "",
-                username: "",
-                expiration: 0,
-                loginForm: {
-                    username: "",
-                    password: ""
-                },
-                auth: false
+                authToken: authToken,
+                auth: false,
+                announcementBool: false,
+                roomAnnouncementBool: false,
+                commentBool: false,
+                config: {
+                    Authorization: authToken.token,
+                    Username: authToken.username
+                }
             }
         },
 
         methods: {
-            login: function (e) {
-                axios({
-                    method: 'post',
-                    url: this.$root.$data['api'] + '/api/authenticate',
-                    data: {
-                        username: this.loginForm.username,
-                        password: this.loginForm.password
-                    }
-                }).then(response => {
-                    this.auth = true;
-                    this.username = this.loginForm.username;
-                    this.token = response.data['token_type'] + " " + response.data['access_token'];
-                    this.expiration = response.data['expires_in'];
-                });
-                e.preventDefault();
-            }
+            showAnnouncement: function () {
+                this.announcementBool = true;
+                this.roomAnnouncementBool = false;
+                this.commentBool = false;
+            },
+
+            showRoomAnnouncement: function () {
+                this.announcementBool = false;
+                this.roomAnnouncementBool = true;
+                this.commentBool = false;
+            },
+
+            showComment: function () {
+                this.announcementBool = false;
+                this.roomAnnouncementBool = false;
+                this.commentBool = true;
+            },
         }
     }
 
