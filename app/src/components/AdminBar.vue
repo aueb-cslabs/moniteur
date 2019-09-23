@@ -12,21 +12,21 @@
             <div class="collapse navbar-collapse ml-3">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" v-on:click="this.$parent.showAnnouncement">General Announcement</a>
+                        <a class="nav-link" v-on:click="this.$parent.showAnnouncement">{{$t("message.adminBarGA")}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-on:click="this.$parent.showRoomAnnouncement">Room Announcement</a>
+                        <a class="nav-link" v-on:click="this.$parent.showRoomAnnouncement">{{$t("message.adminBarRA")}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-on:click="this.$parent.showComment">General Comment</a>
+                        <a class="nav-link" v-on:click="this.$parent.showComment">{{$t("message.adminBarGC")}}</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item" v-if="this.$parent.$data['authToken'].auth">
-                        <a class="nav-link">Logged in {{this.$parent.$data['authToken'].username}}</a>
+                        <a class="nav-link">{{$t("message.adminBarLI")}} {{this.$parent.$data['authToken'].username}}</a>
                     </li>
                     <li class="nav-link">
-                        <a class="nav-text" v-on:click="logout">Logout</a>
+                        <a class="nav-text" v-on:click="logout">{{$t("message.adminBarLogout")}}</a>
                     </li>
                 </ul>
             </div>

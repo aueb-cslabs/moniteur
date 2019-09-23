@@ -5,37 +5,38 @@
                 <form @submit="checkSearch">
                     <div class="row">
                         <div class="col-xs-10 col-md-10 form-group">
-                            <input type="text" class="form-control" v-model="room" placeholder="Room Name">
+                            <input type="text" class="form-control" v-model="room" v-bind:placeholder="this.$t('message.adminRoomAnnRN')">
                         </div>
                         <div class="col-xs-2 col-md-2 form-group pl-4">
-                            <button type="submit" class="btn btn-primary">Search</button>
+                            <button type="submit" class="btn btn-primary">{{$t("message.adminSearch")}}</button>
                         </div>
                     </div>
                 </form>
+                <p class="error">{{searchError}}</p>
             </div>
             <div v-if="roomBool">
                 <form @submit="checkForm">
                     <div class="form-group">
-                        <label for="message">Announcement</label>
-                        <input type="text" class="form-control" id="message" v-model="form.msg" placeholder="Message">
+                        <label for="message">{{$t("message.adminAnnForm1")}}</label>
+                        <input type="text" class="form-control" id="message" v-model="form.msg" v-bind:placeholder="this.$t('message.adminAnnMsg')">
                     </div>
                     <div class="form-group">
-                        <label for="expiration">Expiration Date</label>
-                        <input type="text" class="form-control" id="expiration" v-model="form.end" placeholder="DD/MM/YYYY">
+                        <label for="expiration">{{$t("message.adminAnnExpire")}}</label>
+                        <input type="text" class="form-control" id="expiration" v-model="form.end" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                     </div>
-                    <button type="submit" class="btn btn-primary">Send announcement</button>
+                    <button type="submit" class="btn btn-primary">{{$t("message.adminAnnSend")}}</button>
                     <p class="error">{{error}}</p>
                 </form>
             </div>
             <div class="mt-5" v-if="announcement != null">
                 <div class="alert alert-primary" role="alert">
-                    <h3>Current Room Announcement: {{announcement['msg']}}</h3>
+                    <h3>{{$t("message.adminRoomAnnCurrent")}} {{announcement['msg']}}</h3>
                 </div>
                 <hr>
                 <div class="alert alert-warning" role="alert">
-                    Expires in: {{announcement['end']}}
+                    {{$t("message.adminExpires")}} {{announcement['end']}}
                 </div>
-                <button type="submit" class="btn btn-primary" v-on:click="removeRoomAnnouncement">Remove Announcement</button>
+                <button type="submit" class="btn btn-danger" v-on:click="removeRoomAnnouncement">{{$t("message.removeAnn")}}</button>
             </div>
         </div>
     </div>
@@ -55,6 +56,7 @@
                     msg: ''
                 },
                 error: null,
+                searchError: null,
                 room: '',
                 roomBool: false
             }
@@ -100,22 +102,22 @@
 
             checkForm: function (e) {
                 if (this.form.msg === '' && this.form.end === '') {
-                    this.error = "Form cannot be empty!";
+                    this.error = this.$t('message.adminEmptyForm');
                     e.preventDefault();
                     return;
                 }
                 if (this.form.msg === '') {
-                    this.error = "No message provided!";
+                    this.error = this.$t('message.adminNoMsg');
                     e.preventDefault();
                     return;
                 }
                 if (this.form.end === '') {
-                    this.error = "No date provided!";
+                    this.error = this.$t('message.adminNoDate');
                     e.preventDefault();
                     return;
                 }
                 if (!this.isGoodDate(this.form.end)) {
-                    this.error = "Invalid date!";
+                    this.error = this.$t('message.adminInvalidDate');
                     e.preventDefault();
                     return;
                 }
@@ -128,12 +130,13 @@
 
             checkSearch: function (e) {
                 if (this.room === '') {
-                    this.error = "Provide a room to search!";
+                    this.searchError = this.$t('message.adminRoomAnnSearchErr');
                     this.roomBool = false;
                     e.preventDefault();
                     return;
                 }
                 this.fetchRoomAnnouncement();
+                this.searchError = '';
                 this.roomBool = true;
                 e.preventDefault();
             },

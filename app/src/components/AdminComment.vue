@@ -4,26 +4,26 @@
             <div>
                 <form @submit="checkForm">
                     <div class="form-group">
-                        <label for="message">Comment</label>
-                        <input type="text" class="form-control" id="message" v-model="form.msg" placeholder="Message">
+                        <label for="message">{{$t("message.adminCommForm1")}}</label>
+                        <input type="text" class="form-control" id="message" v-model="form.msg" v-bind:placeholder="this.$t('message.adminAnnMsg')">
                     </div>
                     <div class="form-group">
-                        <label for="expiration">Expiration Date</label>
-                        <input type="text" class="form-control" id="expiration" v-model="form.end" placeholder="DD/MM/YYYY">
+                        <label for="expiration">{{$t("message.adminAnnExpire")}}</label>
+                        <input type="text" class="form-control" id="expiration" v-model="form.end" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                     </div>
-                    <button type="submit" class="btn btn-primary">Send comment</button>
+                    <button type="submit" class="btn btn-primary">{{$t("message.adminCommSend")}}</button>
                     <p class="error">{{error}}</p>
                 </form>
             </div>
             <div class="mt-5" v-if="comment != null">
                 <div class="alert alert-primary" role="alert">
-                    <h3>Current Comment: {{comment['msg']}}</h3>
+                    <h3>{{$t("message.adminCommCurrent")}} {{comment['msg']}}</h3>
                 </div>
                 <hr>
                 <div class="alert alert-warning" role="alert">
-                    Expires in: {{comment['end']}}
+                    {{$("message.adminExpires")}} {{comment['end']}}
                 </div>
-                <button type="submit" class="btn btn-primary" v-on:click="removeComment">Remove Comment</button>
+                <button type="submit" class="btn btn-primary" v-on:click="removeComment">{{$t("message.removeComm")}}</button>
             </div>
         </div>
     </div>
@@ -90,17 +90,17 @@
 
             checkForm: function (e) {
                 if (this.form.msg === '' && this.form.end === '') {
-                    this.error = "Form cannot be empty!";
+                    this.error = this.$t('message.adminEmptyForm');
                     e.preventDefault();
                     return;
                 }
                 if (this.form.msg === '') {
-                    this.error = "No message provided!";
+                    this.error = this.$t('message.adminNoDate');
                     e.preventDefault();
                     return;
                 }
                 if (!this.isGoodDate(this.form.end)) {
-                    this.error = "Invalid date!";
+                    this.error = this.$t('message.adminInvalidDate');
                     e.preventDefault();
                     return;
                 }
@@ -120,6 +120,6 @@
 </script>
 
 <style lang="scss">
-@import "../scss/AdminComment";
-@import "~bootstrap/scss/bootstrap.scss";
+    @import "../scss/AdminComment";
+    @import "~bootstrap/scss/bootstrap.scss";
 </style>

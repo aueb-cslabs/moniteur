@@ -1,16 +1,14 @@
 <template>
     <div style="width: 25%;">
-        <p>Login to Moniteur</p>
+        <p>{{ $t("message.loginWelcome" )}}</p>
         <form @submit="checkLogin">
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" v-model="loginForm.username" placeholder="Enter username">
+                <input type="text" class="form-control" id="username" v-model="loginForm.username" v-bind:placeholder="this.$t('message.loginUsername')">
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" v-model="loginForm.password" placeholder="Password">
+                <input type="password" class="form-control" id="password" v-model="loginForm.password" v-bind:placeholder="this.$t('message.loginPassword')">
             </div>
-            <button type="submit" class="btn btn-primary">Sign in</button>
+            <button type="submit" class="btn btn-primary">{{$t("message.loginSignIn")}}</button>
         </form>
         <p>{{error}}</p>
     </div>
@@ -53,7 +51,7 @@
                         this.error = "";
                     }
                     else {
-                        this.error = "Invalid username or password.";
+                        this.error = this.$t('message.loginError');
                     }
                     this.$parent.checkLogin();
                 });
@@ -61,7 +59,7 @@
 
             checkLogin: function (e) {
                 if (this.loginForm.username === '' || this.loginForm.password === '') {
-                    this.error = "You have not entered username or password!";
+                    this.error = this.$t('message.loginFormError');
                     e.preventDefault();
                     return;
                 }
