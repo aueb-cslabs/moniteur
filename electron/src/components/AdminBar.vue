@@ -11,23 +11,13 @@
             </nav>
             <div class="collapse navbar-collapse ml-3">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" v-on:click="this.$parent.showAnnouncement">{{$t("message.adminBarGA")}}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" v-on:click="this.$parent.showRoomAnnouncement">{{$t("message.adminBarRA")}}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" v-on:click="this.$parent.showComment">{{$t("message.adminBarGC")}}</a>
-                    </li>
+                    <li class="nav-item pr-3" v-on:click="this.$parent.showAnnouncement"> {{$t("message.adminBarGA")}}</li>
+                    <li class="nav-item pr-3" v-on:click="this.$parent.showRoomAnnouncement">{{$t("message.adminBarRA")}}</li>
+                    <li class="nav-item pr-3" v-on:click="this.$parent.showComment">{{$t("message.adminBarGC")}}</li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item" v-if="this.$parent.$data['authToken'].auth">
-                        <a class="nav-link">{{$t("message.adminBarLI")}} {{this.$parent.$data['authToken'].username}}</a>
-                    </li>
-                    <li class="nav-link">
-                        <a class="nav-text" v-on:click="logout">{{$t("message.adminBarLogout")}}</a>
-                    </li>
+                    <li class="nav-item pr-3" v-if="this.$parent.$data['authToken'].auth">{{$t("message.adminBarLI")}} {{this.$parent.$data['authToken'].username}}</li>
+                    <li class="nav-item" v-on:click="logout">{{$t("message.adminBarLogout")}}</li>
                 </ul>
             </div>
         </nav>
@@ -42,6 +32,8 @@
 
         methods: {
             logout: function (e) {
+                this.$parent.$data['authToken'].auth = false;
+                this.$cookies.remove('test');
                 axios({
                     method: 'post',
                     url: this.$root.$data['api'] + "/api/invalidate",

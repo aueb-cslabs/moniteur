@@ -1,6 +1,6 @@
 <template>
     <div style="width: 25%;">
-        <p>{{ $t("message.loginWelcome" )}}</p>
+        <p>{{ $t("message.loginWelcome") }}</p>
         <form @submit="checkLogin">
             <div class="form-group">
                 <input type="text" class="form-control" id="username" v-model="loginForm.username" v-bind:placeholder="this.$t('message.loginUsername')">
@@ -20,19 +20,51 @@
     export default {
         data() {
             return {
-                token: "",
-                username: "",
-                expiration: 0,
                 loginForm: {
                     username: "",
                     password: ""
                 },
-                error: ""
+                error: "",
+                cookie: {
+                    username: '',
+                    token: ''
+                }
+            }
+        },
+
+        created() {
+            if (this.$cookies.get('session') != null) {
+                axios({
+                    method: 'post',
+                    url: this.$root.$data['api'] + '/api/validate',
+                    headers: {
+                        username: this.$cookies.get('session').cookie.username,
+                        authorization: this.$cookies.get('session').cookie.token
+                    }
+                }).then(res => {
+                    if (res.status === 200) {
+                        this.$parent.$data['authToken'].auth = true;
+                        this.$parent.$data['authToken'].username = this.$cookies.get('session').cookie.username;
+                        this.$parent.$data['authToken'].token = this.$cookies.get('session').cookie.token;
+                        this.$parent.$data['authToken'].expiration = this.$cookies.get('session').expiration;
+                    }
+                    else {
+                        this.$parent.$data['authToken'].auth = false;
+                        this.$parent.$data['authToken'].username = '';
+                        this.$parent.$data['authToken'].token = '';
+                        this.$parent.$data['authToken'].expiration = '';
+                    }
+                })
+            }
+            if (this.$cookies.get('test') != null) {
+                this.$parent.$data['authToken'].auth = true;
             }
         },
 
         methods: {
             login: function () {
+                this.$cookies.set('test', 'abc');
+                this.$parent.$data['authToken'].auth=true;
                 axios({
                     method: 'post',
                     url: this.$root.$data['api'] + '/api/authenticate',
@@ -48,6 +80,9 @@
                         this.$parent.$data['authToken'].auth = true;
                         this.$parent.$data['config'].Authorization = response.data['token_type'] + " " + response.data['access_token'];
                         this.$parent.$data['config'].Username = this.loginForm.username;
+                        this.cookie.token = this.$parent.$data['authToken'].token;
+                        this.cookie.username = this.$parent.$data['authToken'].username;
+                        this.$cookies.set('session', this.cookie, new Date(this.$parent.$data['authToken'].expiration));
                         this.error = "";
                     }
                     else {

@@ -34,8 +34,6 @@
             r.style.setProperty("--background", this.$root.$data['background_color']);
             r.style.setProperty("--navbar-bg-color", this.$root.$data['navbar_background_color']);
             r.style.setProperty("--navbar-color", this.$root.$data['navbar_color']);
-
-            //this.auth = authToken.auth;
         },
 
         components: {

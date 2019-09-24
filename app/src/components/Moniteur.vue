@@ -1,5 +1,5 @@
 <template>
-    <div class="moniteur">
+    <div>
         <TitleBar/>
 
         <div class="flex-container">

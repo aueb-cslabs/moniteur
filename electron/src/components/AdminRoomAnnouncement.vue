@@ -7,7 +7,7 @@
                         <div class="col-xs-10 col-md-10 form-group">
                             <input type="text" class="form-control" v-model="room" v-bind:placeholder="this.$t('message.adminRoomAnnRN')">
                         </div>
-                        <div class="col-xs-2 col-md-2 form-group pl-4">
+                        <div class="col-xs-2 col-md-2 form-group">
                             <button type="submit" class="btn btn-primary">{{$t("message.adminSearch")}}</button>
                         </div>
                     </div>
