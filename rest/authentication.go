@@ -53,6 +53,42 @@ func Authenticate(e echo.Context) error {
 	}
 }
 
+func AuthenticateToken(e echo.Context) error {
+	authHeader := e.Request().Header.Get("authorization")
+	if authHeader == "" {
+		return e.NoContent(http.StatusUnauthorized)
+	}
+	bearerToken := strings.Split(authHeader, " ")
+	if len(bearerToken) != 2 {
+		return e.NoContent(http.StatusUnauthorized)
+	}
+	token, err := jwt.Parse(bearerToken[1], jwtKey)
+	if err != nil {
+		return e.JSON(http.StatusUnauthorized, err)
+	}
+	if !token.Valid {
+		return e.NoContent(http.StatusUnauthorized)
+	}
+	claim := authorized[bearerToken[1]]
+	name := e.Request().Header.Get("Username")
+	if claim == nil {
+		return e.NoContent(http.StatusUnauthorized)
+	}
+	expiresAt := claim.StandardClaims.ExpiresAt
+	username := claim.Username
+
+	nowUnix := time.Now().Unix()
+	if nowUnix >= expiresAt {
+		delete(authorized, bearerToken[1])
+		return e.NoContent(http.StatusUnauthorized)
+	}
+	if name != username {
+		return e.NoContent(http.StatusUnauthorized)
+	} else {
+		return e.NoContent(http.StatusOK)
+	}
+}
+
 // Validate user validation of JWT token
 func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {

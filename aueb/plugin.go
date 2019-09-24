@@ -106,6 +106,10 @@ func (Plugin) AuthorizeUser(username string, password string) (bool, error) {
 	return authenticateLdap(username, password)
 }
 
+func (Plugin) RegisterAuthorizedUser(username string) (bool, error) {
+	return register(username)
+}
+
 // retriever Method that converts Schedule Master json to our json format
 func retriever() *types.Schedule {
 	resp := &types.Schedule{}
