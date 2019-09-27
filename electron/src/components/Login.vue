@@ -1,5 +1,5 @@
 <template>
-    <div style="width: 25%;">
+    <div class="form">
         <p>{{ $t("message.loginWelcome") }}</p>
         <form @submit="checkLogin">
             <div class="form-group">
@@ -10,7 +10,23 @@
             </div>
             <button type="submit" class="btn btn-primary">{{$t("message.loginSignIn")}}</button>
         </form>
-        <p>{{error}}</p>
+        <div class="error">
+            <b-alert
+                    :show="dismissCountDown"
+                    dismissible
+                    variant="danger"
+                    @dismissed="dismissCountDown=0"
+                    @dismiss-count-down="countDownChanged"
+            >
+                <p>Error! {{error}}</p>
+                <b-progress
+                        variant="dark"
+                        :max="dismissSecs"
+                        :value="dismissCountDown"
+                        height="4px"
+                ></b-progress>
+            </b-alert>
+        </div>
     </div>
 </template>
 
@@ -28,7 +44,9 @@
                 cookie: {
                     username: '',
                     token: ''
-                }
+                },
+                dismissSecs: 5,
+                dismissCountDown: 0,
             }
         },
 
@@ -95,12 +113,20 @@
             checkLogin: function (e) {
                 if (this.loginForm.username === '' || this.loginForm.password === '') {
                     this.error = this.$t('message.loginFormError');
+                    this.showAlert();
                     e.preventDefault();
                     return;
                 }
                 this.error = '';
                 this.login();
                 e.preventDefault();
+            },
+
+            countDownChanged(dismissCountDown) {
+                this.dismissCountDown = dismissCountDown
+            },
+            showAlert() {
+                this.dismissCountDown = this.dismissSecs
             }
         }
     }

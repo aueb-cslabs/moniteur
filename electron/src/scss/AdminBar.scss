@@ -1,14 +1,20 @@
-.nav-link {
-  cursor: pointer;
-  color: #FFFFFF;
-}
+body {
+  .nav-link {
+    cursor: pointer;
+    color: #FFFFFF;
+  }
 
-.nav-item {
-  cursor: pointer;
-  color: white;
-}
+  .nav-item {
+    cursor: pointer;
+    color: white;
+  }
 
-.top {
-  width: 100%;
-  top: 0;
+  .top {
+    //width: 100%;
+    top: 0;
+  }
+
+  nav {
+    width: 100%;
+  }
 }

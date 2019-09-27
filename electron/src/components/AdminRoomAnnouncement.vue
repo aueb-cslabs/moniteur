@@ -12,7 +12,6 @@
                         </div>
                     </div>
                 </form>
-                <p class="error">{{searchError}}</p>
             </div>
             <div v-if="roomBool">
                 <form @submit="checkForm">
@@ -25,7 +24,6 @@
                         <input type="text" class="form-control" id="expiration" v-model="form.end" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                     </div>
                     <button type="submit" class="btn btn-primary">{{$t("message.adminAnnSend")}}</button>
-                    <p class="error">{{error}}</p>
                 </form>
             </div>
             <div class="mt-5" v-if="announcement != null">
@@ -38,6 +36,23 @@
                 </div>
                 <button type="submit" class="btn btn-danger" v-on:click="removeRoomAnnouncement">{{$t("message.removeAnn")}}</button>
             </div>
+        </div>
+        <div class="error">
+            <b-alert
+                    :show="dismissCountDown"
+                    dismissible
+                    variant="danger"
+                    @dismissed="dismissCountDown=0"
+                    @dismiss-count-down="countDownChanged"
+            >
+                <p>Error! {{error}}</p>
+                <b-progress
+                        variant="dark"
+                        :max="dismissSecs"
+                        :value="dismissCountDown"
+                        height="4px"
+                ></b-progress>
+            </b-alert>
         </div>
     </div>
 </template>
@@ -58,7 +73,9 @@
                 error: null,
                 searchError: null,
                 room: '',
-                roomBool: false
+                roomBool: false,
+                dismissSecs: 5,
+                dismissCountDown: 0,
             }
         },
 
@@ -103,21 +120,25 @@
             checkForm: function (e) {
                 if (this.form.msg === '' && this.form.end === '') {
                     this.error = this.$t('message.adminEmptyForm');
+                    this.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.form.msg === '') {
                     this.error = this.$t('message.adminNoMsg');
+                    this.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.form.end === '') {
                     this.error = this.$t('message.adminNoDate');
+                    this.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (!this.isGoodDate(this.form.end)) {
                     this.error = this.$t('message.adminInvalidDate');
+                    this.showAlert();
                     e.preventDefault();
                     return;
                 }
@@ -130,13 +151,14 @@
 
             checkSearch: function (e) {
                 if (this.room === '') {
-                    this.searchError = this.$t('message.adminRoomAnnSearchErr');
+                    this.error = this.$t('message.adminRoomAnnSearchErr');
                     this.roomBool = false;
+                    this.showAlert();
                     e.preventDefault();
                     return;
                 }
                 this.fetchRoomAnnouncement();
-                this.searchError = '';
+                this.error = '';
                 this.roomBool = true;
                 e.preventDefault();
             },
@@ -144,6 +166,13 @@
             isGoodDate: function(dt){
                 let reGoodDate = /([0-3]?\d\/{1})([01]?\d\/{1})([12]{1}\d{3}\/?)/g;
                 return reGoodDate.test(dt);
+            },
+
+            countDownChanged(dismissCountDown) {
+                this.dismissCountDown = dismissCountDown
+            },
+            showAlert() {
+                this.dismissCountDown = this.dismissSecs
             }
         }
     }
