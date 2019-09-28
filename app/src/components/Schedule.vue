@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper" v-if="normal">
         <div id="current" class="text-center current schedule">
-            <h3> {{ $t("message.nowMsg") }} <i class="fas fa-users-class"></i></h3>
+            <h3> {{ $t("message.nowMsg") }} <i class="fas fa-chalkboard-teacher"></i></h3>
             <p class="center common fade-in" v-if="current['now'] != null">
                 <u>
                     {{time['now_start'].getUTCHours()}}:{{getMinutes(this.time['now_start'])}}
@@ -19,7 +19,7 @@
         </div>
 
         <div id="next" class="text-center next schedule">
-            <h3> {{ $t("message.nextMsg") }} <i class="fas fa-users-class nextsub"></i></h3>
+            <h3> {{ $t("message.nextMsg") }} <i class="fas fa-chalkboard-teacher nextsub"></i></h3>
             <p class="center common fade-in" v-if="current['next'] != null">
                 <u>
                     {{time['next_start'].getUTCHours()}}:{{getMinutes(this.time['next_start'])}}

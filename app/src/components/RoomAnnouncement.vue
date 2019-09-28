@@ -1,7 +1,7 @@
 <template>
     <div class="roomAnnouncements">
         <p class="mt-1 common room-ann-text" v-if="roomAnnouncement != null">
-            <i class="far fa-bullhorn"></i> {{roomAnnouncement['msg']}}
+            <i class="fas fa-bullhorn"></i> {{roomAnnouncement['msg']}}
         </p>
     </div>
 </template>

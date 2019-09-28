@@ -1,7 +1,7 @@
 <template>
     <div class="announcements">
         <p class="mt-4 common ann-text fade-in" v-if="announcement != null">
-            <i class="fas fa-scroll-old"></i> {{announcement['msg']}}
+            <i class="fas fa-scroll"></i> {{announcement['msg']}}
         </p>
     </div>
     
