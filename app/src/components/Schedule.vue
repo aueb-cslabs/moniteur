@@ -82,7 +82,7 @@
                 setInterval(() => {
                     axios.get(this.$root.$data['api']+"/api/calendarInfo")
                         .then(res => this.isExam = res.data['exams']);
-                }, 86400);
+                }, 60000);
             },
 
             /* Checks if it is weekend */
@@ -90,7 +90,7 @@
                 setInterval(() => {
                     axios.get(this.$root.$data['api']+"/api/calendarInfo")
                         .then(res => this.isWeekend = res.data['weekend']);
-                }, 7200000);
+                }, 60000);
             },
 
             /* Checks if there is a break or a national holiday */
@@ -98,14 +98,14 @@
                 setInterval(() => {
                     axios.get(this.$root.$data['api']+"/api/calendarInfo")
                         .then(res => this.isBreak = res.data['break']);
-                }, 7200000);
+                }, 60000);
             },
 
             /* Checks for normal period */
             checkDefault: function () {
                 setInterval(() => {
                     this.normal = !this.isWeekend && !this.isBreak
-                }, 7200000);
+                }, 60000);
             },
 
             /* Fetches examination schedule */
