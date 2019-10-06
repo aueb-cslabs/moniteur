@@ -24,17 +24,20 @@
     export default {
         name: 'AdminBar',
 
+        created() {
+            this.username = this.$cookies.get('session').Username;
+        },
+
         data() {
             return {
+                username: '',
                 sideOpen: false
             }
         },
 
         methods: {
             logout: function (e) {
-                this.$parent.$data['authToken'].auth = false;
-                this.$parent.$data['type'] = '';
-                this.$cookies.remove('test');
+                let cookie = this.$cookies.get('session');
                 axios({
                     method: 'post',
                     url: this.$root.$data['api'] + "/api/invalidate",
@@ -42,14 +45,9 @@
                         Authorization: this.$parent.$data['authToken'].token,
                         Username: this.$parent.$data['authToken'].username
                     }
-                }).then(response => {
-                    if (response.status === 200) {
-                        this.$parent.$data['authToken'].username = "";
-                        this.$parent.$data['authToken'].token = "";
-                        this.$parent.$data['authToken'].expiration = 0;
-                        this.$parent.$data['authToken'].auth = false;
-                        this.$parent.$data['type'] = '';
-                    }
+                }).then(() => {
+                    this.$parent.$data['authToken'].auth = false;
+                    this.$cookies.remove('session');
                 });
                 e.preventDefault();
             },

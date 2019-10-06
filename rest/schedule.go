@@ -84,3 +84,9 @@ func Room(e echo.Context) error {
 
 	return c.JSON(http.StatusOK, room)
 }
+
+func Rooms(e echo.Context) error {
+	c := e.(*types.Context)
+	rooms := c.Plugin().GetRooms()
+	return c.JSON(http.StatusOK, rooms)
+}

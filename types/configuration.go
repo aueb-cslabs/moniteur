@@ -7,10 +7,11 @@ import (
 
 // Configuration contains all the configuration parameters.
 type Configuration struct {
-	Plugin    string `yaml:"plugin"`
-	ExamsLink string `yaml:"exams"`
-	Secret    string `yaml:"secret"`
-	Port      int    `yaml:"port"`
+	Plugin          string            `yaml:"plugin"`
+	ExamsLink       string            `yaml:"exams"`
+	Secret          string            `yaml:"secret"`
+	Port            int               `yaml:"port"`
+	AuthorizedUsers map[string]string `yaml:"authorized_users"`
 }
 
 // LoadConfiguration reads a configuration file and returns a struct.

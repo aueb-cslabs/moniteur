@@ -1,6 +1,7 @@
 <template>
     <div>
         <div class="pt-5">
+            <h2>{{$t("message.adminAnnHeader")}}</h2>
             <div>
                 <form @submit="checkForm">
                     <div class="form-group">
@@ -14,15 +15,15 @@
                     <button type="submit" class="btn btn-primary">{{$t("message.adminAnnSend")}}</button>
                 </form>
             </div>
-            <div class="mt-5" v-if="announcement != null">
+            <div class="mt-5" v-if="this.announcement != null">
                 <div class="alert alert-primary" role="alert">
-                    <h3>{{$t("message.adminAnnCurrent")}} {{announcement['msg']}}</h3>
+                    <h3>{{this.$t("message.adminAnnCurrent")}} {{this.announcement['msg']}}</h3>
                 </div>
                 <hr>
                 <div class="alert alert-warning" role="alert">
-                    {{$t("message.adminExpires")}} {{announcement['end']}}
+                    {{this.$t("message.adminExpires")}} {{this.announcement['end']}}
                 </div>
-                <button type="submit" class="btn btn-danger" v-on:click="removeAnnouncement">{{$("message.removeAnn")}}</button>
+                <button type="submit" class="btn btn-danger" v-on:click="removeAnnouncement">{{this.$t("message.removeAnn")}}</button>
             </div>
         </div>
         <div class="error">
@@ -73,15 +74,16 @@
                 axios({
                     method: 'post',
                     url: this.$root.$data['api'] + "/api/announcement",
-                    headers: this.$parent.$data['config'],
+                    headers: {
+                        Username: this.$parent.$data['authToken'].username,
+                        Authorization: this.$parent.$data['authToken'].token
+                    },
                     data: {
                         end: this.form.end,
                         msg: this.form.msg
                     }
-                }).then(response => {
-                    if (response.status === 200) {
-                        this.fetchAnnouncement();
-                    }
+                }).then(() => {
+                    this.fetchAnnouncement();
                 });
             },
 
@@ -89,11 +91,12 @@
                 axios({
                     method: 'delete',
                     url: this.$root.$data['api'] + "/api/announcement",
-                    headers: this.$parent.$data['config'],
-                }).then(response => {
-                    if (response.status === 200) {
-                        this.announcement = null;
-                    }
+                    headers: {
+                        Username: this.$parent.$data['authToken'].username,
+                        Authorization: this.$parent.$data['authToken'].token
+                    },
+                }).then(() => {
+                    this.announcement = null;
                 });
             },
 

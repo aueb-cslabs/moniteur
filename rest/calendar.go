@@ -3,6 +3,7 @@ package rest
 import (
 	"encoding/json"
 	"github.com/aueb-cslabs/moniteur/types"
+	"github.com/aueb-cslabs/moniteur/utils"
 	"github.com/labstack/echo"
 	"io/ioutil"
 	"net/http"
@@ -14,6 +15,8 @@ import (
 // CalendarGroup Defines the api paths for all the calendar information
 func CalendarGroup(g *echo.Group) {
 	g.GET("", calendarInfo)
+	g.GET("/full", calendarExt)
+	g.POST("", Validate(postCalendar))
 }
 
 // calendarInfo Method that GETs the state of the day
@@ -28,6 +31,32 @@ func calendarInfo(ec echo.Context) error {
 	info.IsNormalPeriod = isNormal(c.Calendar.Semesters)
 
 	return c.JSON(http.StatusOK, info)
+}
+
+func calendarExt(e echo.Context) error {
+	c := e.(*types.Context)
+
+	return e.JSON(http.StatusOK, c.Calendar)
+}
+
+func postCalendar(e echo.Context) error {
+	c := e.(*types.Context)
+
+	calendar := &types.Calendar{}
+
+	err := e.Bind(calendar)
+	if err != nil {
+		return e.NoContent(http.StatusBadRequest)
+	}
+
+	c.Calendar = calendar
+
+	err = utils.UpdateCalendar(calendar)
+	if err != nil {
+		return e.NoContent(http.StatusInternalServerError)
+	}
+
+	return e.NoContent(http.StatusOK)
 }
 
 // currentDate Method that returns the date in dd/mm/yyyy format.

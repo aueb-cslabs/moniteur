@@ -10,6 +10,7 @@ import (
 func Read() (*types.Reader, error) {
 	byt, err := ioutil.ReadFile("config/existing.yml")
 	if err != nil {
+		err = write(&types.Reader{}, "config/existing.yml")
 		return nil, err
 	}
 	existing := &types.Reader{}

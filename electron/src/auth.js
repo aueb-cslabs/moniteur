@@ -1,6 +1,5 @@
 export default {
-    token: "",
-    expiration: "",
-    username: "",
-    auth: false
+    auth: false,
+    username: '',
+    token: ''
 }

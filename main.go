@@ -42,13 +42,13 @@ func main() {
 
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			return next(types.NewContext(c, plugin, calendar))
+			return next(types.NewContext(c, plugin, calendar, config.AuthorizedUsers))
 		}
 	})
 
 	//For CORS to work, please define the EXACT link that you will use!!!
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"http://localhost:8080"},
+		AllowOrigins: []string{"http://localhost:8080", "http://localhost:8086"},
 	}))
 
 	rest.CalendarGroup(api.Group("/calendarInfo"))
@@ -60,7 +60,10 @@ func main() {
 	api.POST("/authenticate", rest.Authenticate)
 	api.POST("/validate", rest.AuthenticateToken)
 	api.POST("/invalidate", rest.Invalidate)
-	api.POST("/register", rest.Register)
+	api.POST("/register/:id", rest.Validate(rest.Register))
+	api.POST("/unregister/:id", rest.Validate(rest.Unregister))
+	api.GET("/rooms", rest.Rooms)
+	api.GET("/users", rest.Validate(rest.Users))
 
 	// Should go in effect only in development mode.
 	// In production this should just serve the files.

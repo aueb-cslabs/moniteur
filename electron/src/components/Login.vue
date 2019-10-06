@@ -42,8 +42,8 @@
                 },
                 error: "",
                 cookie: {
-                    username: '',
-                    token: ''
+                    Username: '',
+                    Authorization: ''
                 },
                 dismissSecs: 5,
                 dismissCountDown: 0,
@@ -51,38 +51,22 @@
         },
 
         created() {
-            if (this.$cookies.get('session') != null) {
+            let cookie = this.$cookies.get('session');
+            if (cookie != null) {
                 axios({
                     method: 'post',
                     url: this.$root.$data['api'] + '/api/validate',
-                    headers: {
-                        username: this.$cookies.get('session').cookie.username,
-                        authorization: this.$cookies.get('session').cookie.token
-                    }
-                }).then(res => {
-                    if (res.status === 200) {
-                        this.$parent.$data['authToken'].auth = true;
-                        this.$parent.$data['authToken'].username = this.$cookies.get('session').cookie.username;
-                        this.$parent.$data['authToken'].token = this.$cookies.get('session').cookie.token;
-                        this.$parent.$data['authToken'].expiration = this.$cookies.get('session').expiration;
-                    }
-                    else {
-                        this.$parent.$data['authToken'].auth = false;
-                        this.$parent.$data['authToken'].username = '';
-                        this.$parent.$data['authToken'].token = '';
-                        this.$parent.$data['authToken'].expiration = '';
-                    }
+                    headers: cookie
+                }).then(() => {
+                    this.$parent.$data['authToken'].auth = true;
+                    this.$parent.$data['authToken'].username = cookie.Username;
+                    this.$parent.$data['authToken'].token = cookie.Authorization;
                 })
-            }
-            if (this.$cookies.get('test') != null) {
-                this.$parent.$data['authToken'].auth = true;
             }
         },
 
         methods: {
             login: function () {
-                this.$cookies.set('test', 'abc');
-                this.$parent.$data['authToken'].auth=true;
                 axios({
                     method: 'post',
                     url: this.$root.$data['api'] + '/api/authenticate',
@@ -91,23 +75,17 @@
                         password: this.loginForm.password
                     }
                 }).then(response => {
-                    if (response.status===200){
-                        this.$parent.$data['authToken'].username = this.loginForm.username;
-                        this.$parent.$data['authToken'].token = response.data['token_type'] + " " + response.data['access_token'];
-                        this.$parent.$data['authToken'].expiration = response.data['expires_in'];
-                        this.$parent.$data['authToken'].auth = true;
-                        this.$parent.$data['config'].Authorization = response.data['token_type'] + " " + response.data['access_token'];
-                        this.$parent.$data['config'].Username = this.loginForm.username;
-                        this.cookie.token = this.$parent.$data['authToken'].token;
-                        this.cookie.username = this.$parent.$data['authToken'].username;
-                        this.$cookies.set('session', this.cookie, new Date(this.$parent.$data['authToken'].expiration));
-                        this.error = "";
-                    }
-                    else {
-                        this.error = this.$t('message.loginError');
-                    }
-                    this.$parent.checkLogin();
-                });
+                    this.cookie.Authorization = response.data['token_type'] + " " + response.data['access_token'];
+                    this.cookie.Username = this.loginForm.username;
+                    this.$parent.$data['authToken'].auth = true;
+                    this.$parent.$data['authToken'].username = this.loginForm.username;
+                    this.$parent.$data['authToken'].token = response.data['token_type'] + " " + response.data['access_token'];
+                        let date = new Date(response.data['expires_in']*1000);
+                    this.$cookies.set('session', this.cookie, date);
+                }).catch(() => {
+                    this.error = this.$t('message.loginError');
+                    this.showAlert();
+                })
             },
 
             checkLogin: function (e) {
@@ -125,6 +103,7 @@
             countDownChanged(dismissCountDown) {
                 this.dismissCountDown = dismissCountDown
             },
+
             showAlert() {
                 this.dismissCountDown = this.dismissSecs
             }

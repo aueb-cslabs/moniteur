@@ -21,6 +21,10 @@ func Authenticate(e echo.Context) error {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 
+	if ctx.AuthorizedUsers[user.Username] == "" {
+		return e.NoContent(http.StatusUnauthorized)
+	}
+
 	res, ldapErr := ctx.Plugin().AuthorizeUser(user.Username, user.Password)
 
 	if res {
@@ -54,7 +58,8 @@ func Authenticate(e echo.Context) error {
 }
 
 func AuthenticateToken(e echo.Context) error {
-	authHeader := e.Request().Header.Get("authorization")
+	ctx := e.(*types.Context)
+	authHeader := e.Request().Header.Get("Authorization")
 	if authHeader == "" {
 		return e.NoContent(http.StatusUnauthorized)
 	}
@@ -71,6 +76,9 @@ func AuthenticateToken(e echo.Context) error {
 	}
 	claim := authorized[bearerToken[1]]
 	name := e.Request().Header.Get("Username")
+	if ctx.AuthorizedUsers[name] == "" {
+		return e.NoContent(http.StatusUnauthorized)
+	}
 	if claim == nil {
 		return e.NoContent(http.StatusUnauthorized)
 	}
@@ -92,6 +100,7 @@ func AuthenticateToken(e echo.Context) error {
 // Validate user validation of JWT token
 func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
+		ctx := c.(*types.Context)
 		authHeader := c.Request().Header.Get("authorization")
 		if authHeader == "" {
 			return c.NoContent(http.StatusUnauthorized)
@@ -109,6 +118,9 @@ func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 		}
 		claim := authorized[bearerToken[1]]
 		name := c.Request().Header.Get("Username")
+		if ctx.AuthorizedUsers[name] == "" {
+			return c.NoContent(http.StatusUnauthorized)
+		}
 		if claim == nil {
 			return c.NoContent(http.StatusUnauthorized)
 		}
@@ -163,4 +175,13 @@ func jwtKey(token *jwt.Token) (interface{}, error) {
 		return nil, errors.New("unexpected error")
 	}
 	return []byte(secret), nil
+}
+
+func Users(e echo.Context) error {
+	c := e.(*types.Context)
+	users := make([]string, 0)
+	for key, _ := range c.AuthorizedUsers {
+		users = append(users, key)
+	}
+	return e.JSON(http.StatusOK, users)
 }

@@ -1,19 +1,12 @@
 <template>
     <div>
         <div class="pt-5">
+            <h2>{{$t("message.adminRAHeader")}}</h2>
             <div>
-                <form @submit="checkSearch">
-                    <div class="row">
-                        <div class="col-xs-10 col-md-10 form-group">
-                            <input type="text" class="form-control" v-model="room" v-bind:placeholder="this.$t('message.adminRoomAnnRN')">
-                        </div>
-                        <div class="col-xs-2 col-md-2 form-group">
-                            <button type="submit" class="btn btn-primary">{{$t("message.adminSearch")}}</button>
-                        </div>
-                    </div>
-                </form>
+                <label>{{$t("message.adminRASelect")}}</label>
+                <b-form-select @change="fetchRoomAnnouncement" v-model="room" :options="options"></b-form-select>
             </div>
-            <div v-if="roomBool">
+            <div v-if="this.room != null" class="pt-5">
                 <form @submit="checkForm">
                     <div class="form-group">
                         <label for="message">{{$t("message.adminAnnForm1")}}</label>
@@ -26,15 +19,15 @@
                     <button type="submit" class="btn btn-primary">{{$t("message.adminAnnSend")}}</button>
                 </form>
             </div>
-            <div class="mt-5" v-if="announcement != null">
+            <div class="mt-5" v-if="this.announcement != null">
                 <div class="alert alert-primary" role="alert">
-                    <h3>{{$t("message.adminRoomAnnCurrent")}} {{announcement['msg']}}</h3>
+                    <h3>{{this.$t("message.adminRoomAnnCurrent")}} {{this.announcement['msg']}}</h3>
                 </div>
                 <hr>
                 <div class="alert alert-warning" role="alert">
-                    {{$t("message.adminExpires")}} {{announcement['end']}}
+                    {{this.$t("message.adminExpires")}} {{this.announcement['end']}}
                 </div>
-                <button type="submit" class="btn btn-danger" v-on:click="removeRoomAnnouncement">{{$t("message.removeAnn")}}</button>
+                <button type="submit" class="btn btn-danger" v-on:click="removeRoomAnnouncement">{{this.$t("message.removeAnn")}}</button>
             </div>
         </div>
         <div class="error">
@@ -63,6 +56,15 @@
     export default {
         name: 'AdminRoomAnnouncement',
 
+        created() {
+            axios({
+                method: 'get',
+                url: this.$root.$data['api'] + '/api/rooms'
+            }).then(response => {
+                this.options = response.data;
+            });
+        },
+
         data() {
             return {
                 announcement: null,
@@ -72,10 +74,11 @@
                 },
                 error: null,
                 searchError: null,
-                room: '',
+                room: null,
                 roomBool: false,
                 dismissSecs: 5,
                 dismissCountDown: 0,
+                options: []
             }
         },
 
@@ -84,15 +87,16 @@
                 axios({
                     method: 'post',
                     url: this.$root.$data['api'] + "/api/announcement/" + this.room,
-                    headers: this.$parent.$data['config'],
+                    headers: {
+                        Username: this.$parent.$data['authToken'].username,
+                        Authorization: this.$parent.$data['authToken'].token
+                    },
                     data: {
                         end: this.form.end,
                         msg: this.form.msg
                     }
-                }).then(response => {
-                    if (response.status === 200) {
-                        this.fetchRoomAnnouncement();
-                    }
+                }).then(() => {
+                    this.fetchRoomAnnouncement();
                 });
             },
 
@@ -100,11 +104,12 @@
                 axios({
                     method: 'delete',
                     url: this.$root.$data['api'] + "/api/announcement/" + this.room,
-                    headers: this.$parent.$data['config'],
-                }).then(response => {
-                    if (response.status === 200) {
-                        this.announcement = null;
-                    }
+                    headers: {
+                        Username: this.$parent.$data['authToken'].username,
+                        Authorization: this.$parent.$data['authToken'].token
+                    },
+                }).then(() => {
+                    this.announcement = null;
                 });
             },
 
@@ -171,6 +176,7 @@
             countDownChanged(dismissCountDown) {
                 this.dismissCountDown = dismissCountDown
             },
+
             showAlert() {
                 this.dismissCountDown = this.dismissSecs
             }

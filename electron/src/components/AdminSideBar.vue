@@ -3,16 +3,14 @@
         <a class="nav-item" v-on:click="this.$parent.showAnnouncement">{{$t("message.adminBarGA")}}</a>
         <a class="nav-item" v-on:click="this.$parent.showRoomAnnouncement">{{$t("message.adminBarRA")}}</a>
         <a class="nav-item" v-on:click="this.$parent.showComment">{{$t("message.adminBarGC")}}</a>
+        <a class="nav-item" v-on:click="this.$parent.showUserManagement">{{$t("message.adminBarUM")}}</a>
+        <a class="nav-item" v-on:click="this.$parent.showAcademicCalendar">{{$t("message.adminBarAC")}}</a>
     </div>
 </template>
 
 <script>
     export default {
         name: 'AdminSideBar',
-
-        created() {
-
-        }
     }
 </script>
 

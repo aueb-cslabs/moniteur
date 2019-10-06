@@ -10,6 +10,8 @@ import (
 
 // createRoomAnn Method that accepts POSTs a room announcement
 func createRoomAnn(e echo.Context) error {
+	c := e.(*types.Context)
+
 	post := &types.AnnouncementPost{}
 	err := e.Bind(post)
 
@@ -24,7 +26,10 @@ func createRoomAnn(e echo.Context) error {
 	}
 	ann.Msg = post.Msg
 
-	announcements[e.Param("room")] = ann
+	//Because of the room names that are in Greek we need to convert it to English
+	room := c.Plugin().ConvertNameInverse(e.Param("room"))
+
+	announcements[room] = ann
 
 	writeRoomAnnouncements()
 
@@ -33,6 +38,8 @@ func createRoomAnn(e echo.Context) error {
 
 // updateRoomAnn Method that accepts PUTs a room announcement
 func updateRoomAnn(e echo.Context) error {
+	c := e.(*types.Context)
+
 	post := &types.AnnouncementPost{}
 	err := e.Bind(post)
 
@@ -47,7 +54,10 @@ func updateRoomAnn(e echo.Context) error {
 	}
 	ann.Msg = post.Msg
 
-	announcements[e.Param("room")] = ann
+	//Because of the room names that are in Greek we need to convert it to English
+	room := c.Plugin().ConvertNameInverse(e.Param("room"))
+
+	announcements[room] = ann
 
 	writeRoomAnnouncements()
 
@@ -56,7 +66,9 @@ func updateRoomAnn(e echo.Context) error {
 
 // deleteRoomAnn Method that accepts DELETEs a room announcement
 func deleteRoomAnn(e echo.Context) error {
-	delete(announcements, e.Param("room"))
+	c := e.(*types.Context)
+	room := c.Plugin().ConvertNameInverse(e.Param("room"))
+	delete(announcements, room)
 
 	writeRoomAnnouncements()
 
@@ -65,7 +77,10 @@ func deleteRoomAnn(e echo.Context) error {
 
 // getRoomAnn Method that accepts GETs a room announcement
 func getRoomAnn(e echo.Context) error {
-	return e.JSON(http.StatusOK, announcements[e.Param("room")])
+	c := e.(*types.Context)
+	room := c.Plugin().ConvertNameInverse(e.Param("room"))
+
+	return e.JSON(http.StatusOK, announcements[room])
 }
 
 // checkRoomAnnouncementsExpiration checks every hour if any room announcement has expired

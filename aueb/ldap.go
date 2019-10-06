@@ -24,8 +24,6 @@ type LdapConfiguration struct {
 	SearchClass string `yaml:"search_class"`
 
 	UsernameAttribute string `yaml:"username_attribute"`
-
-	AuthorizedUsers map[string]string `yaml:"authorized_users"`
 }
 
 // loadLdapConfig loads the config in the struct above from ldap.yml
@@ -70,10 +68,6 @@ func authenticateLdap(username string, password string) (bool, error) {
 	}
 	defer l.Close()
 
-	if ldapConf.AuthorizedUsers[username] == "" {
-		return false, errors.New("user is not authenticated")
-	}
-
 	// Search for the given username
 	filter := fmt.Sprintf("(&(objectClass=%s)(%s=%s))",
 		ldapConf.SearchClass, ldapConf.UsernameAttribute, username)
@@ -101,7 +95,7 @@ func authenticateLdap(username string, password string) (bool, error) {
 	return true, nil
 }
 
-func register(username string) (bool, error) {
+/*func register(username string) (bool, error) {
 	ldapConf.AuthorizedUsers[username] = "Y"
 	byt, err := yaml.Marshal(ldapConf)
 	if err != nil {
@@ -113,3 +107,4 @@ func register(username string) (bool, error) {
 	}
 	return true, nil
 }
+*/

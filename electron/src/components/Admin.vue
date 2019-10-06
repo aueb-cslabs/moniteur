@@ -16,6 +16,12 @@
                 <div v-if="type === 'ac'">
                     <AdminComment/>
                 </div>
+                <div v-if="type === 'um'">
+                    <UserManagement/>
+                </div>
+                <div v-if="type === 'cal'">
+                    <AcademicCalendar/>
+                </div>
             </div>
         </div>
     </div>
@@ -28,7 +34,9 @@
     import AdminAnnouncement from "./AdminAnnouncement";
     import AdminComment from "./AdminComment";
     import AdminRoomAnnouncement from "./AdminRoomAnnouncement";
+    import UserManagement from "./UserManagement";
     import AdminSideBar from "./AdminSideBar";
+    import AcademicCalendar from "./AcademicCalendar";
 
     export default {
         name: 'Administration',
@@ -46,13 +54,14 @@
             AdminAnnouncement,
             AdminComment,
             AdminRoomAnnouncement,
-            AdminSideBar
+            AdminSideBar,
+            UserManagement,
+            AcademicCalendar
         },
 
         data() {
             return {
                 authToken: authToken,
-                auth: false,
                 type: '',
                 config: {
                     Authorization: authToken.token,
@@ -77,6 +86,16 @@
                 this.showSidebar();
             },
 
+            showUserManagement: function() {
+                this.type = 'um';
+                this.showSidebar();
+            },
+
+            showAcademicCalendar: function() {
+                this.type = 'cal';
+                this.showSidebar();
+            },
+
             showSidebar: function () {
                 if (!this.sideOpen){
                     let mw = window.matchMedia( "(max-width: 500px) ");
@@ -85,8 +104,8 @@
                         document.getElementById("main").style.marginLeft = "100%";
                     }
                     else {
-                        document.getElementById("sidebar").style.width = "250px";
-                        document.getElementById("main").style.marginLeft = "250px";
+                        document.getElementById("sidebar").style.width = "280px";
+                        document.getElementById("main").style.marginLeft = "280px";
                     }
                     this.sideOpen = true;
                 }

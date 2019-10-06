@@ -16,8 +16,12 @@ func Initialize(sec string, existing *types.Reader) {
 	secret = sec
 	if existing != nil {
 		com = existing.Comment
-		announcements = existing.RoomAnnouncements
 		message = existing.Announcement
+	}
+	if len(existing.RoomAnnouncements) != 0 {
+		for key, value := range existing.RoomAnnouncements {
+			announcements[key] = value
+		}
 	}
 	go checkAnnouncementExpiration()
 	go checkCommentExpiration()

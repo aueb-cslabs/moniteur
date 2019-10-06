@@ -1,6 +1,7 @@
 <template>
     <div>
         <div class="pt-5">
+            <h2>{{$t("message.adminComHeader")}}</h2>
             <div>
                 <form @submit="checkForm">
                     <div class="form-group">
@@ -14,15 +15,15 @@
                     <button type="submit" class="btn btn-primary">{{$t("message.adminCommSend")}}</button>
                 </form>
             </div>
-            <div class="mt-5" v-if="comment != null">
+            <div class="mt-5" v-if="this.comment != null">
                 <div class="alert alert-primary" role="alert">
-                    <h3>{{$t("message.adminCommCurrent")}} {{comment['msg']}}</h3>
+                    <h3>{{this.$t("message.adminCommCurrent")}} {{this.comment['msg']}}</h3>
                 </div>
                 <hr>
                 <div class="alert alert-warning" role="alert">
-                    {{$("message.adminExpires")}} {{comment['end']}}
+                    {{this.$t("message.adminExpires")}} {{this.comment['end']}}
                 </div>
-                <button type="submit" class="btn btn-primary" v-on:click="removeComment">{{$t("message.removeComm")}}</button>
+                <button type="submit" class="btn btn-primary" v-on:click="removeComment">{{this.$t("message.removeComm")}}</button>
             </div>
         </div>
         <div class="error">
@@ -73,15 +74,16 @@
                 axios({
                     method: 'post',
                     url: this.$root.$data['api'] + "/api/comment",
-                    headers: this.$parent.$data['config'],
+                    headers: {
+                        Username: this.$parent.$data['authToken'].username,
+                        Authorization: this.$parent.$data['authToken'].token
+                    },
                     data: {
                         end: this.form.end,
                         msg: this.form.msg
                     }
-                }).then(response => {
-                    if (response.status === 200) {
-                        this.fetchComment();
-                    }
+                }).then(() => {
+                    this.fetchComment();
                 });
             },
 
@@ -89,11 +91,12 @@
                 axios({
                     method: 'delete',
                     url: this.$root.$data['api'] + "/api/comment",
-                    headers: this.$parent.$data['config'],
-                }).then(response => {
-                    if (response.status === 200) {
-                        this.comment = null;
-                    }
+                    headers: {
+                        Username: this.$parent.$data['authToken'].username,
+                        Authorization: this.$parent.$data['authToken'].token
+                    },
+                }).then(() => {
+                    this.comment = null;
                 });
             },
 
