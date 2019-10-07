@@ -1,7 +1,7 @@
 body {
   .schedule {
     background: #494148;
-    font-size: 1.2em;
+    font-size: 1.5em;
 
     height: 35%;
 
@@ -17,18 +17,23 @@ body {
     padding-bottom: .5em;
 
     display: flex;
-    flex-direction: row;
     justify-content: center;
   }
 
   .current {
     width: 40%;
     height: 80%;
+
+    display: flex;
+    flex-direction: column;
   }
 
   .next {
     width: 40%;
     height: 80%;
+
+    display: flex;
+    flex-direction: column;
 
     margin-left: 1em;
   }
@@ -42,30 +47,22 @@ body {
     color: #5ac1f2;
   }
 
-  .center {
-    margin: 0;
-    position: relative;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  .center-message {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .message {
     width: 75%;
-    height: 40%;
+    height: 80%;
     background: #494148;
     font-size: .5em;
 
     align-self: center;
     border-radius: 50px;
   }
-
-  .center-message {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
 }

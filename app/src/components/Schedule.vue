@@ -2,7 +2,7 @@
     <div class="wrapper" v-if="normal">
         <div id="current" class="text-center current schedule">
             <h3> {{ $t("message.nowMsg") }} <i class="fas fa-chalkboard-teacher"></i></h3>
-            <p class="center common fade-in" v-if="current['now'] != null">
+            <p class="center-message common fade-in" v-if="current['now'] != null">
                 <u>
                     {{time['now_start'].getUTCHours()}}:{{getMinutes(this.time['now_start'])}}
                     - {{time['now_end'].getUTCHours()}}:{{getMinutes(this.time['now_end'])}}
@@ -10,17 +10,16 @@
                 {{current['now']['title']}}<br>
                 {{current['now']['host']}}
             </p>
-            <p class="center common fade-in subject" v-else-if="isExam">
+            <p class="center-message common fade-in subject" v-else-if="isExam">
                 {{ $t("message.noExamNow") }}
             </p>
-            <p class="center common fade-in subject" v-else>
+            <p class="center-message common fade-in subject" v-else>
                 {{ $t("message.noLessonNow") }}
             </p>
         </div>
-
         <div id="next" class="text-center next schedule">
             <h3> {{ $t("message.nextMsg") }} <i class="fas fa-chalkboard-teacher nextsub"></i></h3>
-            <p class="center common fade-in" v-if="current['next'] != null">
+            <p class="center-message common fade-in" v-if="current['next'] != null">
                 <u>
                     {{time['next_start'].getUTCHours()}}:{{getMinutes(this.time['next_start'])}}
                     - {{time['next_end'].getUTCHours()}}:{{getMinutes(this.time['next_end'])}}
@@ -28,18 +27,18 @@
                 {{current['next'][0]['title']}}<br>
                 {{current['next'][0]['host']}}
             </p>
-            <p class="center common fade-in subject" v-else-if="isExam">
+            <p class="center-message common fade-in subject" v-else-if="isExam">
                 {{ $t("message.noExamNext") }}
             </p>
-            <p class="center common fade-in subject" v-else>
+            <p class="center-message common fade-in subject" v-else>
                 {{ $t("message.noLessonNext") }}
             </p>
         </div>
     </div>
     <div class="wrapper" v-else>
-        <div class="center-message message mt-0">
-            <h3 class="common fade-on subject" v-if="isBreak">{{ $t("message.holiday") }}</h3>
-            <h3 class="center-message common fade-on subject" v-if="isWeekend">{{ $t("message.weekend") }}</h3>
+        <div class="message">
+            <h3 class="center-message common fade-in subject" v-if="isBreak">{{ $t("message.holiday") }}</h3>
+            <h3 class="center-message common fade-in subject" v-if="isWeekend">{{ $t("message.weekend") }}</h3>
         </div>
     </div>
 </template>
@@ -54,10 +53,10 @@
         data() {
             return {
                 current: [],
-                isExam: {},
+                isExam: false,
                 time: {},
-                isWeekend: {},
-                isBreak: {},
+                isWeekend: false,
+                isBreak: false,
                 normal: {}
             }
         },
