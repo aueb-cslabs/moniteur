@@ -40,7 +40,7 @@
             getTime: function () {
                 setInterval(() => {
                     let date = new Date();
-                    this.date = date.toLocaleString()
+                    this.date = date.toLocaleString(undefined, {hour12: false })
                 })
             },
 
