@@ -9,7 +9,7 @@
                             <input type="text" class="form-control" v-model="user" v-bind:placeholder="this.$t('message.umUsername')">
                         </div>
                         <div class="col-xs-2 col-md-2 form-group">
-                            <button type="submit" class="btn btn-primary">{{$t("message.umAdd")}}</button>
+                            <button type="submit" class="btn btn-primary float-right">{{$t("message.umAdd")}}</button>
                         </div>
                     </div>
                 </form>
@@ -20,7 +20,7 @@
                     <label>{{$t("message.umSelect")}}</label>
                     <b-form-select v-model="userOption" :options="options"></b-form-select>
                 </div>
-                <b-button @click="removeUser" variant="danger" class="mt-3">{{$t("message.umRemove")}}</b-button>
+                <b-button @click="removeUser" variant="danger" class="mt-3 float-right">{{$t("message.umRemove")}}</b-button>
             </div>
         </div>
         <div class="error">

@@ -23,7 +23,7 @@
                 <div class="alert alert-warning" role="alert">
                     {{this.$t("message.adminExpires")}} {{this.announcement['end']}}
                 </div>
-                <button type="submit" class="btn btn-danger" v-on:click="removeAnnouncement">{{this.$t("message.removeAnn")}}</button>
+                <button type="submit" class="btn btn-danger float-right" v-on:click="removeAnnouncement">{{this.$t("message.removeAnn")}}</button>
             </div>
         </div>
         <div class="error">
@@ -48,6 +48,7 @@
 
 <script>
     import axios from 'axios';
+    import functions from "../functions";
 
     export default {
         name: 'AdminAnnouncement',
@@ -128,7 +129,7 @@
                     e.preventDefault();
                     return;
                 }
-                if (!this.isGoodDate(this.form.end)) {
+                if (!functions.isGoodDate(this.form.end)) {
                     this.error = this.$t('message.adminInvalidDate');
                     this.showAlert();
                     e.preventDefault();
@@ -141,14 +142,10 @@
                 e.preventDefault();
             },
 
-            isGoodDate: function(dt){
-                let reGoodDate = /([0-3]?\d\/{1})([01]?\d\/{1})([12]{1}\d{3}\/?)/g;
-                return reGoodDate.test(dt);
-            },
-
             countDownChanged(dismissCountDown) {
                 this.dismissCountDown = dismissCountDown
             },
+
             showAlert() {
                 this.dismissCountDown = this.dismissSecs
             }

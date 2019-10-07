@@ -4,7 +4,7 @@
   width: 0; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
   z-index: 1; /* Stay on top */
-  top: inherit;
+  top: 0;
   left: 0;
   background-color: var(--navbar-bg-color); /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
@@ -21,6 +21,8 @@
   color: #818181;
   display: block;
   transition: 0.3s;
+  position: relative;
+  top: 80px;
 }
 
 /* When you mouse over the navigation links, change their color */
@@ -44,7 +46,7 @@
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
   transition: margin-left .5s; /* If you want a transition effect */
-  margin-left: 250px;
+  margin-left: 280px;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */

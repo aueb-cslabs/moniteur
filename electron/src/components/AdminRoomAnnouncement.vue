@@ -16,7 +16,7 @@
                         <label for="expiration">{{$t("message.adminAnnExpire")}}</label>
                         <input type="text" class="form-control" id="expiration" v-model="form.end" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                     </div>
-                    <button type="submit" class="btn btn-primary">{{$t("message.adminAnnSend")}}</button>
+                    <button type="submit" class="btn btn-primary float-right">{{$t("message.adminAnnSend")}}</button>
                 </form>
             </div>
             <div class="mt-5" v-if="this.announcement != null">
@@ -27,7 +27,7 @@
                 <div class="alert alert-warning" role="alert">
                     {{this.$t("message.adminExpires")}} {{this.announcement['end']}}
                 </div>
-                <button type="submit" class="btn btn-danger" v-on:click="removeRoomAnnouncement">{{this.$t("message.removeAnn")}}</button>
+                <button type="submit" class="btn btn-danger float-right" v-on:click="removeRoomAnnouncement">{{this.$t("message.removeAnn")}}</button>
             </div>
         </div>
         <div class="error">
@@ -52,6 +52,7 @@
 
 <script>
     import axios from 'axios';
+    import functions from '../functions';
 
     export default {
         name: 'AdminRoomAnnouncement',
@@ -141,7 +142,7 @@
                     e.preventDefault();
                     return;
                 }
-                if (!this.isGoodDate(this.form.end)) {
+                if (!functions.isGoodDate(this.form.end)) {
                     this.error = this.$t('message.adminInvalidDate');
                     this.showAlert();
                     e.preventDefault();
@@ -166,11 +167,6 @@
                 this.error = '';
                 this.roomBool = true;
                 e.preventDefault();
-            },
-
-            isGoodDate: function(dt){
-                let reGoodDate = /([0-3]?\d\/{1})([01]?\d\/{1})([12]{1}\d{3}\/?)/g;
-                return reGoodDate.test(dt);
             },
 
             countDownChanged(dismissCountDown) {

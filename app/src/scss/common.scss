@@ -2,6 +2,16 @@ body {
   .common {
     font-family: Calibri, sans-serif;
   }
+
+  .flex-container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+  }
 }
 
 .fade-in {
@@ -19,16 +29,6 @@ body {
   100% {
     opacity: 1;
   }
-}
-
-.flex-container {
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  justify-items: center;
-  align-items: center;
-  flex-direction: column;
 }
 
 footer {

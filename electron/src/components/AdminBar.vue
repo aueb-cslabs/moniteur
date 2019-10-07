@@ -37,7 +37,7 @@
 
         methods: {
             logout: function (e) {
-                let cookie = this.$cookies.get('session');
+                //let cookie = this.$cookies.get('session');
                 axios({
                     method: 'post',
                     url: this.$root.$data['api'] + "/api/invalidate",

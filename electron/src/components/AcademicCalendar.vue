@@ -112,7 +112,7 @@
                     <div>
                         <form>
                             <div class="row">
-                                <div class="col-md-10 form-group">
+                                <div class="col-md-8 col-lg-10 form-group">
                                     <input type="text" class="form-control" v-model="date" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                                 </div>
                                 <div class="col form-group">
@@ -131,7 +131,7 @@
                             <div class="col">
                                 <b-button @click="removeDate" variant="danger" class="mt-3">{{$t("message.calRemoveDate")}}</b-button>
                                 <b-button @click="removeAll" variant="danger" class="ml-3 mt-3">{{$t("message.calRemoveAll")}}</b-button>
-                                <button @click="checkForm" type="submit" class="btn btn-primary ml-3 mt-3 float-right">{{this.$t("message.calSend")}}</button>
+                                <b-button @click="checkForm" variant="primary" class="ml-3 mt-3 float-right">{{this.$t("message.calSend")}}</b-button>
                             </div>
                         </div>
                     </div>
@@ -155,11 +155,30 @@
                 ></b-progress>
             </b-alert>
         </div>
+        <div class="success">
+            <b-alert
+                    :show="successCountDown"
+                    dismissible
+                    variant="success"
+                    @dismissed="successCountDown=0"
+                    @dismiss-count-down="successChanged"
+            >
+                <p>{{$t('message.calSuccess')}}</p>
+                <b-progress
+                        variant="dark"
+                        :max="dismissSecs"
+                        :value="successCountDown"
+                        height="4px"
+                ></b-progress>
+            </b-alert>
+        </div>
     </div>
 </template>
 
 <script>
     import axios from "axios";
+    import functions from "../functions";
+    import traverse from "traverse";
 
     export default {
         created() {
@@ -208,6 +227,7 @@
                 dateOption: null,
                 dismissSecs: 5,
                 dismissCountDown: 0,
+                successCountDown: 0,
                 error: null,
                 date: ''
             }
@@ -216,77 +236,26 @@
         methods: {
             checkForm: function () {
 
-                //TODO CHANGE THIS, IT IS STUPID!!!
-
-                for (let key in this.Calendar.Semesters.Winter) {
-                    if (this.Calendar.Semesters.Winter.hasOwnProperty(key)) {
-                        if(!this.isGoodDate(this.Calendar.Semesters.Winter[key])){
-                            this.errorF();
-                            return;
+                let dates = traverse(this.Calendar).reduce(function (dates, x) {
+                    if (this.isLeaf) {
+                        if (Array.isArray(x)) {
+                            dates = dates.concat(x);
+                        }
+                        else {
+                            dates.push(x);
                         }
                     }
-                }
-                for (let key in this.Calendar.Semesters.Sprint) {
-                    if (this.Calendar.Semesters.Sprint.hasOwnProperty(key)) {
-                        if(!this.isGoodDate(this.Calendar.Semesters.Sprint[key])){
-                            this.errorF();
-                            return;
-                        }
-                    }
-                }
-                for (let key in this.Calendar.Exams.Winter) {
-                    if (this.Calendar.Exams.Winter.hasOwnProperty(key)) {
-                        if(!this.isGoodDate(this.Calendar.Exams.Winter[key])){
-                            this.errorF();
-                            return;
-                        }
-                    }
-                }
-                for (let key in this.Calendar.Exams.Sprint) {
-                    if (this.Calendar.Exams.Sprint.hasOwnProperty(key)) {
-                        if(!this.isGoodDate(this.Calendar.Exams.Sprint[key])){
-                            this.errorF();
-                            return;
-                        }
-                    }
-                }
-                for (let key in this.Calendar.Exams.September) {
-                    if (this.Calendar.Exams.September.hasOwnProperty(key)) {
-                        if(!this.isGoodDate(this.Calendar.Exams.September[key])){
-                            this.errorF();
-                            return;
-                        }
-                    }
-                }
-                for (let key in this.Calendar.Breaks.Winter) {
-                    if (this.Calendar.Breaks.Winter.hasOwnProperty(key)) {
-                        if(!this.isGoodDate(this.Calendar.Breaks.Winter[key])){
-                            this.errorF();
-                            return;
-                        }
-                    }
-                }
-                for (let key in this.Calendar.Breaks.Sprint) {
-                    if (this.Calendar.Breaks.Sprint.hasOwnProperty(key)) {
-                        if(!this.isGoodDate(this.Calendar.Breaks.Sprint[key])){
-                            this.errorF();
-                            return;
-                        }
-                    }
-                }
-                this.Calendar.Breaks.Various.forEach(value => {
-                    if (!this.isGoodDate(value)) {
-                        this.errorF();
+                    return dates;
+                }, []);
+                for (let i in dates) {
+                    if (!functions.isGoodDate(dates[i])) {
+                        this.error = this.$t('message.adminInvalidDate');
+                        this.showAlert();
                         return;
                     }
-                });
+                }
                 this.error = null;
                 this.send();
-            },
-
-            errorF: function() {
-                this.error = this.$t('message.adminInvalidDate');
-                this.showAlert();
             },
 
             send: function() {
@@ -299,13 +268,11 @@
                     },
                     data: this.Calendar
                 }).then(() => {
-                    //TODO Show success result
+                    this.showSuccess();
+                }).catch(() => {
+                    this.error = this.$t('message.calFail');
+                    this.showAlert();
                 })
-            },
-
-            isGoodDate: function(dt){
-                let reGoodDate = /([0-3]?\d\/{1})([01]?\d\/{1})([12]{1}\d{3}\/?)/g;
-                return reGoodDate.test(dt);
             },
 
             retrieveCalendar: function() {
@@ -329,7 +296,7 @@
             },
 
             addDate: function(e) {
-                if (!this.isGoodDate(this.date)) {
+                if (!functions.isGoodDate(this.date)) {
                     this.error = this.$t('message.adminInvalidDate');
                     this.showAlert();
                     this.date = '';
@@ -347,7 +314,15 @@
 
             showAlert() {
                 this.dismissCountDown = this.dismissSecs
-            }
+            },
+
+            successChanged(successCountDown) {
+                this.successCountDown = successCountDown
+            },
+
+            showSuccess() {
+                this.successCountDown = this.dismissSecs;
+            },
         }
     }
 </script>

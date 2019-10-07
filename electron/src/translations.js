@@ -70,7 +70,9 @@ export default {
             calAddDate: "Add Date",
             calRemoveDate: "Remove Date",
             calSelectDate: "Select Date",
-            calRemoveAll: "Remove All"
+            calRemoveAll: "Remove All",
+            calSuccess: "Successful Submission!",
+            calFail: "Unsuccessful Submission!"
         }
     },
     el: {
@@ -137,14 +139,16 @@ export default {
             calSep: "Εξεταστική Σεπτεμβρίου",
             calSemesterStart: "Έναρξη",
             calSemesterEnd: "Πέρας",
-            calSend: "Αποστολή Προγράμματος",
+            calSend: "Καταχώρηση Προγράμματος",
             calExams: "Καταχώρηση Εξεταστικών Περιόδων",
             calBreaks: "Καταχώρηση Αργιών & Διαλλειμάτων",
             calVarious: "Διάφορες Αργίες",
             calAddDate: "Προσθέστε Ημερομηνία",
             calRemoveDate: "Αφαίρεση Ημερομηνίας",
             calSelectDate: "Επιλέξτε Ημερομηνία",
-            calRemoveAll: "Αφαίρεση Όλων"
+            calRemoveAll: "Αφαίρεση Όλων",
+            calSuccess: "Επιτυχής Καταχώρηση!",
+            calFail: "Ανεπιτυχής Καταχώρηση!"
         }
     }
 };
