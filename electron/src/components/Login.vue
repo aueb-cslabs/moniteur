@@ -8,7 +8,7 @@
             <div class="form-group">
                 <input type="password" class="form-control" id="password" v-model="loginForm.password" v-bind:placeholder="this.$t('message.loginPassword')">
             </div>
-            <button type="submit" class="btn btn-primary">{{$t("message.loginSignIn")}}</button>
+            <button @click="checkLogin" class="btn btn-primary">{{$t("message.loginSignIn")}}</button>
         </form>
         <div class="error">
             <b-alert

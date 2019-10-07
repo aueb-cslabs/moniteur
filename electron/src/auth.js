@@ -1,5 +1,5 @@
 export default {
-    auth: true,
+    auth: false,
     username: '',
     token: ''
 }

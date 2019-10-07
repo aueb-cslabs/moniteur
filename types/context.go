@@ -9,8 +9,8 @@ type Context struct {
 	AuthorizedUsers map[string]string
 }
 
-func NewContext(context echo.Context, plugin Plugin, calendar *Calendar, authorizedUsers map[string]string) *Context {
-	return &Context{Context: context, plugin: plugin, Calendar: calendar, AuthorizedUsers: authorizedUsers}
+func NewContext(context echo.Context, plugin Plugin) *Context {
+	return &Context{Context: context, plugin: plugin}
 }
 
 func (c Context) Plugin() Plugin {

@@ -36,13 +36,13 @@ func main() {
 
 	existing, _ := utils.Read()
 	plugin.Initialize(config.ExamsLink)
-	rest.Initialize(config.Secret, existing)
+	rest.Initialize(config.Secret, existing, calendar, config.AuthorizedUsers)
 
 	api := e.Group("/api")
 
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			return next(types.NewContext(c, plugin, calendar, config.AuthorizedUsers))
+			return next(types.NewContext(c, plugin))
 		}
 	})
 
