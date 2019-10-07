@@ -22,6 +22,9 @@
                 <div v-if="type === 'cal'">
                     <AcademicCalendar/>
                 </div>
+                <div v-if="type === 'exams'">
+                    <ExamsCalendar/>
+                </div>
             </div>
         </div>
     </div>
@@ -37,6 +40,7 @@
     import UserManagement from "./UserManagement";
     import AdminSideBar from "./AdminSideBar";
     import AcademicCalendar from "./AcademicCalendar";
+    import ExamsCalendar from "./ExamsCalendar";
 
     export default {
         name: 'Administration',
@@ -56,7 +60,8 @@
             AdminRoomAnnouncement,
             AdminSideBar,
             UserManagement,
-            AcademicCalendar
+            AcademicCalendar,
+            ExamsCalendar
         },
 
         data() {
@@ -93,6 +98,11 @@
 
             showAcademicCalendar: function() {
                 this.type = 'cal';
+                this.showSidebar();
+            },
+
+            showExamsCalendar: function() {
+                this.type = 'exams';
                 this.showSidebar();
             },
 

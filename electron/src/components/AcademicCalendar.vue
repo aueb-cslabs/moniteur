@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="pt-5">
-            <h2>{{$t("message.calReg")}}</h2>
+            <h2>{{$t("message.ecGeneral")}}</h2>
             <div class="pt-3">
                 <div class="row">
                     <div class="col">

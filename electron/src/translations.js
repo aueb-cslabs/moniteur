@@ -72,7 +72,10 @@ export default {
             calSelectDate: "Select Date",
             calRemoveAll: "Remove All",
             calSuccess: "Successful Submission!",
-            calFail: "Unsuccessful Submission!"
+            calFail: "Unsuccessful Submission!",
+            adminBarEC: "Exams Calendar",
+            ecSubmit: "Exam Registration",
+            ecGeneral: "Exam Schedule"
         }
     },
     el: {
@@ -148,7 +151,10 @@ export default {
             calSelectDate: "Επιλέξτε Ημερομηνία",
             calRemoveAll: "Αφαίρεση Όλων",
             calSuccess: "Επιτυχής Καταχώρηση!",
-            calFail: "Ανεπιτυχής Καταχώρηση!"
+            calFail: "Ανεπιτυχής Καταχώρηση!",
+            adminBarEC: "Πρόγραμμα Εξεταστικής",
+            ecSubmit: "Καταχώρηση Μαθήματος",
+            ecGeneral: "Πρόγραμμα Εξεταστικής"
         }
     }
 };
