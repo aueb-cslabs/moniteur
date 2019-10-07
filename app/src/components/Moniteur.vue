@@ -1,18 +1,19 @@
 <template>
     <div>
-        <TitleBar/>
-
-        <div class="flex-container">
-            <Exam/>
-            <Announcement/>
-            <Schedule/>
-            <div class="bottom align-items-center">
-                <RoomAnnouncement/>
-                <Comment/>
+        <div class="parent-flex">
+            <TitleBar/>
+            <div class="flex-container">
+                <Exam/>
+                <Announcement/>
+                <Schedule/>
+                <div class="bottom align-items-center">
+                    <RoomAnnouncement/>
+                    <Comment/>
+                </div>
+                <footer class="mt-5 text-center">
+                    {{ $t("message.touchscreen")}}
+                </footer>
             </div>
-            <footer class="mt-5 text-center">
-                {{ $t("message.touchscreen")}}
-            </footer>
         </div>
     </div>
 </template>

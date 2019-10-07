@@ -6,6 +6,8 @@
 nav {
   background: var(--navbar-bg-color);
   color: var(--navbar-color);
-  width: 100%;
+
+  display: flex;
+  align-self: stretch;
 }
 
