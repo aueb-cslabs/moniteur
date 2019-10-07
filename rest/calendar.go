@@ -21,37 +21,31 @@ func CalendarGroup(g *echo.Group) {
 
 // calendarInfo Method that GETs the state of the day
 func calendarInfo(ec echo.Context) error {
-	c := ec.(*types.Context)
-
 	info := &types.Info{}
 
 	info.IsWeekend = isWeekend()
-	info.IsBreak = isBreak(c.Calendar.Breaks)
-	info.IsExamsPeriod = isExams(c.Calendar.Exams)
-	info.IsNormalPeriod = isNormal(c.Calendar.Semesters)
+	info.IsBreak = isBreak(calendar.Breaks)
+	info.IsExamsPeriod = isExams(calendar.Exams)
+	info.IsNormalPeriod = isNormal(calendar.Semesters)
 
-	return c.JSON(http.StatusOK, info)
+	return ec.JSON(http.StatusOK, info)
 }
 
 func calendarExt(e echo.Context) error {
-	c := e.(*types.Context)
-
-	return e.JSON(http.StatusOK, c.Calendar)
+	return e.JSON(http.StatusOK, calendar)
 }
 
 func postCalendar(e echo.Context) error {
-	c := e.(*types.Context)
+	calendarIn := &types.Calendar{}
 
-	calendar := &types.Calendar{}
-
-	err := e.Bind(calendar)
+	err := e.Bind(calendarIn)
 	if err != nil {
 		return e.NoContent(http.StatusBadRequest)
 	}
 
-	c.Calendar = calendar
+	calendar = calendarIn
 
-	err = utils.UpdateCalendar(calendar)
+	err = utils.UpdateCalendar(calendarIn)
 	if err != nil {
 		return e.NoContent(http.StatusInternalServerError)
 	}

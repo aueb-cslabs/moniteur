@@ -75,7 +75,12 @@ export default {
             calFail: "Unsuccessful Submission!",
             adminBarEC: "Exams Calendar",
             ecSubmit: "Exam Registration",
-            ecGeneral: "Exam Schedule"
+            ecGeneral: "Exam Schedule",
+            ecLessonName: "Lesson Name",
+            ecStart: "Start",
+            ecEnd: "End",
+            ecDate: "Date",
+            ecSelectRooms: "Rooms"
         }
     },
     el: {
@@ -154,7 +159,12 @@ export default {
             calFail: "Ανεπιτυχής Καταχώρηση!",
             adminBarEC: "Πρόγραμμα Εξεταστικής",
             ecSubmit: "Καταχώρηση Μαθήματος",
-            ecGeneral: "Πρόγραμμα Εξεταστικής"
+            ecGeneral: "Πρόγραμμα Εξεταστικής",
+            ecLessonName: "Όνομα Μαθήματος",
+            ecStart: "Έναρξη",
+            ecEnd: "Λήξη",
+            ecDate: "Ημερομηνία",
+            ecSelectRooms: "Αίθουσες"
         }
     }
 };

@@ -1,0 +1,10 @@
+body {
+  input:focus, textarea:focus {
+    outline: none;
+  }
+
+  .multiselect__input, .multiselect__content-wrapper {
+    //display: none;
+    border: none;
+  }
+}
