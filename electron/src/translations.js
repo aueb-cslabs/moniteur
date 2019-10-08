@@ -80,7 +80,17 @@ export default {
             ecStart: "Start",
             ecEnd: "End",
             ecDate: "Date",
-            ecSelectRooms: "Rooms"
+            ecSelectRooms: "Rooms",
+            ecSelectSem: "Semester",
+            ecSelectDepart: "Department",
+            ecSelectDepartExt: "Extra Departments",
+            ecExaminer: "Examiner",
+            ecSelect: "Select",
+            ecDeselect: "Remove",
+            ecAdd: "Add Exam",
+            ecPreview: "Preview Program",
+            ecCreate: "Create Program",
+            ecRegExams: "Registered Exams"
         }
     },
     el: {
@@ -164,7 +174,17 @@ export default {
             ecStart: "Έναρξη",
             ecEnd: "Λήξη",
             ecDate: "Ημερομηνία",
-            ecSelectRooms: "Αίθουσες"
+            ecSelectRooms: "Αίθουσες",
+            ecSelectSem: "Εξάμηνο",
+            ecSelectDepart: "Τμήμα",
+            ecSelectDepartExt: "Επιπλέον Τμήματα",
+            ecExaminer: "Εξεταστής",
+            ecSelect: "Επιλογή",
+            ecDeselect: "Αφαίρεση",
+            ecAdd: "Προσθήκη Εξέτασης",
+            ecPreview: "Προεπισκόπηση Προγράμματος",
+            ecCreate: "Δημιουργία Προγράμματος",
+            ecRegExams: "Καταχωρημένες Εξετάσεις"
         }
     }
 };
