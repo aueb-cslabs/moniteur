@@ -7,7 +7,11 @@ nav {
   background: var(--navbar-bg-color);
   color: var(--navbar-color);
 
-  display: flex;
   align-self: stretch;
+  align-items: center;
+
+  .title {
+    font-size: 1.7em;
+  }
 }
 
