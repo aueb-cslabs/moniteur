@@ -90,7 +90,8 @@ export default {
             ecAdd: "Add Exam",
             ecPreview: "Preview Program",
             ecCreate: "Create Program",
-            ecRegExams: "Registered Exams"
+            ecRegExams: "Registered Exams",
+            ecFormError: "Errors in the Form"
         }
     },
     el: {
@@ -184,7 +185,8 @@ export default {
             ecAdd: "Προσθήκη Εξέτασης",
             ecPreview: "Προεπισκόπηση Προγράμματος",
             ecCreate: "Δημιουργία Προγράμματος",
-            ecRegExams: "Καταχωρημένες Εξετάσεις"
+            ecRegExams: "Καταχωρημένες Εξετάσεις",
+            ecFormError: "Λάθος Στοιχεία στην Φόρμα"
         }
     }
 };

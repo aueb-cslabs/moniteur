@@ -37,7 +37,7 @@
                     <div class="col col-lg-2">
 <!--                        SEMESTER_ID-->
                         <multiselect v-model="sidSelection" v-bind:placeholder="this.$t('message.ecSelectSem')"
-                                     :close-on-select="false" :options="sidOptions" :multiple="false"
+                                     :close-on-select="true" :options="sidOptions" :multiple="true" :max="1"
                                      v-bind:select-label="this.$t('message.ecSelect')" v-bind:deselect-label="this.$t('message.ecDeselect')">
                             <span slot="noResult">Oops! No elements found. Consider changing the search query.</span>
                         </multiselect>
@@ -45,7 +45,7 @@
                     <div class="col col-lg-2">
 <!--                        DEPARTMENT_ID_UNIQUE-->
                         <multiselect v-model="udepSelection" v-bind:placeholder="this.$t('message.ecSelectDepart')"
-                                     :close-on-select="false" :options="depOptions" :multiple="false"
+                                     :close-on-select="true" :options="depOptions" :multiple="true" :max="1"
                                      v-bind:select-label="this.$t('message.ecSelect')" v-bind:deselect-label="this.$t('message.ecDeselect')">
                             <span slot="noResult">Oops! No elements found. Consider changing the search query.</span>
                         </multiselect>
@@ -62,7 +62,7 @@
                 <div class="row pt-3">
                     <div class="col">
 <!--                        ADD_BUTTON-->
-                        <b-button @click="addExam" class="float-right" variant="primary">{{$t('message.ecAdd')}}</b-button>
+                        <b-button @click="checkEntry" class="float-right" variant="primary">{{$t('message.ecAdd')}}</b-button>
                     </div>
                 </div>
             </div>
@@ -79,11 +79,29 @@
                 <b-button @click="doSmth3" class="ml-3 float-right" variant="primary">{{$t('message.ecCreate')}}</b-button>
             </div>
         </div>
+        <div class="error">
+            <b-alert
+                    :show="dismissCountDown"
+                    dismissible
+                    variant="danger"
+                    @dismissed="dismissCountDown=0"
+                    @dismiss-count-down="countDownChanged"
+            >
+                <p>Error! {{error}}</p>
+                <b-progress
+                        variant="dark"
+                        :max="dismissSecs"
+                        :value="dismissCountDown"
+                        height="4px"
+                ></b-progress>
+            </b-alert>
+        </div>
     </div>
 </template>
 
 <script>
     import Multiselect from 'vue-multiselect';
+    import functions from "../functions";
 
     export default {
         components: {
@@ -99,22 +117,22 @@
                 date: '',
                 roomOptions: ['a', 'b'],
                 roomSelections: [],
-                sidSelection: '',
+                sidSelection: [],
                 sidOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                udepSelection: '',
+                udepSelection: [],
                 extrDepSelections: [],
                 depOptions: ['ΠΛΗΡ', 'ΟΕ', 'ΟΔΕ'],
                 submittedExams: [],
                 fields: [
-                    { key: 'name' },
-                    { key: 'examiner' },
-                    { key: 'startTime' },
-                    { key: 'endTime' },
-                    { key: 'date' },
-                    { key: 'rooms' },
-                    { key: 'semester' },
-                    { key: 'department' },
-                    { key: 'extraDepartments' }
+                    { key: 'name', label: this.$t('message.ecLessonName') },
+                    { key: 'examiner', label: this.$t('message.ecExaminer') },
+                    { key: 'startTime', label: this.$t('message.ecStart') },
+                    { key: 'endTime', label: this.$t('message.ecEnd') },
+                    { key: 'date', label: this.$t('message.ecDate') },
+                    { key: 'rooms', label: this.$t('message.ecSelectRooms'), formatter: "formatTable" },
+                    { key: 'semester', label: this.$t('message.ecSelectSem'), formatter: "formatTable" },
+                    { key: 'department', label: this.$t('message.ecSelectDepart'), formatter: "formatTable" },
+                    { key: 'extraDepartments', label: this.$t('message.ecSelectDepartExt'), formatter: "formatTable" }
                 ],
                 exam: {
                     name: '',
@@ -126,24 +144,28 @@
                     semester: 0,
                     department: '',
                     extraDepartments: []
-                }
+                },
+                dismissSecs: 5,
+                dismissCountDown: 0,
+                error: null
             }
         },
 
         methods: {
             addExam: function () {
-                let newExam = Object.create(this.exam);
-                newExam.name = this.name;
-                newExam.examiner = this.examiner;
-                newExam.startTime = this.startTime;
-                newExam.endTime = this.endTime;
-                newExam.date = this.date;
-                newExam.rooms = this.roomSelections;
-                newExam.semester = this.sidSelection;
-                newExam.department = this.udepSelection;
-                newExam.extraDepartments = this.extrDepSelections;
-                this.clearForm();
+                let newExam = {
+                    name : this.name,
+                    examiner : this.examiner,
+                    startTime : this.startTime,
+                    endTime : this.endTime,
+                    date : this.date,
+                    rooms : this.roomSelections,
+                    semester : this.formatTable(this.sidSelection),
+                    department : this.formatTable(this.udepSelection) ,
+                    extraDepartments : this.extrDepSelections,
+                };
                 this.submittedExams.push(newExam);
+                this.clearForm();
                 this.$refs.examsTable.refresh();
             },
 
@@ -157,7 +179,72 @@
                 this.sidSelection = '';
                 this.udepSelection = '';
                 this.extrDepSelections = [];
-            }
+            },
+
+            formatTable: function (table) {
+                return table.toString();
+            },
+
+            checkEntry: function (e) {
+                if (this.name === '') {
+                    this.error = this.$t('message.ecFormError');
+                    this.showAlert();
+                    e.preventDefault();
+                    return;
+                }
+                if (this.examiner === '') {
+                    this.error = this.$t('message.ecFormError');
+                    this.showAlert();
+                    e.preventDefault();
+                    return;
+                }
+                if (!functions.isValidTime(this.startTime)) {
+                    this.error = this.$t('message.ecFormError');
+                    this.showAlert();
+                    e.preventDefault();
+                    return;
+                }
+                if (!functions.isValidTime(this.endTime)) {
+                    this.error = this.$t('message.ecFormError');
+                    this.showAlert();
+                    e.preventDefault();
+                    return;
+                }
+                if (!functions.isGoodDate(this.date)) {
+                    this.error = this.$t('message.ecFormError');
+                    this.showAlert();
+                    e.preventDefault();
+                    return;
+                }
+                if (this.roomSelections.length === 0) {
+                    this.error = this.$t('message.ecFormError');
+                    this.showAlert();
+                    e.preventDefault();
+                    return;
+                }
+                if (this.sidSelection.length === 0) {
+                    this.error = this.$t('message.ecFormError');
+                    this.showAlert();
+                    e.preventDefault();
+                    return;
+                }
+                if (this.udepSelection.length === 0) {
+                    this.error = this.$t('message.ecFormError');
+                    this.showAlert();
+                    e.preventDefault();
+                    return;
+                }
+                this.addExam();
+                e.preventDefault();
+            },
+
+            countDownChanged(dismissCountDown) {
+                this.dismissCountDown = dismissCountDown
+            },
+
+            showAlert() {
+                this.dismissCountDown = this.dismissSecs
+            },
         }
     }
 </script>

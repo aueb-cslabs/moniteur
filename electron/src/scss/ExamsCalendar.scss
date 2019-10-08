@@ -2,6 +2,20 @@ body {
   input:focus, textarea:focus {
     outline: none;
   }
+
+  .b-table {
+    background: inherit;
+    color: white;
+  }
+
+  td:hover, tr:hover, table:hover, .b-table:hover, tbody, tr, td {
+    color: white;
+  }
+
+  td {
+    background: var(--background_color);
+  }
+
   @import "~bootstrap/scss/functions";
   @import "~bootstrap/scss/variables";
 
