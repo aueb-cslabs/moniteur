@@ -2,8 +2,8 @@
     <div>
         <div class="parent-flex">
             <TitleBar/>
+            <Exam/>
             <div class="flex-container">
-                <Exam/>
                 <Announcement/>
                 <Schedule/>
                 <div class="bottom align-items-center">

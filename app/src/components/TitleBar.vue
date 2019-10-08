@@ -2,14 +2,14 @@
     <nav class="navbar navbar-expand navbar-dark">
         <a class='navbar-brand'>
             <img v-bind:src="this.$root.$data['logo_url']"
-                 alt="logo" height="60" />
+                 alt="logo" height="90" />
         </a>
         <nav class="navbar-nav mr-auto">
             <img class="ml-2" v-bind:src="this.$root.$data['secondary_logo_url']"
-                 alt="cs_logo" height="60" />
-            <a class="ml-4 navbar-brand mt-2">{{room}}</a>
+                 alt="cs_logo" height="95" />
+            <a class="ml-4 navbar-brand title">{{room}}</a>
         </nav>
-        <a class="navbar-brand">
+        <a class="navbar-brand title">
             {{date}}
         </a>
     </nav>
