@@ -6,10 +6,8 @@
             <div class="flex-container">
                 <Announcement/>
                 <Schedule/>
-                <div class="bottom align-items-center">
-                    <RoomAnnouncement/>
-                    <Comment/>
-                </div>
+                <RoomAnnouncement/>
+                <Comment/>
                 <footer class="mt-5 text-center">
                     {{ $t("message.touchscreen")}}
                 </footer>
