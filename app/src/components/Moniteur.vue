@@ -8,7 +8,7 @@
                 <Schedule/>
                 <RoomAnnouncement/>
                 <Comment/>
-                <footer class="mt-5 text-center">
+                <footer class="text-center footer">
                     {{ $t("message.touchscreen")}}
                 </footer>
             </div>
