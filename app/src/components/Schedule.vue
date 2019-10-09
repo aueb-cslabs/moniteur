@@ -80,10 +80,7 @@
             checkExam: function () {
                 setInterval(() => {
                     axios.get(this.$root.$data['api']+"/api/calendarInfo")
-                        .then(res => {
-                            this.isExam = res.data['exams'];
-                            EventBus.$emit('exam', this.isExam);
-                        });
+                        .then(res => this.isExam = res.data['exams']);
                 }, 60000);
             },
 
