@@ -7,8 +7,6 @@
 </template>
 
 <script>
-    import {EventBus} from "./EventBus";
-
     export default {
         name: "Exam",
 
@@ -24,7 +22,7 @@
 
         methods: {
             registerExamListener: function () {
-               EventBus.$on('exam', exam => {
+               this.$on('exam', exam => {
                    this.isExam = exam;
                });
             }

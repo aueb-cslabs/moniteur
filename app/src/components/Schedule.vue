@@ -44,7 +44,6 @@
 </template>
 
 <script>
-    import { EventBus } from "./EventBus";
     import axios from 'axios';
 
     export default {
@@ -71,7 +70,7 @@
                 this.fetchExamSched();
             } else {
                 this.fetchNormSched();
-                EventBus.$emit('exam', false);
+                this.$emit('exam', false);
             }
         },
 
@@ -118,9 +117,9 @@
                             this.convertSecToTime();
 
                             if(this.current['now'] != null) {
-                                EventBus.$emit('exam', this.isExam);
+                                this.$emit('exam', this.isExam);
                             } else {
-                                EventBus.$emit('exam', false);
+                                this.$emit('exam', false);
                             }
                         });
                 }, 30000)
