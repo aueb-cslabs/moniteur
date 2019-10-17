@@ -4,6 +4,7 @@ import (
 	"github.com/aueb-cslabs/moniteur/types"
 	"github.com/labstack/echo"
 	"net/http"
+	"sort"
 	"time"
 )
 
@@ -64,6 +65,10 @@ func scheduleRoomNow(ec echo.Context) error {
 		if slot.Room == room && slot.Day == day && slot.Start >= sec {
 			returnSchedule.Next = append(returnSchedule.Next, slot)
 		}
+
+		sort.Slice(returnSchedule.Next, func(i, j int) bool {
+			return returnSchedule.Next[i].Start < returnSchedule.Next[j].Start
+		})
 	}
 
 	return c.JSON(http.StatusOK, returnSchedule)
