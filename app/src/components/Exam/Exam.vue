@@ -31,7 +31,7 @@
 </script>
 
 <style lang="scss">
-    @import "../scss/Exam.scss";
-    @import "../scss/common.scss";
+    @import "Exam";
+    @import "../common";
 
 </style>

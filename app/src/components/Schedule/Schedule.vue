@@ -185,5 +185,5 @@
 </script>
 
 <style lang="scss">
-    @import "../scss/Schedule.scss";
+    @import "Schedule";
 </style>

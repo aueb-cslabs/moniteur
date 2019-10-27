@@ -34,5 +34,5 @@
 </script>
 
 <style lang="scss">
-    @import "../scss/RoomAnnouncement.scss";
+    @import "RoomAnnouncement";
 </style>

@@ -4,7 +4,7 @@ import VueI18n from 'vue-i18n'
 import VueRouter from 'vue-router'
 
 import Moniteur from "./components/Moniteur";
-import P404 from "./components/404";
+import P404 from "./components/Page404/404";
 
 import config from './config'
 import messages from './translations'

@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~bootstrap/scss/bootstrap.scss";
-@import "~@fortawesome/fontawesome-free/css/all.css";
-@import "scss/App.scss";
+  @import "~bootstrap/scss/bootstrap.scss";
+  @import "~@fortawesome/fontawesome-free/css/all.css";
+  @import "App";
 </style>

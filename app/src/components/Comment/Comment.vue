@@ -34,5 +34,5 @@
 </script>
 
 <style lang="scss">
-    @import "../scss/Comment.scss";
+    @import "Comment";
 </style>

@@ -17,12 +17,12 @@
 </template>
 
 <script>
-import TitleBar from './TitleBar.vue'
-import Schedule from "./Schedule";
-import Exam from "./Exam";
-import Announcement from "./Announcement";
-import RoomAnnouncement from "./RoomAnnouncement";
-import Comment from "./Comment";
+import TitleBar from './TitleBar/TitleBar.vue'
+import Schedule from "./Schedule/Schedule";
+import Exam from "./Exam/Exam";
+import Announcement from "./Announcement/Announcement";
+import RoomAnnouncement from "./RoomAnnouncement/RoomAnnouncement";
+import Comment from "./Comment/Comment";
 
 export default {
 
@@ -45,5 +45,5 @@ export default {
 <style lang="scss">
     @import "~bootstrap/scss/bootstrap.scss";
     @import "~@fortawesome/fontawesome-free/css/all.css";
-    @import "../scss/Moniteur.scss";
+    @import "Moniteur";
 </style>

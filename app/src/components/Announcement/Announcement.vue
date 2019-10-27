@@ -34,6 +34,6 @@
 </script>
 
 <style lang="scss">
-    @import "../scss/Announcement.scss";
-    @import "../scss/common.scss";
+    @import "Announcement";
+    @import "../common";
 </style>
