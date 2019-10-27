@@ -33,5 +33,4 @@
 <style lang="scss">
     @import "Exam";
     @import "../common";
-
 </style>

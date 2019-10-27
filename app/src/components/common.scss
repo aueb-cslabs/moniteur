@@ -2,24 +2,6 @@ body {
   .common {
     font-family: Calibri, sans-serif;
   }
-
-  .flex-container {
-    width: 100%;
-    height: 85%;
-
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .parent-flex {
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-  }
 }
 
 .fade-in {

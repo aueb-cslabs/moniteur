@@ -56,5 +56,5 @@
 </script>
 
 <style lang="scss">
-@import "TitleBar";
+    @import "TitleBar";
 </style>

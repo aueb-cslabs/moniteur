@@ -3,8 +3,6 @@ body {
     background: #494148;
     font-size: 1.5em;
 
-    height: 35%;
-
     align-self: center;
     border-radius: 50px;
   }
@@ -42,7 +40,7 @@ body {
     color: #38f204;
   }
 
-  .nextsub {
+  .next-icon {
     color: #5ac1f2;
   }
 
@@ -52,7 +50,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
   }
 
   .message {
