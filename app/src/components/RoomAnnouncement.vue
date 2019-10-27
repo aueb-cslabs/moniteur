@@ -1,6 +1,6 @@
 <template>
-    <div class="roomAnnouncements">
-        <p class="mt-1 common room-ann-text" v-if="roomAnnouncement != null">
+    <div class="roomAnnouncements" v-if="roomAnnouncement != null">
+        <p class="mt-1 common room-ann-text">
             <i class="fas fa-bullhorn"></i> {{roomAnnouncement['msg']}}
         </p>
     </div>

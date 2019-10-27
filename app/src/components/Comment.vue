@@ -1,6 +1,6 @@
 <template>
-    <div class="comments">
-        <p class="mt-2 common comments-text fade-in" v-if="comment != null">
+    <div class="comments" v-if="comment != null">
+        <p class="mt-2 common comments-text fade-in">
            {{comment['msg']}}
         </p>
     </div>
