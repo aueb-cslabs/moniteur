@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper" v-if="normal">
+    <div class="wrapper" v-if="!this.isWeekend && !this.isBreak">
         <div class="text-center current schedule">
             <h3> {{ $t("message.nowMsg") }} <i class="fas fa-chalkboard-teacher"></i></h3>
             <p class="center-message common fade-in" v-if="current['now'] != null">
@@ -56,8 +56,7 @@
                 isExam: false,
                 time: {},
                 isWeekend: false,
-                isBreak: false,
-                normal: {}
+                isBreak: false
             }
         },
 
@@ -65,7 +64,6 @@
             this.checkExam();
             this.checkWeekend();
             this.checkBreak();
-            this.checkDefault();
 
             if (this.isExam) {
                 this.fetchExamSched();
@@ -97,13 +95,6 @@
                 setInterval(() => {
                     axios.get(config.api + "/api/calendarInfo")
                         .then(res => this.isBreak = res.data['break']);
-                }, 60000);
-            },
-
-            /* Checks for normal period */
-            checkDefault: function () {
-                setInterval(() => {
-                    this.normal = !this.isWeekend && !this.isBreak
                 }, 60000);
             },
 
