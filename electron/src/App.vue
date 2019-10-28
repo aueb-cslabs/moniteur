@@ -3,9 +3,9 @@
 </template>
 
 <script>
-  import Admin from "./components/Admin.vue"
+    import Admin from "./components/Admin.vue"
 
-export default {
+    export default {
 
   name: 'app',
   components: {

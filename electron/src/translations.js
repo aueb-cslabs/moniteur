@@ -91,7 +91,10 @@ export default {
             ecPreview: "Preview Program",
             ecCreate: "Create Program",
             ecRegExams: "Registered Exams",
-            ecFormError: "Errors in the Form"
+            ecFormError: "Errors in the Form",
+            adminBarSettings: "Settings",
+            settingsSave: "Save config",
+            adminFileFail: "Failed to save config!"
         }
     },
     el: {
@@ -186,7 +189,10 @@ export default {
             ecPreview: "Προεπισκόπηση Προγράμματος",
             ecCreate: "Δημιουργία Προγράμματος",
             ecRegExams: "Καταχωρημένες Εξετάσεις",
-            ecFormError: "Λάθος Στοιχεία στην Φόρμα"
+            ecFormError: "Λάθος Στοιχεία στην Φόρμα",
+            adminBarSettings: "Ρυθμίσεις",
+            settingsSave: "Αποθήκευση ρυθμίσεων",
+            adminFileFail: "Αποτυχία αποθήκευσης!"
         }
     }
 };

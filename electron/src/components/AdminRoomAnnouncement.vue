@@ -16,10 +16,10 @@
                         <label for="expiration">{{$t("message.adminAnnExpire")}}</label>
                         <input type="text" class="form-control" id="expiration" v-model="form.end" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                     </div>
-                    <button type="submit" class="btn btn-primary float-right">{{$t("message.adminAnnSend")}}</button>
+                    <button type="submit" class="btn btn-primary float-right mb-4">{{$t("message.adminAnnSend")}}</button>
                 </form>
             </div>
-            <div class="mt-5" v-if="this.announcement != null">
+            <div class="pt-5" v-if="this.announcement != null">
                 <div class="alert alert-primary" role="alert">
                     <h3>{{this.$t("message.adminRoomAnnCurrent")}} {{this.announcement['msg']}}</h3>
                 </div>
