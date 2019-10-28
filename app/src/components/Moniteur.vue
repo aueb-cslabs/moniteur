@@ -17,29 +17,31 @@
 </template>
 
 <script>
-import TitleBar from './TitleBar/TitleBar.vue'
-import Schedule from "./Schedule/Schedule";
-import Exam from "./Exam/Exam";
-import Announcement from "./Announcement/Announcement";
-import RoomAnnouncement from "./RoomAnnouncement/RoomAnnouncement";
-import Comment from "./Comment/Comment";
+    import config from '../config/config.js';
 
-export default {
+    import TitleBar from './TitleBar/TitleBar.vue'
+    import Schedule from "./Schedule/Schedule";
+    import Exam from "./Exam/Exam";
+    import Announcement from "./Announcement/Announcement";
+    import RoomAnnouncement from "./RoomAnnouncement/RoomAnnouncement";
+    import Comment from "./Comment/Comment";
 
-    created() {
-        let r = document.documentElement;
-        r.style.setProperty("--background", this.$root.$data['background_color']);
-    },
+    export default {
 
-    components: {
-        Comment,
-        RoomAnnouncement,
-        Announcement,
-        TitleBar,
-        Schedule,
-        Exam
+        created() {
+            let r = document.documentElement;
+            r.style.setProperty("--background", config.background_color);
+        },
+
+        components: {
+            Comment,
+            RoomAnnouncement,
+            Announcement,
+            TitleBar,
+            Schedule,
+            Exam
+        }
     }
-}
 </script>
 
 <style lang="scss">

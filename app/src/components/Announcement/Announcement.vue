@@ -8,7 +8,9 @@
 </template>
 
 <script>
+    import config from '../../config/config.js';
     import axios from "axios"
+
     export default {
         name: "Announcement",
 
@@ -25,7 +27,7 @@
         methods: {
             getAnnouncement: function () {
                 setInterval(() => {
-                    axios.get(this.$root.$data['api'] + "/api/announcement")
+                    axios.get(config.api + "/api/announcement")
                         .then(response => this.announcement = response.data)
                 }, 5000);
             }

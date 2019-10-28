@@ -6,7 +6,6 @@ import VueRouter from 'vue-router'
 import Moniteur from "./components/Moniteur";
 import P404 from "./components/Page404/404";
 
-import config from './config'
 import messages from './translations'
 
 Vue.config.productionTip = false;
@@ -32,8 +31,6 @@ const router = new VueRouter({
 new Vue({
   i18n,
   router,
-  data : {
-    ...config,
-  },
+
   render: h => h(App),
 }).$mount('#app');

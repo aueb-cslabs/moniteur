@@ -1,11 +1,11 @@
 <template>
     <nav class="navbar navbar-expand navbar-dark">
         <a class='navbar-brand'>
-            <img v-bind:src="this.$root.$data['logo_url']"
+            <img v-bind:src="logo"
                  alt="logo" height="90" />
         </a>
         <nav class="navbar-nav mr-auto">
-            <img class="ml-2" v-bind:src="this.$root.$data['secondary_logo_url']"
+            <img class="ml-2" v-bind:src="secondary_logo"
                  alt="cs_logo" height="95" />
             <a class="ml-4 navbar-brand title">{{room}}</a>
         </nav>
@@ -16,11 +16,16 @@
 </template>
 
 <script>
+    import config from '../../config/config.js';
+
     export default {
         name: "TitleBar",
 
         data() {
             return {
+                logo: config.logo_url,
+                secondary_logo: config.secondary_logo_url,
+
                 date: '',
                 room: ''
             }
@@ -32,8 +37,8 @@
 
             let r = document.documentElement;
 
-            r.style.setProperty("--navbar-bg-color", this.$root.$data['navbar_background_color']);
-            r.style.setProperty("--navbar-color", this.$root.$data['navbar_color']);
+            r.style.setProperty("--navbar-bg-color", config.navbar_background_color);
+            r.style.setProperty("--navbar-color", config.navbar_color);
         },
 
         methods: {
@@ -45,7 +50,7 @@
             },
 
             getRoom: function () {
-                fetch(this.$root.$data['api'] + "/api/room/" + this.$route.params.id)
+                fetch(config.api + "/api/room/" + this.$route.params.id)
                     .then(res => res.json())
                     .then(json => {
                         this.room = json.toString()

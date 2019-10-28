@@ -7,6 +7,7 @@
 </template>
 
 <script>
+    import config from '../../config/config.js';
     import axios from "axios";
 
     export default {
@@ -25,7 +26,7 @@
         methods: {
             getComment: function () {
                 setInterval(() => {
-                    axios.get(this.$root.$data['api'] + "/api/comment")
+                    axios.get(config.api + "/api/comment")
                         .then(res => this.comment = res.data)
                 }, 5000)
             }
