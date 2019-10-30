@@ -57,6 +57,7 @@
 </template>
 
 <script>
+
     export default {
         name: "Settings",
 
@@ -132,19 +133,18 @@
             },
 
             save: function() {
-                let fs = require('fs');
-                let file = 'export default {' + this.form + '}';
-                try {
-                    fs.writeFileSync('../config.js', file, 'utf-8');
-                }
-                catch(e) {
-                    this.error = this.$t('message.adminFileFail');
-                    this.showAlert();
-                }
+                const fs = window.require('fs');
+                let file = 'export default ' + JSON.stringify(this.form);
+                fs.writeFile("../config.js", file, function(err) {
+                    if(err) {
+                        return console.log(err);
+                    }
+                    console.log("File successfully saved to disk.");
+                });
             },
 
             loadConfig() {
-                this.form = this.$root.$data
+                this.form = this.$root.$data;
             }
         }
     }
