@@ -108,11 +108,8 @@
                             this.checkNext(this.current);
                             this.convertSecToTime();
 
-                            if(this.current['now'] != null) {
+                            if(this.current['now'] != null)
                                 this.$emit('exam', this.isExam);
-                            } else {
-                                this.$emit('exam', false);
-                            }
                         });
                 }, 30000)
             },
