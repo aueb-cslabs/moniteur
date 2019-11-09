@@ -1,4 +1,4 @@
-module github.com/aueb-cslabs/moniteur
+module github.com/aueb-cslabs/moniteur/backend
 
 go 1.12
 

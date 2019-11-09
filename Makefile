@@ -1,8 +1,8 @@
 .build-moniteur:
-	go build -o bin/moniteur github.com/aueb-cslabs/moniteur
+	cd backend && go build -o bin/moniteur github.com/aueb-cslabs/moniteur/backend
 
 .build-aueb-plugin:
-	go build -buildmode=plugin -o bin/aueb-plugin.so github.com/aueb-cslabs/moniteur/aueb
+	cd backend && go build -buildmode=plugin -o bin/aueb-plugin.so github.com/aueb-cslabs/moniteur/backend/plugin/aueb
 
 .build-go: .build-moniteur .build-aueb-plugin
 
@@ -14,8 +14,8 @@
 default: .build
 
 test: .build-go
-	go test github.com/aueb-cslabs/moniteur
-	go test github.com/aueb-cslabs/moniteur/aueb
+	go test github.com/aueb-cslabs/moniteur/backend
+	go test github.com/aueb-cslabs/moniteur/backend/plugin/aueb
 
 start: .build-go
 	bin/moniteur
