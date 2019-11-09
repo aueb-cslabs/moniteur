@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/aueb-cslabs/moniteur/types"
+	"github.com/aueb-cslabs/moniteur/backend/types"
 	"github.com/tealeg/xlsx"
 	"io/ioutil"
 	"net/http"

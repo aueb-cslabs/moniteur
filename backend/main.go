@@ -1,12 +1,12 @@
 // +build linux darwin
 
-package main
+package backend
 
 import "C"
 import (
-	"github.com/aueb-cslabs/moniteur/rest"
-	"github.com/aueb-cslabs/moniteur/types"
-	"github.com/aueb-cslabs/moniteur/utils"
+	"github.com/aueb-cslabs/moniteur/backend/rest"
+	"github.com/aueb-cslabs/moniteur/backend/types"
+	"github.com/aueb-cslabs/moniteur/backend/utils"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"

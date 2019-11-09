@@ -1,7 +1,7 @@
 package rest
 
 import (
-	"github.com/aueb-cslabs/moniteur/utils"
+	"github.com/aueb-cslabs/moniteur/backend/utils"
 	"github.com/labstack/echo"
 	"net/http"
 )

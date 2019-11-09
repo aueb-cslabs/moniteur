@@ -1,7 +1,7 @@
 package rest
 
 import (
-	"github.com/aueb-cslabs/moniteur/types"
+	"github.com/aueb-cslabs/moniteur/backend/types"
 	"github.com/labstack/echo"
 	"net/http"
 	"time"

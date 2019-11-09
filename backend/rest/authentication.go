@@ -2,7 +2,7 @@ package rest
 
 import (
 	"errors"
-	"github.com/aueb-cslabs/moniteur/types"
+	"github.com/aueb-cslabs/moniteur/backend/types"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 	"net/http"
