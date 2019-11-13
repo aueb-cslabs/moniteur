@@ -17,14 +17,14 @@
 </template>
 
 <script>
-    import config from '../config/config.js';
-
     import TitleBar from './TitleBar/TitleBar.vue'
     import Schedule from "./Schedule/Schedule";
     import Exam from "./Exam/Exam";
     import Announcement from "./Announcement/Announcement";
     import RoomAnnouncement from "./RoomAnnouncement/RoomAnnouncement";
     import Comment from "./Comment/Comment";
+
+    const config = require('electron').remote.getGlobal('config');
 
     export default {
 
