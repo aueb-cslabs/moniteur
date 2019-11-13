@@ -1,6 +1,6 @@
 // +build linux darwin
 
-package backend
+package main
 
 import "C"
 import (
