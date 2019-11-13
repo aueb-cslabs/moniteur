@@ -49,7 +49,8 @@ app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (win === null) {
-    createWindow()
+    createWindow();
+    win.maximize();
   }
 });
 
@@ -58,7 +59,8 @@ app.on('activate', () => {
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
   loadConfig();
-  createWindow()
+  createWindow();
+  win.maximize();
 });
 
 function loadConfig() {
