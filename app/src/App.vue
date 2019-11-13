@@ -1,22 +1,22 @@
 <template>
-  <Moniteur class="moniteur"></Moniteur>
+    <Moniteur class="moniteur"></Moniteur>
 </template>
 
 <script>
-  import Moniteur from "./components/Moniteur";
+    import Moniteur from "./components/Moniteur";
 
-export default {
-  name: 'app',
+    export default {
+        name: 'app',
 
-  components: {
-    Moniteur
-  }
-}
+        components: {
+            Moniteur
+        }
+    }
 
 </script>
 
 <style lang="scss">
-  @import "~bootstrap/scss/bootstrap.scss";
-  @import "~@fortawesome/fontawesome-free/css/all.css";
-  @import "App";
+    @import "~bootstrap/scss/bootstrap.scss";
+    @import "~@fortawesome/fontawesome-free/css/all.css";
+    @import "App";
 </style>
