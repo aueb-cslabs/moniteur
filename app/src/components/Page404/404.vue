@@ -15,8 +15,14 @@
 </template>
 
 <script>
+    const electron = require('electron').remote.getGlobal('config');
     export default {
-        name: "notfound"
+        name: "notfound",
+
+        created() {
+            // eslint-disable-next-line no-console
+            console.log(electron.api);
+        }
     }
 </script>
 

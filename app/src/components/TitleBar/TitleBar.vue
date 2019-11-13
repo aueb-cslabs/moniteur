@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import config from '../../config/config.js';
+    const config = require('electron').remote.getGlobal('config');
 
     export default {
         name: "TitleBar",
@@ -50,7 +50,7 @@
             },
 
             getRoom: function () {
-                fetch(config.api + "/api/room/" + this.$route.params.id)
+                fetch(config.api + "/api/room/" + config.room)
                     .then(res => res.json())
                     .then(json => {
                         this.room = json.toString()

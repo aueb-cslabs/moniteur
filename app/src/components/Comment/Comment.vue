@@ -7,8 +7,8 @@
 </template>
 
 <script>
-    import config from '../../config/config.js';
     import axios from "axios";
+    const config = require('electron').remote.getGlobal('config');
 
     export default {
         name: "Comment",

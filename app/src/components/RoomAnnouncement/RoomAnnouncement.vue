@@ -7,8 +7,8 @@
 </template>
 
 <script>
-    import config from '../../config/config.js'
     import axios from 'axios';
+    const config = require('electron').remote.getGlobal('config');
 
     export default {
         name: "RoomAnnouncement",
@@ -26,7 +26,7 @@
         methods: {
             getAnnouncement: function () {
                 setInterval(() => {
-                    axios.get(config.api + "/api/announcement/" + this.$route.params.id)
+                    axios.get(config.api + "/api/announcement/" + config.room)
                          .then(res => this.roomAnnouncement = res.data);
                 }, 5000)
             }

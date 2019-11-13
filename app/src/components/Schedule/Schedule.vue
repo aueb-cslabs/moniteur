@@ -44,7 +44,7 @@
 </template>
 
 <script>
-    import config from '../../config/config.js';
+    const config = require('electron').remote.getGlobal('config');
     import axios from 'axios';
 
     export default {
@@ -101,7 +101,7 @@
             /* Fetches examination schedule */
             fetchExamSched: function() {
                 setInterval(() => {
-                    axios.get(config.api + "/api/exams/" + this.$route.params.id)
+                    axios.get(config.api + "/api/exams/" + config.room)
                         .then(res => {
                             this.current = res.data;
 
@@ -117,7 +117,7 @@
             /* Fetches normal schedule */
             fetchNormSched: function() {
                 setInterval(() => {
-                    axios.get(config.api + "/api/schedule/" + this.$route.params.id + "/now")
+                    axios.get(config.api + "/api/schedule/" + config.room + "/now")
                         .then(res => {
                             this.current = res.data;
                             this.checkNext(this.current);
