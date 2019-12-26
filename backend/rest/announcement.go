@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+//TODO REMOVE EXCESS CODE AND CLEAN IT UP
+
 var message *types.Announcement
 
 // AnnouncementsGroup Defines the api paths for all the announcements
@@ -36,7 +38,11 @@ func createAnnouncement(e echo.Context) error {
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, err)
 	}
+
 	message.Msg = post.Msg
+	redisClient.Set("Announcement", message.Msg, 0)
+	redisClient.ExpireAt("Announcement", time.Unix(message.End, 0))
+	redisClient.Set("Announcement_dt", message.End, 0)
 
 	writeAnnouncement()
 
@@ -48,14 +54,23 @@ func deleteAnnouncement(e echo.Context) error {
 	message = nil
 
 	writeAnnouncement()
+	redisClient.Del("Announcement")
+	redisClient.Del("Announcement_dt")
 
 	return e.NoContent(http.StatusOK)
 }
 
 // announcement Method that accepts GETs a general announcement
 func announcement(e echo.Context) error {
-
-	return e.JSON(http.StatusOK, message)
+	exists := redisClient.Exists("Announcement").Val()
+	if exists == 1 {
+		res := redisClient.Get("Announcement").Val()
+		end, _ := redisClient.Get("Announcement_dt").Int64()
+		message = &types.Announcement{End: end, Msg: res}
+		return e.JSON(http.StatusOK, message)
+	} else {
+		return e.JSON(http.StatusOK, nil)
+	}
 }
 
 // updateAnnouncement Method that accepts PUTs a general announcement
@@ -73,6 +88,9 @@ func updateAnnouncement(e echo.Context) error {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 	message.Msg = post.Msg
+	redisClient.Set("Announcement", message.Msg, 0)
+	redisClient.ExpireAt("Announcement", time.Unix(message.End, 0))
+	redisClient.Set("Announcement_dt", message.End, 0)
 
 	writeAnnouncement()
 

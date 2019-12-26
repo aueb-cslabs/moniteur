@@ -7,6 +7,7 @@ import (
 	"github.com/aueb-cslabs/moniteur/backend/rest"
 	"github.com/aueb-cslabs/moniteur/backend/types"
 	"github.com/aueb-cslabs/moniteur/backend/utils"
+	"github.com/go-redis/redis/v7"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
@@ -29,6 +30,16 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
+	redisClient := redis.NewClient(&redis.Options{
+		Addr:     config.RedisConfig.Addr,
+		Password: config.RedisConfig.Password,
+		DB:       config.RedisConfig.DB,
+	})
+
+	_, err = redisClient.Ping().Result()
+	if err != nil {
+		log.Panic(err)
+	}
 
 	e := echo.New()
 	e.HideBanner = true
@@ -36,7 +47,7 @@ func main() {
 
 	existing, _ := utils.Read()
 	plugin.Initialize(config.ExamsLink)
-	rest.Initialize(config.Secret, existing, calendar, config.AuthorizedUsers)
+	rest.Initialize(config.Secret, existing, calendar, config.AuthorizedUsers, *redisClient)
 
 	api := e.Group("/api")
 

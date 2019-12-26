@@ -12,6 +12,7 @@ type Configuration struct {
 	Secret          string            `yaml:"secret"`
 	Port            int               `yaml:"port"`
 	AuthorizedUsers map[string]string `yaml:"authorized_users"`
+	RedisConfig     redis             `yaml:"redis"`
 }
 
 // LoadConfiguration reads a configuration file and returns a struct.

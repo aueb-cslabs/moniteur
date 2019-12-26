@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+//TODO REMOVE EXCESS CODE AND CLEAN IT UP
+
 var com *types.Announcement
 
 // CommentGroup Defines the api paths for all the comments
@@ -33,6 +35,9 @@ func createComment(e echo.Context) error {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 	com.Msg = post.Msg
+	redisClient.Set("Comment", com.Msg, 0)
+	redisClient.ExpireAt("Comment", time.Unix(com.End, 0))
+	redisClient.Set("Comment_dt", com.End, 0)
 
 	writeComment()
 
@@ -44,13 +49,22 @@ func deleteComment(e echo.Context) error {
 	com = nil
 
 	writeComment()
-
+	redisClient.Del("Comment")
+	redisClient.Del("Comment_dt")
 	return e.NoContent(http.StatusOK)
 }
 
 // comment Method that accepts GETs a general comment
 func comment(e echo.Context) error {
-	return e.JSON(http.StatusOK, com)
+	exists := redisClient.Exists("Comment").Val()
+	if exists == 1 {
+		res := redisClient.Get("Comment").Val()
+		end, _ := redisClient.Get("Comment_dt").Int64()
+		com = &types.Announcement{End: end, Msg: res}
+		return e.JSON(http.StatusOK, com)
+	} else {
+		return e.JSON(http.StatusOK, nil)
+	}
 }
 
 // updateComment Method that accepts PUTs a general comment
@@ -68,6 +82,9 @@ func updateComment(e echo.Context) error {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 	com.Msg = post.Msg
+	redisClient.Set("Comment", com.Msg, 0)
+	redisClient.ExpireAt("Comment", time.Unix(com.End, 0))
+	redisClient.Set("Comment_dt", com.End, 0)
 
 	writeComment()
 

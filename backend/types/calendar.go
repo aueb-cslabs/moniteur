@@ -76,3 +76,7 @@ func ConvertDateToUnix(date string) (int64, error) {
 	unix := endDate.Unix()
 	return unix, nil
 }
+
+func ParseDuration(timestamp int64) time.Duration {
+	return time.Duration(timestamp - time.Now().Unix())
+}
