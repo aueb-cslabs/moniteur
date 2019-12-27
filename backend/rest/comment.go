@@ -17,21 +17,16 @@ func CommentGroup(g *echo.Group) {
 
 // createComment Method that accepts POSTs a general comment
 func createComment(e echo.Context) error {
-	post := types.AnnouncementPost{}
+	post := types.Announcement{}
 	err := e.Bind(&post)
 
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 
-	end, err := types.ConvertDateToUnix(post.End)
-	if err != nil {
-		return e.JSON(http.StatusBadRequest, err)
-	}
-
 	redisClient.Set("Comment", post.Msg, 0)
-	redisClient.ExpireAt("Comment", time.Unix(end, 0))
-	redisClient.Set("Comment_dt", end, 0)
+	redisClient.ExpireAt("Comment", time.Unix(post.End, 0))
+	redisClient.Set("Comment_dt", post.End, 0)
 
 	return e.NoContent(http.StatusOK)
 }
@@ -59,21 +54,16 @@ func comment(e echo.Context) error {
 
 // updateComment Method that accepts PUTs a general comment
 func updateComment(e echo.Context) error {
-	post := types.AnnouncementPost{}
+	post := types.Announcement{}
 	err := e.Bind(&post)
 
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 
-	end, err := types.ConvertDateToUnix(post.End)
-	if err != nil {
-		return e.JSON(http.StatusBadRequest, err)
-	}
-
 	redisClient.Set("Comment", post.Msg, 0)
-	redisClient.ExpireAt("Comment", time.Unix(end, 0))
-	redisClient.Set("Comment_dt", end, 0)
+	redisClient.ExpireAt("Comment", time.Unix(post.End, 0))
+	redisClient.Set("Comment_dt", post.End, 0)
 
 	return e.NoContent(http.StatusOK)
 }

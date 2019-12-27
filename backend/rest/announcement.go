@@ -21,21 +21,16 @@ func AnnouncementsGroup(g *echo.Group) {
 
 // createAnnouncement Method that accepts POSTs a general announcement
 func createAnnouncement(e echo.Context) error {
-	post := types.AnnouncementPost{}
+	post := types.Announcement{}
 	err := e.Bind(&post)
 
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 
-	end, err := types.ConvertDateToUnix(post.End)
-	if err != nil {
-		return e.JSON(http.StatusBadRequest, err)
-	}
-
 	redisClient.Set("Announcement", post.Msg, 0)
-	redisClient.ExpireAt("Announcement", time.Unix(end, 0))
-	redisClient.Set("Announcement_dt", end, 0)
+	redisClient.ExpireAt("Announcement", time.Unix(post.End, 0))
+	redisClient.Set("Announcement_dt", post.End, 0)
 
 	return e.NoContent(http.StatusOK)
 }
@@ -63,21 +58,16 @@ func announcement(e echo.Context) error {
 
 // updateAnnouncement Method that accepts PUTs a general announcement
 func updateAnnouncement(e echo.Context) error {
-	post := types.AnnouncementPost{}
+	post := types.Announcement{}
 	err := e.Bind(&post)
 
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 
-	end, err := types.ConvertDateToUnix(post.End)
-	if err != nil {
-		return e.JSON(http.StatusBadRequest, err)
-	}
-
 	redisClient.Set("Announcement", post.Msg, 0)
-	redisClient.ExpireAt("Announcement", time.Unix(end, 0))
-	redisClient.Set("Announcement_dt", end, 0)
+	redisClient.ExpireAt("Announcement", time.Unix(post.End, 0))
+	redisClient.Set("Announcement_dt", post.End, 0)
 
 	return e.NoContent(http.StatusOK)
 }

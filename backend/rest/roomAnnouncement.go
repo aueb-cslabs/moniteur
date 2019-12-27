@@ -11,14 +11,9 @@ import (
 func createRoomAnn(e echo.Context) error {
 	c := e.(*types.Context)
 
-	post := &types.AnnouncementPost{}
+	post := &types.Announcement{}
 	err := e.Bind(post)
 
-	if err != nil {
-		return e.JSON(http.StatusBadRequest, err)
-	}
-
-	end, err := types.ConvertDateToUnix(post.End)
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, err)
 	}
@@ -27,8 +22,8 @@ func createRoomAnn(e echo.Context) error {
 	room := c.Plugin().ConvertNameInverse(e.Param("room"))
 
 	redisClient.Set(room+"_ann", post.Msg, 0)
-	redisClient.ExpireAt(room+"_ann", time.Unix(end, 0))
-	redisClient.Set(room+"_ann_dt", end, 0)
+	redisClient.ExpireAt(room+"_ann", time.Unix(post.End, 0))
+	redisClient.Set(room+"_ann_dt", post.End, 0)
 
 	return e.NoContent(http.StatusOK)
 }
@@ -37,14 +32,9 @@ func createRoomAnn(e echo.Context) error {
 func updateRoomAnn(e echo.Context) error {
 	c := e.(*types.Context)
 
-	post := &types.AnnouncementPost{}
+	post := &types.Announcement{}
 	err := e.Bind(post)
 
-	if err != nil {
-		return e.JSON(http.StatusBadRequest, err)
-	}
-
-	end, err := types.ConvertDateToUnix(post.End)
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, err)
 	}
@@ -53,8 +43,8 @@ func updateRoomAnn(e echo.Context) error {
 	room := c.Plugin().ConvertNameInverse(e.Param("room"))
 
 	redisClient.Set(room+"_ann", post.Msg, 0)
-	redisClient.ExpireAt(room+"_ann", time.Unix(end, 0))
-	redisClient.Set(room+"_ann_dt", end, 0)
+	redisClient.ExpireAt(room+"_ann", time.Unix(post.End, 0))
+	redisClient.Set(room+"_ann_dt", post.End, 0)
 
 	return e.NoContent(http.StatusOK)
 }
