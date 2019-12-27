@@ -32,7 +32,12 @@ func main() {
 	redisClient := redis.NewClient(&redis.Options{
 		Addr:     config.RedisConfig.Addr,
 		Password: config.RedisConfig.Password,
-		DB:       config.RedisConfig.DB,
+		DB:       config.RedisConfig.Ann_DB,
+	})
+	authUsers := redis.NewClient(&redis.Options{
+		Addr:     config.RedisConfig.Addr,
+		Password: config.RedisConfig.Password,
+		DB:       config.RedisConfig.Users_DB,
 	})
 
 	_, err = redisClient.Ping().Result()
@@ -45,7 +50,7 @@ func main() {
 	e.HidePort = true
 
 	plugin.Initialize(config.ExamsLink)
-	rest.Initialize(config.Secret, calendar, config.AuthorizedUsers, *redisClient)
+	rest.Initialize(config.Secret, calendar, *authUsers, *redisClient)
 
 	api := e.Group("/api")
 

@@ -6,13 +6,6 @@ import (
 	"io/ioutil"
 )
 
-// UpdateUsers updates the authorized users in config.yml
-func UpdateUsers(users map[string]string) error {
-	config, _ := types.LoadConfiguration("config/config.yml")
-	config.AuthorizedUsers = users
-	return write(config, "config/config.yml")
-}
-
 func UpdateCalendar(calendar *types.Calendar) error {
 	return write(calendar, "config/calendar.yml")
 }

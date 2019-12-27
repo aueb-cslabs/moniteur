@@ -21,7 +21,7 @@ func Authenticate(e echo.Context) error {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 
-	if authorizedUsers[user.Username] == "" {
+	if authUsers.Exists(user.Username).Val() != 1 {
 		return e.NoContent(http.StatusUnauthorized)
 	}
 
@@ -75,7 +75,7 @@ func AuthenticateToken(e echo.Context) error {
 	}
 	claim := authorized[bearerToken[1]]
 	name := e.Request().Header.Get("Username")
-	if authorizedUsers[name] == "" {
+	if authUsers.Exists(name).Val() != 1 {
 		return e.NoContent(http.StatusUnauthorized)
 	}
 	if claim == nil {
@@ -116,7 +116,7 @@ func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 		}
 		claim := authorized[bearerToken[1]]
 		name := c.Request().Header.Get("Username")
-		if authorizedUsers[name] == "" {
+		if authUsers.Exists(name).Val() != 1 {
 			return c.NoContent(http.StatusUnauthorized)
 		}
 		if claim == nil {
@@ -176,9 +176,6 @@ func jwtKey(token *jwt.Token) (interface{}, error) {
 }
 
 func Users(e echo.Context) error {
-	users := make([]string, 0)
-	for key, _ := range authorizedUsers {
-		users = append(users, key)
-	}
-	return e.JSON(http.StatusOK, users)
+	authorizedUsers := authUsers.Do("KEYS", "*").Args()
+	return e.JSON(http.StatusOK, authorizedUsers)
 }
