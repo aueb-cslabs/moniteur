@@ -96,7 +96,7 @@
                         Authorization: this.$parent.$data['authToken'].token
                     },
                     data: {
-                        end: new Date(this.form.msg)/1000,
+                        end: new Date(this.form.end)/1000,
                         msg: this.form.msg
                     }
                 }).then(() => {
