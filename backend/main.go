@@ -6,7 +6,6 @@ import "C"
 import (
 	"github.com/aueb-cslabs/moniteur/backend/rest"
 	"github.com/aueb-cslabs/moniteur/backend/types"
-	"github.com/aueb-cslabs/moniteur/backend/utils"
 	"github.com/go-redis/redis/v7"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -45,9 +44,8 @@ func main() {
 	e.HideBanner = true
 	e.HidePort = true
 
-	existing, _ := utils.Read()
 	plugin.Initialize(config.ExamsLink)
-	rest.Initialize(config.Secret, existing, calendar, config.AuthorizedUsers, *redisClient)
+	rest.Initialize(config.Secret, calendar, config.AuthorizedUsers, *redisClient)
 
 	api := e.Group("/api")
 

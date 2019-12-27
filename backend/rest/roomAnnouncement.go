@@ -2,13 +2,10 @@ package rest
 
 import (
 	"github.com/aueb-cslabs/moniteur/backend/types"
-	"github.com/aueb-cslabs/moniteur/backend/utils"
 	"github.com/labstack/echo"
 	"net/http"
 	"time"
 )
-
-//TODO REMOVE EXCESS CODE AND CLEAN IT UP
 
 // createRoomAnn Method that accepts POSTs a room announcement
 func createRoomAnn(e echo.Context) error {
@@ -21,23 +18,17 @@ func createRoomAnn(e echo.Context) error {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 
-	ann := &types.Announcement{}
-	ann.End, err = types.ConvertDateToUnix(post.End)
+	end, err := types.ConvertDateToUnix(post.End)
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, err)
 	}
-	ann.Msg = post.Msg
 
 	//Because of the room names that are in Greek we need to convert it to English
 	room := c.Plugin().ConvertNameInverse(e.Param("room"))
 
-	announcements[room] = ann
-
-	redisClient.Set(room+"_ann", ann.Msg, 0)
-	redisClient.ExpireAt(room+"_ann", time.Unix(ann.End, 0))
-	redisClient.Set(room+"_ann_dt", ann.End, 0)
-
-	writeRoomAnnouncements()
+	redisClient.Set(room+"_ann", post.Msg, 0)
+	redisClient.ExpireAt(room+"_ann", time.Unix(end, 0))
+	redisClient.Set(room+"_ann_dt", end, 0)
 
 	return e.NoContent(http.StatusOK)
 }
@@ -53,23 +44,17 @@ func updateRoomAnn(e echo.Context) error {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 
-	ann := &types.Announcement{}
-	ann.End, err = types.ConvertDateToUnix(post.End)
+	end, err := types.ConvertDateToUnix(post.End)
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, err)
 	}
-	ann.Msg = post.Msg
 
 	//Because of the room names that are in Greek we need to convert it to English
 	room := c.Plugin().ConvertNameInverse(e.Param("room"))
 
-	announcements[room] = ann
-
-	redisClient.Set(room+"_ann", ann.Msg, 0)
-	redisClient.ExpireAt(room+"_ann", time.Unix(ann.End, 0))
-	redisClient.Set(room+"_ann_dt", ann.End, 0)
-
-	writeRoomAnnouncements()
+	redisClient.Set(room+"_ann", post.Msg, 0)
+	redisClient.ExpireAt(room+"_ann", time.Unix(end, 0))
+	redisClient.Set(room+"_ann_dt", end, 0)
 
 	return e.NoContent(http.StatusOK)
 }
@@ -78,9 +63,7 @@ func updateRoomAnn(e echo.Context) error {
 func deleteRoomAnn(e echo.Context) error {
 	c := e.(*types.Context)
 	room := c.Plugin().ConvertNameInverse(e.Param("room"))
-	delete(announcements, room)
 
-	writeRoomAnnouncements()
 	redisClient.Del(room + "_ann")
 	redisClient.Del(room + "_ann_dt")
 
@@ -101,22 +84,4 @@ func getRoomAnn(e echo.Context) error {
 	} else {
 		return e.JSON(http.StatusOK, nil)
 	}
-}
-
-// checkRoomAnnouncementsExpiration checks every hour if any room announcement has expired
-func checkRoomAnnouncementsExpiration() {
-	for {
-		for i, k := range announcements {
-			now := time.Now().Unix()
-			if now >= k.End {
-				delete(announcements, i)
-			}
-		}
-		time.Sleep(time.Hour)
-	}
-}
-
-// writeRoomAnnouncements writes room announcement to existing.yml
-func writeRoomAnnouncements() {
-	_ = utils.WriteRoomAnnouncement(announcements)
 }
