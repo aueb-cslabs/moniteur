@@ -102,10 +102,12 @@
 <script>
     import Multiselect from 'vue-multiselect';
     import functions from "../functions";
+    import datetime from 'vuejs-datetimepicker';
 
     export default {
         components: {
-            Multiselect
+            Multiselect,
+            datetime
         },
 
         data() {

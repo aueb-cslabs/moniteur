@@ -25,7 +25,8 @@
     "vue-fontawesome": "0.0.2",
     "vue-i18n": "^8.14.1",
     "vue-multiselect": "^2.1.6",
-    "vue-sidebar-menu": "^4.2.2"
+    "vue-sidebar-menu": "^4.2.2",
+    "vuejs-datetimepicker": "^1.1.13"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",

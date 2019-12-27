@@ -9,8 +9,8 @@
                         <input type="text" class="form-control" id="message" v-model="form.msg" v-bind:placeholder="this.$t('message.adminAnnMsg')">
                     </div>
                     <div class="form-group">
-                        <label for="expiration">{{$t("message.adminAnnExpire")}}</label>
-                        <input type="text" class="form-control" id="expiration" v-model="form.end" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                        <label>{{$t("message.adminAnnExpire")}}</label>
+                        <datetime v-bind:placeholder="this.$t('message.adminAnnDateForm')" format="DD/MM/YYYY H:i" v-model="form.end"></datetime>
                     </div>
                     <button type="submit" class="btn btn-primary">{{$t("message.adminCommSend")}}</button>
                 </form>
@@ -49,9 +49,12 @@
 <script>
     import axios from 'axios';
     import functions from "../functions";
+    import datetime from 'vuejs-datetimepicker';
 
     export default {
         name: 'AdminComment',
+
+        components: { datetime },
 
         created() {
             this.fetchComment();
@@ -80,7 +83,7 @@
                         Authorization: this.$parent.$data['authToken'].token
                     },
                     data: {
-                        end: this.form.end,
+                        end: new Date(this.form.msg)/1000,
                         msg: this.form.msg
                     }
                 }).then(() => {

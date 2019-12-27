@@ -9,11 +9,11 @@
                         <form @submit="checkForm">
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="text" class="form-control" v-model="Calendar.Semesters.Winter.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <datetime v-bind:placeholder="this.$t('message.adminAnnDateForm')" format="DD/MM/YYYY" v-model="Calendar.Semesters.Winter.Start"></datetime>
                             </div>
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="text" class="form-control" v-model="Calendar.Semesters.Winter.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <datetime v-bind:placeholder="this.$t('message.adminAnnDateForm')" format="DD/MM/YYYY" v-model="Calendar.Semesters.Winter.End"></datetime>
                             </div>
                         </form>
                     </div>
@@ -22,11 +22,11 @@
                         <form @submit="checkForm">
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="text" class="form-control" v-model="Calendar.Semesters.Sprint.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <datetime v-bind:placeholder="this.$t('message.adinAnnDateForm')" format="DD/MM/YYYY" v-model="Calendar.Semesters.Sprint.Start"></datetime>
                             </div>
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="text" class="form-control" v-model="Calendar.Semesters.Sprint.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <datetime v-bind:placeholder="this.$t('message.adinAnnDateForm')" format="DD/MM/YYYY" v-model="Calendar.Semesters.Sprint.End"></datetime>
                             </div>
                         </form>
                     </div>
@@ -40,11 +40,11 @@
                         <form @submit="checkForm">
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="text" class="form-control" v-model="Calendar.Exams.Winter.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <datetime v-bind:placeholder="this.$t('message.adinAnnDateForm')" format="DD/MM/YYYY" v-model="Calendar.Exams.Winter.Start"></datetime>
                             </div>
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="text" class="form-control" v-model="Calendar.Exams.Winter.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <datetime v-bind:placeholder="this.$t('message.adinAnnDateForm')" format="DD/MM/YYYY" v-model="Calendar.Exams.Winter.End"></datetime>
                             </div>
                         </form>
                     </div>
@@ -53,11 +53,11 @@
                         <form @submit="checkForm">
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="text" class="form-control" v-model="Calendar.Exams.Sprint.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <datetime v-bind:placeholder="this.$t('message.adinAnnDateForm')" format="DD/MM/YYYY" v-model="Calendar.Exams.Sprint.Start"></datetime>
                             </div>
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="text" class="form-control" v-model="Calendar.Exams.Sprint.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <datetime v-bind:placeholder="this.$t('message.adinAnnDateForm')" format="DD/MM/YYYY" v-model="Calendar.Exams.Sprint.End"></datetime>
                             </div>
                         </form>
                     </div>
@@ -66,11 +66,11 @@
                         <form @submit="checkForm">
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="text" class="form-control" v-model="Calendar.Exams.September.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <datetime v-bind:placeholder="this.$t('message.adinAnnDateForm')" format="DD/MM/YYYY" v-model="Calendar.Exams.September.Start"></datetime>
                             </div>
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="text" class="form-control" v-model="Calendar.Exams.September.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <datetime v-bind:placeholder="this.$t('message.adinAnnDateForm')" format="DD/MM/YYYY" v-model="Calendar.Exams.September.End"></datetime>
                             </div>
                         </form>
                     </div>
@@ -84,11 +84,11 @@
                         <form @submit="checkForm">
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="text" class="form-control" v-model="Calendar.Breaks.Winter.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <datetime v-bind:placeholder="this.$t('message.adinAnnDateForm')" format="DD/MM/YYYY" v-model="Calendar.Breaks.Winter.Start"></datetime>
                             </div>
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="text" class="form-control" v-model="Calendar.Breaks.Winter.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <datetime v-bind:placeholder="this.$t('message.adinAnnDateForm')" format="DD/MM/YYYY" v-model="Calendar.Breaks.Winter.End"></datetime>
                             </div>
                         </form>
                     </div>
@@ -97,11 +97,11 @@
                         <form @submit="checkForm">
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="text" class="form-control" v-model="Calendar.Breaks.Sprint.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <datetime v-bind:placeholder="this.$t('message.adinAnnDateForm')" format="DD/MM/YYYY" v-model="Calendar.Breaks.Sprint.Start"></datetime>
                             </div>
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="text" class="form-control" v-model="Calendar.Breaks.Sprint.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <datetime v-bind:placeholder="this.$t('message.adinAnnDateForm')" format="DD/MM/YYYY" v-model="Calendar.Breaks.Sprint.End"></datetime>
                             </div>
                         </form>
                     </div>
@@ -113,7 +113,7 @@
                         <form>
                             <div class="row">
                                 <div class="col-md-8 col-lg-10 form-group">
-                                    <input type="text" class="form-control" v-model="date" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                    <datetime v-bind:placeholder="this.$t('message.adinAnnDateForm')" format="DD/MM/YYYY" v-model="date"></datetime>
                                 </div>
                                 <div class="col form-group">
                                     <button @click="addDate" class="btn btn-primary float-right">{{$t("message.umAdd")}}</button>
@@ -179,8 +179,11 @@
     import axios from "axios";
     import functions from "../functions";
     import traverse from "traverse";
+    import datetime from 'vuejs-datetimepicker';
 
     export default {
+        components: { datetime },
+
         created() {
             this.retrieveCalendar();
         },
@@ -300,6 +303,7 @@
                     this.error = this.$t('message.adminInvalidDate');
                     this.showAlert();
                     this.date = '';
+                    datetime.methods.clearDate();
                     e.preventDefault();
                     return;
                 }
