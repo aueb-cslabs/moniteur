@@ -176,6 +176,8 @@ func jwtKey(token *jwt.Token) (interface{}, error) {
 }
 
 func Users(e echo.Context) error {
-	authorizedUsers := authUsers.Do("KEYS", "*").Args()
-	return e.JSON(http.StatusOK, authorizedUsers)
+	authorizedUsers := authUsers.Do("SCAN", "0", "COUNT", "1000")
+	data := authorizedUsers.Val().([]interface{})
+	users := data[1].([]interface{})
+	return e.JSON(http.StatusOK, users)
 }

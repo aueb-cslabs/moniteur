@@ -12,9 +12,10 @@ var secret string
 var redisClient, authUsers redis.Client
 
 // Initialize Method
-func Initialize(sec string, initCalendar *types.Calendar, authUsers redis.Client, redis redis.Client) {
+func Initialize(sec string, initCalendar *types.Calendar, auth redis.Client, redis redis.Client) {
 	authorized = make(map[string]*types.AuthTokenClaim)
 	calendar = initCalendar
 	secret = sec
 	redisClient = redis
+	authUsers = auth
 }

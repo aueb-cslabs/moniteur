@@ -62,7 +62,7 @@ func main() {
 
 	//For CORS to work, please define the EXACT link that you will use!!!
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"http://localhost:8080", "http://localhost:8086"},
+		AllowOrigins: []string{"*"},
 	}))
 
 	rest.CalendarGroup(api.Group("/calendarInfo"))

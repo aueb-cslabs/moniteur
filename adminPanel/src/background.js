@@ -14,7 +14,6 @@ let win
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }])
 
 function createWindow () {
-  console.log(process.cwd());
   // Create the browser window.
   win = new BrowserWindow({ width: 800, height: 600, webPreferences: {
     nodeIntegration: true
@@ -79,7 +78,6 @@ if (isDevelopment) {
 
 function checkAppData() {
   if (!fs.existsSync(app.getPath('userData')+"/config.yml")) {
-    console.log("once");
     fs.openSync(app.getPath('userData')+'/config.yml', 'w');
     let config = yaml.safeLoad(fs.readFileSync(process.cwd()+'/config/config.yml', 'utf8'));
     fs.writeFileSync(app.getPath('userData')+'/config.yml', yaml.safeDump(config), function(err) {
@@ -90,6 +88,7 @@ function checkAppData() {
 
 function loadConfig() {
   try {
+    console.log(app.getPath('userData'));
     global.config = yaml.safeLoad(fs.readFileSync(app.getPath('userData')+'/config.yml', 'utf8'));
     // eslint-disable-next-line no-console
     console.log(global.config);
