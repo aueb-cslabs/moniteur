@@ -53,14 +53,11 @@
 <script>
     import axios from 'axios';
     import functions from '../functions';
-    import datetime from 'vuejs-datetimepicker';
 
     const config = require('electron').remote.getGlobal('config');
 
     export default {
         name: 'AdminRoomAnnouncement',
-
-        components: { datetime },
 
         created() {
             axios({

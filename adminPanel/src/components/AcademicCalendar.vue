@@ -179,12 +179,10 @@
     import axios from "axios";
     import functions from "../functions";
     import traverse from "traverse";
-    import datetime from 'vuejs-datetimepicker';
 
     const config = require('electron').remote.getGlobal('config');
 
     export default {
-        components: { datetime },
 
         created() {
             this.retrieveCalendar();
