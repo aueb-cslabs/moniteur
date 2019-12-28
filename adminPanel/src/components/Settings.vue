@@ -60,8 +60,8 @@
     import yaml from 'js-yaml';
 
     const config = require('electron').remote.getGlobal('config');
+    const app = require('electron').remote.app;
     const fs = window.require('fs');
-    //const background = remote.require('../background.js');
 
     export default {
         name: "Settings",
@@ -134,12 +134,13 @@
             },
 
             save: function() {
-                //saveConfig(this.form);
-                fs.writeFileSync("config.yml", yaml.safeDump(this.form), function(err) {
+                fs.writeFileSync(app.getPath('userData')+"/config.yml", yaml.safeDump(this.form), function(err) {
                     if(err) {
                         return err;
                     }
                 });
+                app.relaunch();
+                app.exit(0);
             },
         }
     }

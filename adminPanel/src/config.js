@@ -1,6 +1,6 @@
 export default {
-    "api": "",
-    "logo_url": '',
+    "api": config.api,
+    "logo_url": config.logo_url,
     "secondary_logo_url": '',
     "background_color": "",
     "navbar_background_color": "",

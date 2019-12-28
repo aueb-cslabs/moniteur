@@ -8,12 +8,14 @@ module.exports = {
                 "productName": "moniteur-admin",
                 "nsis": {
                     "oneClick": false,
-                    "artifactName": "${productName}-Setup-${version}.${ext}"
+                    "artifactName": "${productName}-Setup-${version}.${ext}",
                 },
                 "dmg": {
 
-                }
-
+                },
+                "extraFiles": [
+                    "config/*"
+                ]
             }
         }
     }

@@ -14,6 +14,7 @@ let win
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }])
 
 function createWindow () {
+  console.log(process.cwd());
   // Create the browser window.
   win = new BrowserWindow({ width: 800, height: 600, webPreferences: {
     nodeIntegration: true
@@ -56,6 +57,7 @@ app.on('activate', () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
+  checkAppData();
   loadConfig();
   createWindow();
 })
@@ -75,9 +77,20 @@ if (isDevelopment) {
   }
 }
 
+function checkAppData() {
+  if (!fs.existsSync(app.getPath('userData')+"/config.yml")) {
+    console.log("once");
+    fs.openSync(app.getPath('userData')+'/config.yml', 'w');
+    let config = yaml.safeLoad(fs.readFileSync(process.cwd()+'/config/config.yml', 'utf8'));
+    fs.writeFileSync(app.getPath('userData')+'/config.yml', yaml.safeDump(config), function(err) {
+      if (err) return err;
+    });
+  }
+}
+
 function loadConfig() {
   try {
-    global.config = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'));
+    global.config = yaml.safeLoad(fs.readFileSync(app.getPath('userData')+'/config.yml', 'utf8'));
     // eslint-disable-next-line no-console
     console.log(global.config);
   } catch (e) {
@@ -85,18 +98,3 @@ function loadConfig() {
     console.log(e);
   }
 }
-
-export default {
-  methods: {
-    saveConfig(config) {
-      const fs = window.require('fs');
-      fs.writeFile("config.yml", config, function(err) {
-        if(err) {
-          return err;
-        }
-      });
-    },
-  }
-}
-
-global.reload = app.relaunch();
