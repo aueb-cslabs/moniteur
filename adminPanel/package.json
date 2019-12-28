@@ -2,6 +2,11 @@
   "name": "moniteur-admin",
   "version": "0.1.0",
   "main": "background.js",
+  "author": {
+    "name": "AUEB CSLab",
+    "email": "cslab@aueb.gr"
+  },
+  "homepage": "https://cslab.aueb.gr",
   "scripts": {
     "serve": "vue-cli-service serve --port 8086",
     "build": "vue-cli-service build",

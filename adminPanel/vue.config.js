@@ -10,6 +10,9 @@ module.exports = {
                     "oneClick": false,
                     "artifactName": "moniteur-admin-Setup-${version}.${ext}",
                 },
+                "linux": {
+                    "target": "deb"
+                },
                 "dmg": {
 
                 },
