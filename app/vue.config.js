@@ -6,7 +6,8 @@ module.exports = {
                 // options placed here will be merged with default configuration and passed to electron-builder
                 "appId": "org.aueb.moniteur",
                 "nsis": {
-                    "oneClick": false
+                    "oneClick": false,
+                    "artifactName": "${productName}-Setup-${version}.${ext}"
                 },
                 "extraFiles": [
                     {
