@@ -8,6 +8,12 @@ module.exports = {
                 "nsis": {
                     "oneClick": false
                 },
+                "extraFiles": [
+                    {
+                        "from": "config/config.example.yml",
+                        "to": "config.yml"
+                    }
+                ]
             }
         }
     }
