@@ -2,12 +2,20 @@
   "name": "moniteur-admin",
   "version": "0.1.0",
   "main": "background.js",
+  "author": {
+    "name": "AUEB CSLab",
+    "email": "cslab@aueb.gr"
+  },
+  "homepage": "https://cslab.aueb.gr",
   "scripts": {
     "serve": "vue-cli-service serve --port 8086",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
+    "build:win": "vue-cli-service electron:build --windows",
+    "build:linux": "vue-cli-service electron:build --linux",
+    "build:macos": "vue-cli-service electron:build --macos",
+    "build:win-linux": "vue-cli-service electron:build --windows --linux",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
@@ -24,9 +32,7 @@
     "vue-cookies": "^1.5.13",
     "vue-fontawesome": "0.0.2",
     "vue-i18n": "^8.14.1",
-    "vue-multiselect": "^2.1.6",
-    "vue-sidebar-menu": "^4.2.2",
-    "vuejs-datetimepicker": "^1.1.13"
+    "vue-multiselect": "^2.1.6"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",

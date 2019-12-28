@@ -303,7 +303,6 @@
                     this.error = this.$t('message.adminInvalidDate');
                     this.showAlert();
                     this.date = '';
-                    datetime.methods.clearDate();
                     e.preventDefault();
                     return;
                 }
