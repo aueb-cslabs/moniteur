@@ -13,8 +13,8 @@
                         <input type="text" class="form-control" id="message" v-model="form.msg" v-bind:placeholder="this.$t('message.adminAnnMsg')">
                     </div>
                     <div class="form-group">
-                        <label>{{$t("message.adminAnnExpire")}}</label>
-                        <datetime v-bind:placeholder="this.$t('message.adminAnnDateForm')" format="DD/MM/YYYY H:i" v-model="form.end"></datetime>
+                        <label for="expiration">{{$t("message.adminAnnExpire")}}</label>
+                        <input type="datetime-local" class="form-control" id="expiration" v-model="form.end" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                     </div>
                     <button type="submit" class="btn btn-primary float-right mb-4">{{$t("message.adminAnnSend")}}</button>
                 </form>
