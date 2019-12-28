@@ -29,7 +29,7 @@ script:
         electronuserland/builder:wine \
         /bin/bash -c "cd adminPanel && npm install && npm run build:win-linux"
     else
-      cd adminPanel && npm run build:macos
+      cd adminPanel && npm install && npm run build:macos
     fi
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine
