@@ -1,5 +1,5 @@
 {
-  "name": "moniteur",
+  "name": "moniteur-admin",
   "version": "0.1.0",
   "main": "background.js",
   "scripts": {
