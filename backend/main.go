@@ -4,6 +4,7 @@ package main
 
 import "C"
 import (
+	"github.com/aueb-cslabs/moniteur/backend/postgres"
 	"github.com/aueb-cslabs/moniteur/backend/rest"
 	"github.com/aueb-cslabs/moniteur/backend/types"
 	"github.com/go-redis/redis/v7"
@@ -16,7 +17,6 @@ import (
 )
 
 func main() {
-
 	config, err := types.LoadConfiguration("config/config.yml")
 	if err != nil {
 		log.Panic(err)
@@ -29,6 +29,7 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
+	db := postgres.Initialize(config.Postgres)
 	redisClient := redis.NewClient(&redis.Options{
 		Addr:     config.RedisConfig.Addr,
 		Password: config.RedisConfig.Password,
@@ -56,7 +57,7 @@ func main() {
 
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			return next(types.NewContext(c, plugin))
+			return next(types.NewContext(c, plugin, db))
 		}
 	})
 
@@ -70,6 +71,7 @@ func main() {
 	rest.CommentGroup(api.Group("/comment"))
 	rest.ScheduleGroup(api.Group("/schedule"))
 	rest.ExamsGroup(api.Group("/exams"))
+	rest.OverrideGroup(api.Group("/override"))
 	api.GET("/room/:id", rest.Room)
 	api.POST("/authenticate", rest.Authenticate)
 	api.POST("/validate", rest.AuthenticateToken)

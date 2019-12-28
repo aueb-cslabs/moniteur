@@ -12,6 +12,7 @@ type Configuration struct {
 	Secret      string `yaml:"secret"`
 	Port        int    `yaml:"port"`
 	RedisConfig redis  `yaml:"redis"`
+	Postgres    string `yaml:"postgres"`
 }
 
 // LoadConfiguration reads a configuration file and returns a struct.

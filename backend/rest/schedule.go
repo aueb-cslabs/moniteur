@@ -40,6 +40,7 @@ func scheduleRoom(ec echo.Context) error {
 			applicableSlots = append(applicableSlots, slot)
 		}
 	}
+
 	schedule.Slots = applicableSlots
 
 	return c.JSON(http.StatusOK, schedule)
@@ -69,6 +70,17 @@ func scheduleRoomNow(ec echo.Context) error {
 		sort.Slice(returnSchedule.Next, func(i, j int) bool {
 			return returnSchedule.Next[i].Start < returnSchedule.Next[j].Start
 		})
+	}
+
+	db := c.DB
+	var overrides []*types.ScheduleSlot
+	db.Where("room = ?", room).Find(&overrides)
+	now := time.Now().Unix()
+
+	for _, slot := range overrides {
+		if slot.Start < now && slot.End > now {
+			returnSchedule.Now = slot
+		}
 	}
 
 	return c.JSON(http.StatusOK, returnSchedule)

@@ -1,16 +1,19 @@
 package types
 
-import "github.com/labstack/echo"
+import (
+	"github.com/jinzhu/gorm"
+	"github.com/labstack/echo"
+)
 
 type Context struct {
 	echo.Context
-	plugin          Plugin
-	Calendar        *Calendar
-	AuthorizedUsers map[string]string
+	plugin   Plugin
+	Calendar *Calendar
+	DB       *gorm.DB
 }
 
-func NewContext(context echo.Context, plugin Plugin) *Context {
-	return &Context{Context: context, plugin: plugin}
+func NewContext(context echo.Context, plugin Plugin, db *gorm.DB) *Context {
+	return &Context{Context: context, plugin: plugin, DB: db}
 }
 
 func (c Context) Plugin() Plugin {
