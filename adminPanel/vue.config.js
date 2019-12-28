@@ -5,10 +5,10 @@ module.exports = {
             builderOptions: {
                 // options placed here will be merged with default configuration and passed to electron-builder
                 "appId": "org.aueb.moniteur-admin",
-                "productName": "moniteur-admin",
+                "productName": "Moniteur Admin",
                 "nsis": {
                     "oneClick": false,
-                    "artifactName": "${productName}-Setup-${version}.${ext}",
+                    "artifactName": "moniteur-admin-Setup-${version}.${ext}",
                 },
                 "dmg": {
 
