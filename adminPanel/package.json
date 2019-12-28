@@ -15,6 +15,7 @@
     "build:win": "vue-cli-service electron:build --windows",
     "build:linux": "vue-cli-service electron:build --linux",
     "build:macos": "vue-cli-service electron:build --macos",
+    "build:win-linux": "vue-cli-service electron:build --windows --linux",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
