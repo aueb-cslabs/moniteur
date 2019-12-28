@@ -46,14 +46,17 @@
     //import ExamsCalendar from "./ExamsCalendar";
     import Settings from "./Settings";
 
+    const config = require('electron').remote.getGlobal('config');
+
     export default {
+
         name: 'Administration',
 
         created() {
             let r = document.documentElement;
-            r.style.setProperty("--background", this.$root.$data['background_color']);
-            r.style.setProperty("--navbar-bg-color", this.$root.$data['navbar_background_color']);
-            r.style.setProperty("--navbar-color", this.$root.$data['navbar_color']);
+            r.style.setProperty("--background", config.background_color);
+            r.style.setProperty("--navbar-bg-color", config.navbar_background_color);
+            r.style.setProperty("--navbar-color", config.navbar_color);
         },
 
         components: {

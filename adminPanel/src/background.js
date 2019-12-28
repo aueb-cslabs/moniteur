@@ -2,6 +2,8 @@
 
 import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
+import fs from "fs";
+import yaml from 'js-yaml';
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -54,7 +56,8 @@ app.on('activate', () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-  createWindow()
+  loadConfig();
+  createWindow();
 })
 
 // Exit cleanly on request from parent process in development mode.
@@ -71,3 +74,29 @@ if (isDevelopment) {
     })
   }
 }
+
+function loadConfig() {
+  try {
+    global.config = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'));
+    // eslint-disable-next-line no-console
+    console.log(global.config);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e);
+  }
+}
+
+export default {
+  methods: {
+    saveConfig(config) {
+      const fs = window.require('fs');
+      fs.writeFile("config.yml", config, function(err) {
+        if(err) {
+          return err;
+        }
+      });
+    },
+  }
+}
+
+global.reload = app.relaunch();

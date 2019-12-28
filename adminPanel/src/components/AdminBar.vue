@@ -4,11 +4,11 @@
             <i class="fas fa-list-ul fa-2x" style="color: white;"></i>
         </button>
         <a class='navbar-brand d-none d-sm-block'>
-            <img v-bind:src="this.$root.$data['logo_url']"
+            <img v-bind:src="this.logo_url"
             alt="logo" height="60" />
         </a>
         <a class="navbar-nav mr-auto d-none d-sm-block">
-            <img class="ml-2" v-bind:src="this.$root.$data['secondary_logo_url']"
+            <img class="ml-2" v-bind:src="this.secondary_logo_url"
                  alt="cs_logo" height="60" />
         </a>
         <ul class="navbar-nav ml-auto">
@@ -21,6 +21,8 @@
 <script>
     import axios from "axios";
 
+    const config = require('electron').remote.getGlobal('config');
+
     export default {
         name: 'AdminBar',
 
@@ -31,7 +33,9 @@
         data() {
             return {
                 username: '',
-                sideOpen: false
+                sideOpen: false,
+                logo_url: config.logo_url,
+                secondary_logo_url: config.secondary_logo_url
             }
         },
 
@@ -40,7 +44,7 @@
                 //let cookie = this.$cookies.get('session');
                 axios({
                     method: 'post',
-                    url: this.$root.$data['api'] + "/api/invalidate",
+                    url: config.api + "/api/invalidate",
                     headers: {
                         Authorization: this.$parent.$data['authToken'].token,
                         Username: this.$parent.$data['authToken'].username

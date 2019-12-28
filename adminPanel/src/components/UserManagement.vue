@@ -46,6 +46,8 @@
 <script>
     import axios from "axios";
 
+    const config = require('electron').remote.getGlobal('config');
+
     export default {
         created() {
             this.updateUsers();
@@ -76,7 +78,7 @@
             addUser: function() {
                 axios({
                     method: 'post',
-                    url: this.$root.$data['api'] + '/api/register/' + this.user,
+                    url: config.api + '/api/register/' + this.user,
                     headers: {
                         Username: this.$parent.$data['authToken'].username,
                         Authorization: this.$parent.$data['authToken'].token
@@ -89,7 +91,7 @@
             updateUsers: function() {
                 axios({
                     method: 'get',
-                    url: this.$root.$data['api'] + '/api/users',
+                    url: config.api + '/api/users',
                     headers: {
                         Username: this.$parent.$data['authToken'].username,
                         Authorization: this.$parent.$data['authToken'].token
@@ -102,7 +104,7 @@
             removeUser: function() {
                 axios({
                     method: 'post',
-                    url: this.$root.$data['api'] + '/api/unregister/' + this.userOption,
+                    url: config.api + '/api/unregister/' + this.userOption,
                     headers: {
                         Username: this.$parent.$data['authToken'].username,
                         Authorization: this.$parent.$data['authToken'].token

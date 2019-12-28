@@ -51,6 +51,8 @@
     import functions from "../functions";
     import datetime from 'vuejs-datetimepicker';
 
+    const config = require('electron').remote.getGlobal('config');
+
     export default {
         name: 'AdminComment',
 
@@ -77,7 +79,7 @@
             send: function () {
                 axios({
                     method: 'post',
-                    url: this.$root.$data['api'] + "/api/comment",
+                    url: config.api + "/api/comment",
                     headers: {
                         Username: this.$parent.$data['authToken'].username,
                         Authorization: this.$parent.$data['authToken'].token
@@ -94,7 +96,7 @@
             removeComment: function () {
                 axios({
                     method: 'delete',
-                    url: this.$root.$data['api'] + "/api/comment",
+                    url: config.api + "/api/comment",
                     headers: {
                         Username: this.$parent.$data['authToken'].username,
                         Authorization: this.$parent.$data['authToken'].token
@@ -105,7 +107,7 @@
             },
 
             fetchComment: function () {
-                axios.get(this.$root.$data['api'] + "/api/comment")
+                axios.get(config.api + "/api/comment")
                     .then(response => {
                         this.comment = response.data;
                         let date = new Date(this.comment['end']*1000).toLocaleDateString("el-GR");

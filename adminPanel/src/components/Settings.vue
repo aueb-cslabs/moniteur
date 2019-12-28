@@ -57,6 +57,11 @@
 </template>
 
 <script>
+    import yaml from 'js-yaml';
+
+    const config = require('electron').remote.getGlobal('config');
+    const fs = window.require('fs');
+    //const background = remote.require('../background.js');
 
     export default {
         name: "Settings",
@@ -67,18 +72,14 @@
                 dismissCountDown: 0,
                 error: null,
                 form : {
-                    api: '',
-                    logo_url: '',
-                    secondary_logo_url: '',
-                    background_color: '',
-                    navbar_background_color: '',
-                    navbar_color: ''
+                    api: config.api,
+                    logo_url: config.logo_url,
+                    secondary_logo_url: config.secondary_logo_url,
+                    background_color: config.background_color,
+                    navbar_background_color: config.navbar_background_color,
+                    navbar_color: config.navbar_color
                 }
             }
-        },
-
-        created() {
-            this.loadConfig();
         },
 
         methods: {
@@ -133,19 +134,13 @@
             },
 
             save: function() {
-                const fs = window.require('fs');
-                let file = 'export default ' + JSON.stringify(this.form);
-                fs.writeFile("../config.js", file, function(err) {
+                //saveConfig(this.form);
+                fs.writeFileSync("config.yml", yaml.safeDump(this.form), function(err) {
                     if(err) {
-                        return console.log(err);
+                        return err;
                     }
-                    console.log("File successfully saved to disk.");
                 });
             },
-
-            loadConfig() {
-                this.form = this.$root.$data;
-            }
         }
     }
 </script>

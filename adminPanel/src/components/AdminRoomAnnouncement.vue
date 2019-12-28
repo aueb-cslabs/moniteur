@@ -55,6 +55,8 @@
     import functions from '../functions';
     import datetime from 'vuejs-datetimepicker';
 
+    const config = require('electron').remote.getGlobal('config');
+
     export default {
         name: 'AdminRoomAnnouncement',
 
@@ -63,7 +65,7 @@
         created() {
             axios({
                 method: 'get',
-                url: this.$root.$data['api'] + '/api/rooms'
+                url: config.api + '/api/rooms'
             }).then(response => {
                 this.options = response.data;
             });
@@ -90,7 +92,7 @@
             send: function () {
                 axios({
                     method: 'post',
-                    url: this.$root.$data['api'] + "/api/announcement/" + this.room,
+                    url: config.api + "/api/announcement/" + this.room,
                     headers: {
                         Username: this.$parent.$data['authToken'].username,
                         Authorization: this.$parent.$data['authToken'].token
@@ -107,7 +109,7 @@
             removeRoomAnnouncement: function () {
                 axios({
                     method: 'delete',
-                    url: this.$root.$data['api'] + "/api/announcement/" + this.room,
+                    url: config.api + "/api/announcement/" + this.room,
                     headers: {
                         Username: this.$parent.$data['authToken'].username,
                         Authorization: this.$parent.$data['authToken'].token
@@ -118,7 +120,7 @@
             },
 
             fetchRoomAnnouncement: function () {
-                axios.get(this.$root.$data['api'] + "/api/announcement/" + this.room)
+                axios.get(config.api + "/api/announcement/" + this.room)
                     .then(response => {
                         this.announcement = response.data;
                         let date = new Date(this.announcement['end']*1000).toLocaleDateString("el-GR");

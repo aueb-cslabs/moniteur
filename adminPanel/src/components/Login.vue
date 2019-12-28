@@ -33,6 +33,8 @@
 <script>
     import axios from "axios";
 
+    const config = require('electron').remote.getGlobal('config');
+
     export default {
         data() {
             return {
@@ -55,7 +57,7 @@
             if (cookie != null) {
                 axios({
                     method: 'post',
-                    url: this.$root.$data['api'] + '/api/validate',
+                    url: config.api + '/api/validate',
                     headers: cookie
                 }).then(() => {
                     this.$parent.$data['authToken'].auth = true;
@@ -69,7 +71,7 @@
             login: function () {
                 axios({
                     method: 'post',
-                    url: this.$root.$data['api'] + '/api/authenticate',
+                    url: config.api + '/api/authenticate',
                     data: {
                         username: this.loginForm.username,
                         password: this.loginForm.password
