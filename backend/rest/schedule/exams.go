@@ -1,4 +1,4 @@
-package rest
+package schedule
 
 import (
 	"github.com/aueb-cslabs/moniteur/backend/types"

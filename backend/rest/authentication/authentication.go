@@ -1,7 +1,8 @@
-package rest
+package authentication
 
 import (
 	"errors"
+	"github.com/aueb-cslabs/moniteur/backend/rest"
 	"github.com/aueb-cslabs/moniteur/backend/types"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
@@ -21,7 +22,7 @@ func Authenticate(e echo.Context) error {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 
-	if authUsers.Exists(user.Username).Val() != 1 {
+	if ctx.AuthUsers.Exists(user.Username).Val() != 1 {
 		return e.NoContent(http.StatusUnauthorized)
 	}
 
@@ -39,7 +40,7 @@ func Authenticate(e echo.Context) error {
 
 		token.Claims = authTokenClaim
 
-		tokenString, err := token.SignedString([]byte(secret))
+		tokenString, err := token.SignedString([]byte(rest.Secret))
 		if err != nil {
 			return e.JSON(http.StatusUnauthorized, err)
 		}
@@ -49,7 +50,7 @@ func Authenticate(e echo.Context) error {
 		authToken.TokenType = "Bearer"
 		authToken.ExpiresIn = expiresAt
 
-		authorized[authToken.Token] = authTokenClaim
+		rest.Authorized[authToken.Token] = authTokenClaim
 
 		return e.JSON(http.StatusOK, authToken)
 	} else {
@@ -58,6 +59,8 @@ func Authenticate(e echo.Context) error {
 }
 
 func AuthenticateToken(e echo.Context) error {
+	ctx := e.(*types.Context)
+
 	authHeader := e.Request().Header.Get("Authorization")
 	if authHeader == "" {
 		return e.NoContent(http.StatusUnauthorized)
@@ -73,9 +76,9 @@ func AuthenticateToken(e echo.Context) error {
 	if !token.Valid {
 		return e.NoContent(http.StatusUnauthorized)
 	}
-	claim := authorized[bearerToken[1]]
+	claim := rest.Authorized[bearerToken[1]]
 	name := e.Request().Header.Get("Username")
-	if authUsers.Exists(name).Val() != 1 {
+	if ctx.AuthUsers.Exists(name).Val() != 1 {
 		return e.NoContent(http.StatusUnauthorized)
 	}
 	if claim == nil {
@@ -86,7 +89,7 @@ func AuthenticateToken(e echo.Context) error {
 
 	nowUnix := time.Now().Unix()
 	if nowUnix >= expiresAt {
-		delete(authorized, bearerToken[1])
+		delete(rest.Authorized, bearerToken[1])
 		return e.NoContent(http.StatusUnauthorized)
 	}
 	if name != username {
@@ -99,6 +102,8 @@ func AuthenticateToken(e echo.Context) error {
 // Validate user validation of JWT token
 func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
+		ctx := c.(*types.Context)
+
 		authHeader := c.Request().Header.Get("authorization")
 		if authHeader == "" {
 			return c.NoContent(http.StatusUnauthorized)
@@ -114,9 +119,9 @@ func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 		if !token.Valid {
 			return c.NoContent(http.StatusUnauthorized)
 		}
-		claim := authorized[bearerToken[1]]
+		claim := rest.Authorized[bearerToken[1]]
 		name := c.Request().Header.Get("Username")
-		if authUsers.Exists(name).Val() != 1 {
+		if ctx.AuthUsers.Exists(name).Val() != 1 {
 			return c.NoContent(http.StatusUnauthorized)
 		}
 		if claim == nil {
@@ -127,7 +132,7 @@ func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 
 		nowUnix := time.Now().Unix()
 		if nowUnix >= expiresAt {
-			delete(authorized, bearerToken[1])
+			delete(rest.Authorized, bearerToken[1])
 			return c.NoContent(http.StatusUnauthorized)
 		}
 		if name != username {
@@ -156,12 +161,12 @@ func Invalidate(e echo.Context) error {
 	if !token.Valid {
 		return e.NoContent(http.StatusUnauthorized)
 	}
-	claim := authorized[bearerToken[1]]
+	claim := rest.Authorized[bearerToken[1]]
 	if claim == nil {
 		return e.NoContent(http.StatusBadRequest)
 	}
 	if claim.Username == user {
-		delete(authorized, bearerToken[1])
+		delete(rest.Authorized, bearerToken[1])
 		return e.NoContent(http.StatusOK)
 	}
 	return e.NoContent(http.StatusBadRequest)
@@ -172,11 +177,13 @@ func jwtKey(token *jwt.Token) (interface{}, error) {
 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 		return nil, errors.New("unexpected error")
 	}
-	return []byte(secret), nil
+	return []byte(rest.Secret), nil
 }
 
 func Users(e echo.Context) error {
-	authorizedUsers := authUsers.Do("SCAN", "0", "COUNT", "1000")
+	ctx := e.(*types.Context)
+
+	authorizedUsers := ctx.AuthUsers.Do("SCAN", "0", "COUNT", "1000")
 	data := authorizedUsers.Val().([]interface{})
 	users := data[1].([]interface{})
 	return e.JSON(http.StatusOK, users)

@@ -1,4 +1,4 @@
-package rest
+package announcements
 
 import (
 	"github.com/aueb-cslabs/moniteur/backend/types"
@@ -9,7 +9,7 @@ import (
 
 // createRoomAnn Method that accepts POSTs a room announcement
 func createRoomAnn(e echo.Context) error {
-	c := e.(*types.Context)
+	ctx := e.(*types.Context)
 
 	post := &types.Announcement{}
 	err := e.Bind(post)
@@ -19,18 +19,18 @@ func createRoomAnn(e echo.Context) error {
 	}
 
 	//Because of the room names that are in Greek we need to convert it to English
-	room := c.Plugin().ConvertNameInverse(e.Param("room"))
+	room := ctx.Plugin().ConvertNameInverse(e.Param("room"))
 
-	redisClient.Set(room+"_ann", post.Msg, 0)
-	redisClient.ExpireAt(room+"_ann", time.Unix(post.End, 0))
-	redisClient.Set(room+"_ann_dt", post.End, 0)
+	ctx.RedisClient.Set(room+"_ann", post.Msg, 0)
+	ctx.RedisClient.ExpireAt(room+"_ann", time.Unix(post.End, 0))
+	ctx.RedisClient.Set(room+"_ann_dt", post.End, 0)
 
 	return e.NoContent(http.StatusOK)
 }
 
 // updateRoomAnn Method that accepts PUTs a room announcement
 func updateRoomAnn(e echo.Context) error {
-	c := e.(*types.Context)
+	ctx := e.(*types.Context)
 
 	post := &types.Announcement{}
 	err := e.Bind(post)
@@ -40,35 +40,37 @@ func updateRoomAnn(e echo.Context) error {
 	}
 
 	//Because of the room names that are in Greek we need to convert it to English
-	room := c.Plugin().ConvertNameInverse(e.Param("room"))
+	room := ctx.Plugin().ConvertNameInverse(e.Param("room"))
 
-	redisClient.Set(room+"_ann", post.Msg, 0)
-	redisClient.ExpireAt(room+"_ann", time.Unix(post.End, 0))
-	redisClient.Set(room+"_ann_dt", post.End, 0)
+	ctx.RedisClient.Set(room+"_ann", post.Msg, 0)
+	ctx.RedisClient.ExpireAt(room+"_ann", time.Unix(post.End, 0))
+	ctx.RedisClient.Set(room+"_ann_dt", post.End, 0)
 
 	return e.NoContent(http.StatusOK)
 }
 
 // deleteRoomAnn Method that accepts DELETEs a room announcement
 func deleteRoomAnn(e echo.Context) error {
-	c := e.(*types.Context)
-	room := c.Plugin().ConvertNameInverse(e.Param("room"))
+	ctx := e.(*types.Context)
 
-	redisClient.Del(room + "_ann")
-	redisClient.Del(room + "_ann_dt")
+	room := ctx.Plugin().ConvertNameInverse(e.Param("room"))
+
+	ctx.RedisClient.Del(room + "_ann")
+	ctx.RedisClient.Del(room + "_ann_dt")
 
 	return e.NoContent(http.StatusOK)
 }
 
 // getRoomAnn Method that accepts GETs a room announcement
 func getRoomAnn(e echo.Context) error {
-	c := e.(*types.Context)
-	room := c.Plugin().ConvertNameInverse(e.Param("room"))
+	ctx := e.(*types.Context)
+
+	room := ctx.Plugin().ConvertNameInverse(e.Param("room"))
 	room = room + "_ann"
-	exists := redisClient.Exists(room).Val()
+	exists := ctx.RedisClient.Exists(room).Val()
 	if exists == 1 {
-		res := redisClient.Get(room).Val()
-		end, _ := redisClient.Get(room + "_dt").Int64()
+		res := ctx.RedisClient.Get(room).Val()
+		end, _ := ctx.RedisClient.Get(room + "_dt").Int64()
 		roomAnn := &types.Announcement{End: end, Msg: res}
 		return e.JSON(http.StatusOK, roomAnn)
 	} else {

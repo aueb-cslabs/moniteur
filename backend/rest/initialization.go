@@ -2,20 +2,16 @@ package rest
 
 import (
 	"github.com/aueb-cslabs/moniteur/backend/types"
-	"github.com/go-redis/redis/v7"
 )
 
 // Map that connects rooms and announcements
-var authorized map[string]*types.AuthTokenClaim
-var calendar *types.Calendar
-var secret string
-var redisClient, authUsers redis.Client
+var Authorized map[string]*types.AuthTokenClaim
+var Calendar *types.Calendar
+var Secret string
 
 // Initialize Method
-func Initialize(sec string, initCalendar *types.Calendar, auth redis.Client, redis redis.Client) {
-	authorized = make(map[string]*types.AuthTokenClaim)
-	calendar = initCalendar
-	secret = sec
-	redisClient = redis
-	authUsers = auth
+func Initialize(sec string, initCalendar *types.Calendar) {
+	Authorized = make(map[string]*types.AuthTokenClaim)
+	Calendar = initCalendar
+	Secret = sec
 }

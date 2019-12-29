@@ -22,15 +22,3 @@ func Initialize(uri string) (db *gorm.DB) {
 func Terminate(db *gorm.DB) {
 	_ = db.Close()
 }
-
-/*func Migrate(){
-	db.AutoMigrate(&types.ScheduleSlot{})
-}
-
-func Insert(lesson *types.ScheduleSlot) {
-	db.Create(lesson)
-}
-
-func Search(room string, lessons *types.ScheduleSlot) {
-	db.Where("room = ?", room).Find(lessons)
-}*/

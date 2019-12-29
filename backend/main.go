@@ -6,6 +6,10 @@ import "C"
 import (
 	"github.com/aueb-cslabs/moniteur/backend/postgres"
 	"github.com/aueb-cslabs/moniteur/backend/rest"
+	"github.com/aueb-cslabs/moniteur/backend/rest/announcements"
+	"github.com/aueb-cslabs/moniteur/backend/rest/authentication"
+	"github.com/aueb-cslabs/moniteur/backend/rest/calendar"
+	"github.com/aueb-cslabs/moniteur/backend/rest/schedule"
 	"github.com/aueb-cslabs/moniteur/backend/types"
 	"github.com/go-redis/redis/v7"
 	"github.com/labstack/echo"
@@ -25,7 +29,7 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-	calendar, err := types.LoadCalendar("config/calendar.yml")
+	calendarInfo, err := types.LoadCalendar("config/calendar.yml")
 	if err != nil {
 		log.Panic(err)
 	}
@@ -51,13 +55,13 @@ func main() {
 	e.HidePort = true
 
 	plugin.Initialize(config.ExamsLink)
-	rest.Initialize(config.Secret, calendar, *authUsers, *redisClient)
+	rest.Initialize(config.Secret, calendarInfo)
 
 	api := e.Group("/api")
 
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			return next(types.NewContext(c, plugin, db))
+			return next(types.NewContext(c, plugin, db, redisClient, authUsers))
 		}
 	})
 
@@ -66,20 +70,20 @@ func main() {
 		AllowOrigins: []string{"*"},
 	}))
 
-	rest.CalendarGroup(api.Group("/calendarInfo"))
-	rest.AnnouncementsGroup(api.Group("/announcement"))
-	rest.CommentGroup(api.Group("/comment"))
-	rest.ScheduleGroup(api.Group("/schedule"))
-	rest.ExamsGroup(api.Group("/exams"))
-	rest.OverrideGroup(api.Group("/override"))
-	api.GET("/room/:id", rest.Room)
-	api.POST("/authenticate", rest.Authenticate)
-	api.POST("/validate", rest.AuthenticateToken)
-	api.POST("/invalidate", rest.Invalidate)
-	api.POST("/register/:id", rest.Validate(rest.Register))
-	api.POST("/unregister/:id", rest.Validate(rest.Unregister))
-	api.GET("/rooms", rest.Rooms)
-	api.GET("/users", rest.Validate(rest.Users))
+	calendar.CalendarGroup(api.Group("/calendarInfo"))
+	announcements.AnnouncementsGroup(api.Group("/announcement"))
+	announcements.CommentGroup(api.Group("/comment"))
+	schedule.ScheduleGroup(api.Group("/schedule"))
+	schedule.ExamsGroup(api.Group("/exams"))
+	schedule.OverrideGroup(api.Group("/override"))
+	api.GET("/room/:id", schedule.Room)
+	api.POST("/authenticate", authentication.Authenticate)
+	api.POST("/validate", authentication.AuthenticateToken)
+	api.POST("/invalidate", authentication.Invalidate)
+	api.POST("/register/:id", authentication.Validate(authentication.Register))
+	api.POST("/unregister/:id", authentication.Validate(authentication.Unregister))
+	api.GET("/rooms", schedule.Rooms)
+	api.GET("/users", authentication.Validate(authentication.Users))
 
 	// Should go in effect only in development mode.
 	// In production this should just serve the files.

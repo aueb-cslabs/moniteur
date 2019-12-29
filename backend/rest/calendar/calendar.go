@@ -1,7 +1,9 @@
-package rest
+package calendar
 
 import (
 	"encoding/json"
+	"github.com/aueb-cslabs/moniteur/backend/rest"
+	"github.com/aueb-cslabs/moniteur/backend/rest/authentication"
 	"github.com/aueb-cslabs/moniteur/backend/types"
 	"github.com/aueb-cslabs/moniteur/backend/utils"
 	"github.com/labstack/echo"
@@ -16,7 +18,7 @@ import (
 func CalendarGroup(g *echo.Group) {
 	g.GET("", calendarInfo)
 	g.GET("/full", calendarExt)
-	g.POST("", Validate(postCalendar))
+	g.POST("", authentication.Validate(postCalendar))
 }
 
 // calendarInfo Method that GETs the state of the day
@@ -24,15 +26,15 @@ func calendarInfo(ec echo.Context) error {
 	info := &types.Info{}
 
 	info.IsWeekend = isWeekend()
-	info.IsBreak = isBreak(calendar.Breaks)
-	info.IsExamsPeriod = isExams(calendar.Exams)
-	info.IsNormalPeriod = isNormal(calendar.Semesters)
+	info.IsBreak = isBreak(rest.Calendar.Breaks)
+	info.IsExamsPeriod = isExams(rest.Calendar.Exams)
+	info.IsNormalPeriod = isNormal(rest.Calendar.Semesters)
 
 	return ec.JSON(http.StatusOK, info)
 }
 
 func calendarExt(e echo.Context) error {
-	return e.JSON(http.StatusOK, calendar)
+	return e.JSON(http.StatusOK, rest.Calendar)
 }
 
 func postCalendar(e echo.Context) error {
@@ -43,7 +45,7 @@ func postCalendar(e echo.Context) error {
 		return e.NoContent(http.StatusBadRequest)
 	}
 
-	calendar = calendarIn
+	rest.Calendar = calendarIn
 
 	err = utils.UpdateCalendar(calendarIn)
 	if err != nil {

@@ -1,20 +1,23 @@
-package rest
+package authentication
 
 import (
+	"github.com/aueb-cslabs/moniteur/backend/types"
 	"github.com/labstack/echo"
 	"net/http"
 )
 
 func Register(e echo.Context) error {
+	ctx := e.(*types.Context)
+
 	username := e.Param("id")
 
 	if username == "" {
 		return e.NoContent(http.StatusBadRequest)
 	}
-	if authUsers.Get(username).Val() == "Y" {
+	if ctx.AuthUsers.Get(username).Val() == "Y" {
 		return e.NoContent(http.StatusAccepted)
 	}
-	_, err := authUsers.Set(username, "Y", 0).Result()
+	_, err := ctx.AuthUsers.Set(username, "Y", 0).Result()
 	if err != nil {
 		return e.NoContent(http.StatusBadRequest)
 	}
@@ -22,12 +25,14 @@ func Register(e echo.Context) error {
 }
 
 func Unregister(e echo.Context) error {
+	ctx := e.(*types.Context)
+
 	username := e.Param("id")
 
 	if username == "" {
 		return e.NoContent(http.StatusBadRequest)
 	}
-	res, _ := authUsers.Del(username).Result()
+	res, _ := ctx.AuthUsers.Del(username).Result()
 	if res != 1 {
 		return e.NoContent(http.StatusBadRequest)
 	}
