@@ -69,8 +69,8 @@ func currentDate() string {
 
 // checkDates Method that checks every if a date is between two date limits
 func checkDates(start string, end string) bool {
-	startA := strings.Split(start, "/")
-	endA := strings.Split(end, "/")
+	startA := strings.Split(start, "-")
+	endA := strings.Split(end, "-")
 
 	startY, startM, startD := convertDate(startA)
 	endY, endM, endD := convertDate(endA)
@@ -84,9 +84,9 @@ func checkDates(start string, end string) bool {
 
 // convertDate Method that breaks up a date
 func convertDate(date []string) (int, time.Month, int) {
-	day, _ := strconv.Atoi(date[0])
+	day, _ := strconv.Atoi(date[2])
 	month, _ := strconv.Atoi(date[1])
-	year, _ := strconv.Atoi(date[2])
+	year, _ := strconv.Atoi(date[0])
 
 	return year, time.Month(month), day
 }
