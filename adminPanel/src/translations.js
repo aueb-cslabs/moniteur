@@ -94,7 +94,11 @@ export default {
             ecFormError: "Errors in the Form",
             adminBarSettings: "Settings",
             settingsSave: "Save config",
-            adminFileFail: "Failed to save config!"
+            adminFileFail: "Failed to save config!",
+            adminBarUL: "Unscheduled Lessons",
+            ecProf: "Professor",
+            ecRemove: "Remove Lesson",
+            ecNoSelected: "No selected item"
         }
     },
     el: {
@@ -192,7 +196,11 @@ export default {
             ecFormError: "Λάθος Στοιχεία στην Φόρμα",
             adminBarSettings: "Ρυθμίσεις",
             settingsSave: "Αποθήκευση ρυθμίσεων",
-            adminFileFail: "Αποτυχία αποθήκευσης!"
+            adminFileFail: "Αποτυχία αποθήκευσης!",
+            adminBarUL: "Έκτακτα Μαθήματα",
+            ecProf: "Καθηγητής",
+            ecRemove: "Αφαίρεση Μαθήματος",
+            ecNoSelected: "Κανένα Μάθημα Επιλεγμένο"
         }
     }
 };

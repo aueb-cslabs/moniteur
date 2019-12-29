@@ -31,7 +31,7 @@ func deleteOverride(e echo.Context) error {
 	db := e.(*types.Context).DB
 
 	override := &types.ScheduleSlot{}
-	err := e.Bind(override)
+	err := e.Bind(&override)
 
 	if err != nil {
 		return e.NoContent(http.StatusBadRequest)

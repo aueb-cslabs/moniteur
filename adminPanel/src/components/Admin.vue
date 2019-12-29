@@ -25,6 +25,9 @@
                 <!--<div v-if="type === 'exams'">
                     <ExamsCalendar/>
                 </div>-->
+                <div v-if="type === 'unles'">
+                    <UnscheduledLessons/>
+                </div>
                 <div v-if="type === 'settings'">
                     <Settings/>
                 </div>
@@ -45,6 +48,7 @@
     import AcademicCalendar from "./AcademicCalendar";
     //import ExamsCalendar from "./ExamsCalendar";
     import Settings from "./Settings";
+    import UnscheduledLessons from "./UnscheduledLessons";
 
     const config = require('electron').remote.getGlobal('config');
 
@@ -60,6 +64,7 @@
         },
 
         components: {
+            UnscheduledLessons,
             Settings,
             Login,
             AdminBar,
@@ -111,6 +116,11 @@
 
             showExamsCalendar: function() {
                 this.type = 'exams';
+                this.showSidebar();
+            },
+
+            showUnscheduledLessons: function() {
+                this.type = 'unles';
                 this.showSidebar();
             },
 
