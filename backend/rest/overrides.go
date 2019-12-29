@@ -9,6 +9,7 @@ import (
 func OverrideGroup(g *echo.Group) {
 	g.POST("", Validate(createOverride))
 	g.DELETE("", Validate(deleteOverride))
+	g.GET("", Validate(overrides))
 }
 
 func createOverride(e echo.Context) error {
@@ -37,4 +38,14 @@ func deleteOverride(e echo.Context) error {
 
 	db.Delete(types.ScheduleSlot{}, "id = ?", override.Model.ID)
 	return e.NoContent(http.StatusOK)
+}
+
+func overrides(e echo.Context) error {
+	db := e.(*types.Context).DB
+
+	var overrides []*types.ScheduleSlot
+
+	db.Find(&overrides)
+
+	return e.JSON(http.StatusOK, overrides)
 }
