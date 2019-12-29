@@ -9,11 +9,11 @@
                         <form @submit="checkForm">
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="datetime-local" class="form-control" v-model="Calendar.Semesters.Winter.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <input type="date" class="form-control" v-model="Calendar.Semesters.Winter.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                             </div>
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="datetime-local" class="form-control" v-model="Calendar.Semesters.Winter.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <input type="date" class="form-control" v-model="Calendar.Semesters.Winter.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                             </div>
                         </form>
                     </div>
@@ -22,11 +22,11 @@
                         <form @submit="checkForm">
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="datetime-local" class="form-control" v-model="Calendar.Semesters.Sprint.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <input type="date" class="form-control" v-model="Calendar.Semesters.Sprint.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                             </div>
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="datetime-local" class="form-control" v-model="Calendar.Semesters.Sprint.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <input type="date" class="form-control" v-model="Calendar.Semesters.Sprint.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                             </div>
                         </form>
                     </div>
@@ -40,11 +40,11 @@
                         <form @submit="checkForm">
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="datetime-local" class="form-control" v-model="Calendar.Exams.Winter.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <input type="date" class="form-control" v-model="Calendar.Exams.Winter.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                             </div>
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="datetime-local" class="form-control" v-model="Calendar.Exams.Winter.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <input type="date" class="form-control" v-model="Calendar.Exams.Winter.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                             </div>
                         </form>
                     </div>
@@ -53,11 +53,11 @@
                         <form @submit="checkForm">
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="datetime-local" class="form-control" v-model="Calendar.Exams.Sprint.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <input type="date" class="form-control" v-model="Calendar.Exams.Sprint.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                             </div>
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="datetime-local" class="form-control" v-model="Calendar.Exams.Sprint.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <input type="date" class="form-control" v-model="Calendar.Exams.Sprint.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                             </div>
                         </form>
                     </div>
@@ -66,11 +66,11 @@
                         <form @submit="checkForm">
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="datetime-local" class="form-control" v-model="Calendar.Exams.September.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <input type="date" class="form-control" v-model="Calendar.Exams.September.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                             </div>
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="datetime-local" class="form-control" v-model="Calendar.Exams.September.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <input type="date" class="form-control" v-model="Calendar.Exams.September.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                             </div>
                         </form>
                     </div>
@@ -84,11 +84,11 @@
                         <form @submit="checkForm">
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="datetime-local" class="form-control" v-model="Calendar.Breaks.Winter.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <input type="date" class="form-control" v-model="Calendar.Breaks.Winter.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                             </div>
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="datetime-local" class="form-control" v-model="Calendar.Breaks.Winter.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <input type="date" class="form-control" v-model="Calendar.Breaks.Winter.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                             </div>
                         </form>
                     </div>
@@ -97,11 +97,11 @@
                         <form @submit="checkForm">
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="datetime-local" class="form-control" v-model="Calendar.Breaks.Sprint.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <input type="date" class="form-control" v-model="Calendar.Breaks.Sprint.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                             </div>
                             <div class="form-group">
                                 <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="datetime-local" class="form-control" v-model="Calendar.Breaks.Sprint.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                <input type="date" class="form-control" v-model="Calendar.Breaks.Sprint.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                             </div>
                         </form>
                     </div>
@@ -113,7 +113,7 @@
                         <form>
                             <div class="row">
                                 <div class="col-md-8 col-lg-10 form-group">
-                                    <input type="datetime-local" class="form-control" v-model="date" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                                    <input type="date" class="form-control" v-model="date" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
                                 </div>
                                 <div class="col form-group">
                                     <button @click="addDate" class="btn btn-primary float-right">{{$t("message.umAdd")}}</button>
@@ -139,23 +139,7 @@
             </div>
         </div>
         <ErrorPopup ref="error"/>
-        <div class="success">
-            <b-alert
-                    :show="successCountDown"
-                    dismissible
-                    variant="success"
-                    @dismissed="successCountDown=0"
-                    @dismiss-count-down="successChanged"
-            >
-                <p>{{$t('message.calSuccess')}}</p>
-                <b-progress
-                        variant="dark"
-                        :max="dismissSecs"
-                        :value="successCountDown"
-                        height="4px"
-                ></b-progress>
-            </b-alert>
-        </div>
+        <SuccessPopup ref="success"/>
     </div>
 </template>
 
@@ -164,12 +148,14 @@
     import functions from "../functions";
     import traverse from "traverse";
     import ErrorPopup from "../ErrorPopup/ErrorPopup";
+    import SuccessPopup from "../SuccessPopup/SuccessPopup";
 
     const config = require('electron').remote.getGlobal('config');
 
     export default {
 
         components: {
+            SuccessPopup,
             ErrorPopup
         },
 
@@ -217,7 +203,6 @@
                     }
                 },
                 dateOption: null,
-                successCountDown: 0,
                 date: ''
             }
         },
@@ -231,17 +216,17 @@
                             dates = dates.concat(x);
                         }
                         else {
-                            dates.push(x);
+                            dates.push(this.convert(x));
                         }
                     }
                     return dates;
                 }, []);
                 for (let i in dates) {
-                    if (!functions.isGoodDate(dates[i])) {
+                    /*if (!functions.isGoodDate(dates[i])) {
                         this.$refs.error.setError(this.$t('message.adminInvalidDate'));
                         this.$refs.error.showAlert();
                         return;
-                    }
+                    }*/
                 }
                 this.error = null;
                 this.send();
@@ -257,7 +242,7 @@
                     },
                     data: this.Calendar
                 }).then(() => {
-                    this.showSuccess();
+                    this.$refs.success.showSuccess();
                 }).catch(() => {
                     this.$refs.error.setError(this.$t('message.calFail'));
                     this.$refs.error.showAlert();
@@ -285,25 +270,22 @@
             },
 
             addDate: function(e) {
-                if (!functions.isGoodDate(this.date)) {
+                /*if (!functions.isGoodDate(this.date)) {
                     this.$refs.error.setError(this.$t('message.adminInvalidDate'));
                     this.$refs.error.showAlert();
                     this.date = '';
                     e.preventDefault();
                     return;
-                }
-                this.Calendar.Breaks.Various.push(this.date);
+                }*/
+                this.Calendar.Breaks.Various.push(this.convert(this.date));
                 this.date = '';
                 e.preventDefault();
             },
 
-            successChanged(successCountDown) {
-                this.successCountDown = successCountDown
-            },
-
-            showSuccess() {
-                this.successCountDown = this.dismissSecs;
-            },
+            convert: function(date) {
+                let newDate = date.split("/");
+                return newDate[2] + "-" + newDate[1] + "-" + newDate[0];
+            }
         }
     }
 </script>
