@@ -35,7 +35,7 @@ func main() {
 	}
 
 	psql := databases.InitializePostgres(config.Postgres)
-	redisClient, authUsers := databases.InitializeRedis(config.RedisConfig)
+	redisClient, authUsers, tokens := databases.InitializeRedis(config.RedisConfig)
 
 	plugin.Initialize(config.ExamsLink)
 	rest.Initialize(calendarInfo)
@@ -63,7 +63,7 @@ func main() {
 
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			return next(types.NewContext(c, plugin, psql, redisClient, authUsers, config.Secret))
+			return next(types.NewContext(c, plugin, psql, redisClient, authUsers, tokens, config.Secret))
 		}
 	})
 

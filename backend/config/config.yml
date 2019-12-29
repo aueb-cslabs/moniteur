@@ -7,4 +7,5 @@ redis:
   Password: ""
   Ann_DB: 0
   Users_DB: 1
+  Tokens_DB: 2
 postgres: postgresql://postgres:1234@localhost:5432/postgres?sslmode=disable

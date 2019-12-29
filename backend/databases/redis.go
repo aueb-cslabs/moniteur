@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func InitializeRedis(config types.Redis) (*redis.Client, *redis.Client) {
+func InitializeRedis(config types.Redis) (*redis.Client, *redis.Client, *redis.Client) {
 	redisClient := redis.NewClient(&redis.Options{
 		Addr:     config.Addr,
 		Password: config.Password,
@@ -16,6 +16,11 @@ func InitializeRedis(config types.Redis) (*redis.Client, *redis.Client) {
 		Addr:     config.Addr,
 		Password: config.Password,
 		DB:       config.Users_DB,
+	})
+	tokens := redis.NewClient(&redis.Options{
+		Addr:     config.Addr,
+		Password: config.Password,
+		DB:       config.Tokens_DB,
 	})
 
 	_, err := redisClient.Ping().Result()
@@ -28,5 +33,10 @@ func InitializeRedis(config types.Redis) (*redis.Client, *redis.Client) {
 		log.Panic(err)
 	}
 
-	return redisClient, authUsers
+	_, err = tokens.Ping().Result()
+	if err != nil {
+		log.Panic(err)
+	}
+
+	return redisClient, authUsers, tokens
 }

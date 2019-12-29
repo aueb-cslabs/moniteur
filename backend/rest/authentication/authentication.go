@@ -1,7 +1,7 @@
 package authentication
 
 import (
-	"github.com/aueb-cslabs/moniteur/backend/rest"
+	"encoding/json"
 	"github.com/aueb-cslabs/moniteur/backend/types"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
@@ -49,7 +49,14 @@ func Authenticate(e echo.Context) error {
 		authToken.TokenType = "Bearer"
 		authToken.ExpiresIn = expiresAt
 
-		rest.Authorized[authToken.Token] = authTokenClaim
+		res, err := json.Marshal(authTokenClaim)
+
+		if err != nil {
+			return e.NoContent(http.StatusBadRequest)
+		}
+
+		ctx.Tokens.Set(authToken.Token, res, 0)
+		ctx.Tokens.ExpireAt(authToken.Token, time.Unix(authToken.ExpiresIn, 0))
 
 		return e.JSON(http.StatusOK, authToken)
 	} else {
@@ -78,12 +85,14 @@ func AuthenticateToken(e echo.Context) error {
 	if !token.Valid {
 		return e.NoContent(http.StatusUnauthorized)
 	}
-	claim := rest.Authorized[bearerToken[1]]
+	redisClaim, err := ctx.Tokens.Get(bearerToken[1]).Bytes()
+	claim := &types.AuthTokenClaim{}
+	_ = json.Unmarshal(redisClaim, claim)
 	name := e.Request().Header.Get("Username")
 	if ctx.AuthUsers.Exists(name).Val() != 1 {
 		return e.NoContent(http.StatusUnauthorized)
 	}
-	if claim == nil {
+	if len(claim.Username) == 0 {
 		return e.NoContent(http.StatusUnauthorized)
 	}
 	expiresAt := claim.StandardClaims.ExpiresAt
@@ -91,7 +100,7 @@ func AuthenticateToken(e echo.Context) error {
 
 	nowUnix := time.Now().Unix()
 	if nowUnix >= expiresAt {
-		delete(rest.Authorized, bearerToken[1])
+		ctx.Tokens.Del(bearerToken[1])
 		return e.NoContent(http.StatusUnauthorized)
 	}
 	if name != username {
@@ -124,12 +133,14 @@ func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 		if !token.Valid {
 			return c.NoContent(http.StatusUnauthorized)
 		}
-		claim := rest.Authorized[bearerToken[1]]
+		redisClaim, err := ctx.Tokens.Get(bearerToken[1]).Bytes()
+		claim := &types.AuthTokenClaim{}
+		_ = json.Unmarshal(redisClaim, claim)
 		name := c.Request().Header.Get("Username")
 		if ctx.AuthUsers.Exists(name).Val() != 1 {
 			return c.NoContent(http.StatusUnauthorized)
 		}
-		if claim == nil {
+		if len(claim.Username) == 0 {
 			return c.NoContent(http.StatusUnauthorized)
 		}
 		expiresAt := claim.StandardClaims.ExpiresAt
@@ -137,7 +148,7 @@ func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 
 		nowUnix := time.Now().Unix()
 		if nowUnix >= expiresAt {
-			delete(rest.Authorized, bearerToken[1])
+			ctx.Tokens.Del(bearerToken[1])
 			return c.NoContent(http.StatusUnauthorized)
 		}
 		if name != username {
@@ -172,12 +183,14 @@ func Invalidate(e echo.Context) error {
 	if !token.Valid {
 		return e.NoContent(http.StatusUnauthorized)
 	}
-	claim := rest.Authorized[bearerToken[1]]
-	if claim == nil {
+	redisClaim, err := ctx.Tokens.Get(bearerToken[1]).Bytes()
+	claim := &types.AuthTokenClaim{}
+	_ = json.Unmarshal(redisClaim, claim)
+	if len(claim.Username) == 0 {
 		return e.NoContent(http.StatusBadRequest)
 	}
 	if claim.Username == user {
-		delete(rest.Authorized, bearerToken[1])
+		ctx.Tokens.Del(bearerToken[1])
 		return e.NoContent(http.StatusOK)
 	}
 	return e.NoContent(http.StatusBadRequest)
