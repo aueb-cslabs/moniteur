@@ -12,6 +12,15 @@ matrix:
       services: docker
       language: node_js
 
+    - os: linux
+      language: go
+      go:
+        - "1.12"
+      script:
+        - make .build-go
+      env:
+        - GO111MODULE=on
+
 cache:
   directories:
     - node_modules
