@@ -4,14 +4,13 @@ package main
 
 import "C"
 import (
-	"github.com/aueb-cslabs/moniteur/backend/postgres"
+	"github.com/aueb-cslabs/moniteur/backend/databases"
 	"github.com/aueb-cslabs/moniteur/backend/rest"
 	"github.com/aueb-cslabs/moniteur/backend/rest/announcements"
 	"github.com/aueb-cslabs/moniteur/backend/rest/authentication"
 	"github.com/aueb-cslabs/moniteur/backend/rest/calendar"
 	"github.com/aueb-cslabs/moniteur/backend/rest/schedule"
 	"github.com/aueb-cslabs/moniteur/backend/types"
-	"github.com/go-redis/redis/v7"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
@@ -21,6 +20,7 @@ import (
 )
 
 func main() {
+
 	config, err := types.LoadConfiguration("config/config.yml")
 	if err != nil {
 		log.Panic(err)
@@ -33,42 +33,18 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-	db := postgres.Initialize(config.Postgres)
-	redisClient := redis.NewClient(&redis.Options{
-		Addr:     config.RedisConfig.Addr,
-		Password: config.RedisConfig.Password,
-		DB:       config.RedisConfig.Ann_DB,
-	})
-	authUsers := redis.NewClient(&redis.Options{
-		Addr:     config.RedisConfig.Addr,
-		Password: config.RedisConfig.Password,
-		DB:       config.RedisConfig.Users_DB,
-	})
 
-	_, err = redisClient.Ping().Result()
-	if err != nil {
-		log.Panic(err)
-	}
+	psql := databases.InitializePostgres(config.Postgres)
+	redisClient, authUsers := databases.InitializeRedis(config.RedisConfig)
+
+	plugin.Initialize(config.ExamsLink)
+	rest.Initialize(calendarInfo)
 
 	e := echo.New()
 	e.HideBanner = true
 	e.HidePort = true
 
-	plugin.Initialize(config.ExamsLink)
-	rest.Initialize(config.Secret, calendarInfo)
-
 	api := e.Group("/api")
-
-	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
-		return func(c echo.Context) error {
-			return next(types.NewContext(c, plugin, db, redisClient, authUsers))
-		}
-	})
-
-	//For CORS to work, please define the EXACT link that you will use!!!
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"*"},
-	}))
 
 	calendar.CalendarGroup(api.Group("/calendarInfo"))
 	announcements.AnnouncementsGroup(api.Group("/announcement"))
@@ -84,6 +60,17 @@ func main() {
 	api.POST("/unregister/:id", authentication.Validate(authentication.Unregister))
 	api.GET("/rooms", schedule.Rooms)
 	api.GET("/users", authentication.Validate(authentication.Users))
+
+	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			return next(types.NewContext(c, plugin, psql, redisClient, authUsers, config.Secret))
+		}
+	})
+
+	//For CORS to work, please define the EXACT link that you will use!!!
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+	}))
 
 	// Should go in effect only in development mode.
 	// In production this should just serve the files.

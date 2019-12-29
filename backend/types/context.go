@@ -13,10 +13,11 @@ type Context struct {
 	DB          *gorm.DB
 	RedisClient *redis.Client
 	AuthUsers   *redis.Client
+	Secret      string
 }
 
-func NewContext(context echo.Context, plugin Plugin, db *gorm.DB, redis *redis.Client, auth *redis.Client) *Context {
-	return &Context{Context: context, plugin: plugin, DB: db, RedisClient: redis, AuthUsers: auth}
+func NewContext(context echo.Context, plugin Plugin, db *gorm.DB, redis *redis.Client, auth *redis.Client, secret string) *Context {
+	return &Context{Context: context, plugin: plugin, DB: db, RedisClient: redis, AuthUsers: auth, Secret: secret}
 }
 
 func (c Context) Plugin() Plugin {

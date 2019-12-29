@@ -1,7 +1,6 @@
 package authentication
 
 import (
-	"errors"
 	"github.com/aueb-cslabs/moniteur/backend/rest"
 	"github.com/aueb-cslabs/moniteur/backend/types"
 	"github.com/dgrijalva/jwt-go"
@@ -40,7 +39,7 @@ func Authenticate(e echo.Context) error {
 
 		token.Claims = authTokenClaim
 
-		tokenString, err := token.SignedString([]byte(rest.Secret))
+		tokenString, err := token.SignedString([]byte(ctx.Secret))
 		if err != nil {
 			return e.JSON(http.StatusUnauthorized, err)
 		}
@@ -69,7 +68,10 @@ func AuthenticateToken(e echo.Context) error {
 	if len(bearerToken) != 2 {
 		return e.NoContent(http.StatusUnauthorized)
 	}
-	token, err := jwt.Parse(bearerToken[1], jwtKey)
+	var jwtKey = []byte(ctx.Secret)
+	token, err := jwt.Parse(bearerToken[1], func(token *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
 	if err != nil {
 		return e.JSON(http.StatusUnauthorized, err)
 	}
@@ -112,7 +114,10 @@ func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 		if len(bearerToken) != 2 {
 			return c.NoContent(http.StatusUnauthorized)
 		}
-		token, err := jwt.Parse(bearerToken[1], jwtKey)
+		var jwtKey = []byte(ctx.Secret)
+		token, err := jwt.Parse(bearerToken[1], func(token *jwt.Token) (interface{}, error) {
+			return jwtKey, nil
+		})
 		if err != nil {
 			return c.JSON(http.StatusUnauthorized, err)
 		}
@@ -144,6 +149,8 @@ func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 }
 
 func Invalidate(e echo.Context) error {
+	ctx := e.(*types.Context)
+
 	authToken := e.Request().Header.Get("Authorization")
 	user := e.Request().Header.Get("Username")
 
@@ -154,7 +161,11 @@ func Invalidate(e echo.Context) error {
 	if len(bearerToken) != 2 {
 		return e.NoContent(http.StatusBadRequest)
 	}
-	token, err := jwt.Parse(bearerToken[1], jwtKey)
+	//token, err := jwt.Parse(bearerToken[1], NewKeyFunc(ctx.Secret))
+	var jwtKey = []byte(ctx.Secret)
+	token, err := jwt.Parse(bearerToken[1], func(token *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, err)
 	}
@@ -172,13 +183,13 @@ func Invalidate(e echo.Context) error {
 	return e.NoContent(http.StatusBadRequest)
 }
 
-// jwtKey checks if the token is signed
-func jwtKey(token *jwt.Token) (interface{}, error) {
+/*// jwtKey checks if the token is signed
+func jwtKey(token *jwt.Token, secret string) (interface{}, error) {
 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 		return nil, errors.New("unexpected error")
 	}
-	return []byte(rest.Secret), nil
-}
+	return []byte(secret), nil
+}*/
 
 func Users(e echo.Context) error {
 	ctx := e.(*types.Context)

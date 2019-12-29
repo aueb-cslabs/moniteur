@@ -1,4 +1,4 @@
-package postgres
+package databases
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-func Initialize(uri string) (db *gorm.DB) {
+func InitializePostgres(uri string) (db *gorm.DB) {
 	overrides, err := gorm.Open("postgres", uri)
 	if err != nil {
 		fmt.Println(err)

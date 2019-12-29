@@ -3,6 +3,7 @@ module github.com/aueb-cslabs/moniteur/backend
 go 1.12
 
 require (
+	github.com/aueb-cslabs/moniteur v0.0.0-20191229071749-b4f325d6499e // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20191128021309-1d7a30a10f73 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-redis/redis/v7 v7.0.0-beta.4
