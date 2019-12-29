@@ -36,28 +36,13 @@
                 </form>
             </div>
         </div>
-        <div class="error">
-            <b-alert
-                    :show="dismissCountDown"
-                    dismissible
-                    variant="danger"
-                    @dismissed="dismissCountDown=0"
-                    @dismiss-count-down="countDownChanged"
-            >
-                <p>Error! {{error}}</p>
-                <b-progress
-                        variant="dark"
-                        :max="dismissSecs"
-                        :value="dismissCountDown"
-                        height="4px"
-                ></b-progress>
-            </b-alert>
-        </div>
+        <ErrorPopup ref="error"/>
     </div>
 </template>
 
 <script>
     import yaml from 'js-yaml';
+    import ErrorPopup from "../ErrorPopup/ErrorPopup";
 
     const config = require('electron').remote.getGlobal('config');
     const app = require('electron').remote.app;
@@ -65,12 +50,9 @@
 
     export default {
         name: "Settings",
-
+        components: {ErrorPopup},
         data() {
             return {
-                dismissSecs: 5,
-                dismissCountDown: 0,
-                error: null,
                 form : {
                     api: config.api,
                     logo_url: config.logo_url,
@@ -83,52 +65,43 @@
         },
 
         methods: {
-            countDownChanged(dismissCountDown) {
-                this.dismissCountDown = dismissCountDown
-            },
-
-            showAlert() {
-                this.dismissCountDown = this.dismissSecs
-            },
-
             checkForm: function (e) {
                 if (this.form.api === '') {
-                    this.error = this.$t('message.adminEmptyForm');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.adminEmptyForm'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.form.logo_url === '') {
-                    this.error = this.$t('message.adminEmptyForm');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.adminEmptyForm'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.form.secondary_logo_url === '') {
-                    this.error = this.$t('message.adminEmptyForm');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.adminEmptyForm'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.form.background_color === '') {
-                    this.error = this.$t('message.adminEmptyForm');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.adminEmptyForm'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.form.navbar_background_color === '') {
-                    this.error = this.$t('message.adminEmptyForm');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.adminEmptyForm'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.form.navbar_color === '') {
-                    this.error = this.$t('message.adminEmptyForm');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.adminEmptyForm'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
-                this.error = null;
                 this.save();
                 e.preventDefault();
             },

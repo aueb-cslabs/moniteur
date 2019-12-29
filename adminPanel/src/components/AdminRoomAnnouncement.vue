@@ -30,35 +30,20 @@
                 <button type="submit" class="btn btn-danger float-right" v-on:click="removeRoomAnnouncement">{{this.$t("message.removeAnn")}}</button>
             </div>
         </div>
-        <div class="error">
-            <b-alert
-                    :show="dismissCountDown"
-                    dismissible
-                    variant="danger"
-                    @dismissed="dismissCountDown=0"
-                    @dismiss-count-down="countDownChanged"
-            >
-                <p>Error! {{error}}</p>
-                <b-progress
-                        variant="dark"
-                        :max="dismissSecs"
-                        :value="dismissCountDown"
-                        height="4px"
-                ></b-progress>
-            </b-alert>
-        </div>
+        <ErrorPopup ref="error"/>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
     import functions from '../functions';
+    import ErrorPopup from "../ErrorPopup/ErrorPopup";
 
     const config = require('electron').remote.getGlobal('config');
 
     export default {
         name: 'AdminRoomAnnouncement',
-
+        components: {ErrorPopup},
         created() {
             axios({
                 method: 'get',
@@ -75,12 +60,9 @@
                     end: '',
                     msg: ''
                 },
-                error: null,
                 searchError: null,
                 room: null,
                 roomBool: false,
-                dismissSecs: 5,
-                dismissCountDown: 0,
                 options: []
             }
         },
@@ -127,30 +109,29 @@
 
             checkForm: function (e) {
                 if (this.form.msg === '' && this.form.end === '') {
-                    this.error = this.$t('message.adminEmptyForm');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.adminEmptyForm'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.form.msg === '') {
-                    this.error = this.$t('message.adminNoMsg');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.adminNoMsg'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.form.end === '') {
-                    this.error = this.$t('message.adminNoDate');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.adminNoDate'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (!functions.isGoodDate(this.form.end)) {
-                    this.error = this.$t('message.adminInvalidDate');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.adminInvalidDate'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
-                this.error = null;
                 this.send();
                 this.form.end = '';
                 this.form.msg = '';
@@ -159,24 +140,15 @@
 
             checkSearch: function (e) {
                 if (this.room === '') {
-                    this.error = this.$t('message.adminRoomAnnSearchErr');
+                    this.$refs.error.setError(this.$t('message.adminRoomAnnSearchErr'));
                     this.roomBool = false;
-                    this.showAlert();
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 this.fetchRoomAnnouncement();
-                this.error = '';
                 this.roomBool = true;
                 e.preventDefault();
-            },
-
-            countDownChanged(dismissCountDown) {
-                this.dismissCountDown = dismissCountDown
-            },
-
-            showAlert() {
-                this.dismissCountDown = this.dismissSecs
             }
         }
     }

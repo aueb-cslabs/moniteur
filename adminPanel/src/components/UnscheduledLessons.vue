@@ -52,34 +52,20 @@
                 ></b-table>
             </div>
         </div>
-        <div class="error">
-            <b-alert
-                    :show="dismissCountDown"
-                    dismissible
-                    variant="danger"
-                    @dismissed="dismissCountDown=0"
-                    @dismiss-count-down="countDownChanged"
-            >
-                <p>Error! {{error}}</p>
-                <b-progress
-                        variant="dark"
-                        :max="dismissSecs"
-                        :value="dismissCountDown"
-                        height="4px"
-                ></b-progress>
-            </b-alert>
-        </div>
+        <ErrorPopup ref="error"/>
     </div>
 </template>
 
 <script>
     import Multiselect from 'vue-multiselect';
     import axios from 'axios';
+    import ErrorPopup from "../ErrorPopup/ErrorPopup";
 
     const config = require('electron').remote.getGlobal('config');
 
     export default {
         components: {
+            ErrorPopup,
             Multiselect,
         },
         
@@ -116,10 +102,7 @@
                     semester: 0,
                     department: '',
                     extraDepartments: []
-                },
-                dismissSecs: 5,
-                dismissCountDown: 0,
-                error: null
+                }
             }
         },
 
@@ -163,45 +146,37 @@
 
             checkEntry: function (e) {
                 if (this.title === '') {
-                    this.error = this.$t('message.ecFormError');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.ecFormError'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.examiner === '') {
                     this.host = this.$t('message.ecFormError');
-                    this.showAlert();
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.start === '') {
-                    this.error = this.$t('message.ecFormError');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.ecFormError'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.end === '') {
-                    this.error = this.$t('message.ecFormError');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.ecFormError'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.room === '') {
-                    this.error = this.$t('message.ecFormError');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.ecFormError'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 this.addExam();
                 e.preventDefault();
-            },
-
-            countDownChanged(dismissCountDown) {
-                this.dismissCountDown = dismissCountDown
-            },
-
-            showAlert() {
-                this.dismissCountDown = this.dismissSecs
             },
             
             loadRooms: function () {
@@ -257,8 +232,8 @@
                     });
                 }
                 else {
-                    this.error = this.$t('message.ecNoSelected');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.ecNoSelected'));
+                    this.$refs.error.showAlert();
                 }
             }
         }

@@ -23,32 +23,18 @@
                 <b-button @click="removeUser" variant="danger" class="mt-3">{{$t("message.umRemove")}}</b-button>
             </div>
         </div>
-        <div class="error">
-            <b-alert
-                    :show="dismissCountDown"
-                    dismissible
-                    variant="danger"
-                    @dismissed="dismissCountDown=0"
-                    @dismiss-count-down="countDownChanged"
-            >
-                <p>Error! {{error}}</p>
-                <b-progress
-                        variant="dark"
-                        :max="dismissSecs"
-                        :value="dismissCountDown"
-                        height="4px"
-                ></b-progress>
-            </b-alert>
-        </div>
+        <ErrorPopup ref="error"/>
     </div>
 </template>
 
 <script>
     import axios from "axios";
+    import ErrorPopup from "../ErrorPopup/ErrorPopup";
 
     const config = require('electron').remote.getGlobal('config');
 
     export default {
+        components: {ErrorPopup},
         created() {
             this.updateUsers();
         },
@@ -56,9 +42,6 @@
         data() {
             return {
                 user: '',
-                dismissSecs: 5,
-                dismissCountDown: 0,
-                error: null,
                 options: [],
                 userOption: null
             }
@@ -67,8 +50,8 @@
         methods: {
             checkUser: function (e) {
                 if (this.user === '') {
-                    this.error = this.$t('message.adminEmptyForm');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.adminEmptyForm'));
+                    this.$refs.error.showAlert();
                 }
                 this.addUser();
                 this.user = null;
@@ -112,14 +95,6 @@
                 }).then(() => {
                     this.updateUsers();
                 })
-            },
-
-            countDownChanged(dismissCountDown) {
-                this.dismissCountDown = dismissCountDown
-            },
-
-            showAlert() {
-                this.dismissCountDown = this.dismissSecs
             }
         }
     }

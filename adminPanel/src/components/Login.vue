@@ -10,45 +10,28 @@
             </div>
             <button @click="checkLogin" class="btn btn-primary">{{$t("message.loginSignIn")}}</button>
         </form>
-        <div class="error">
-            <b-alert
-                    :show="dismissCountDown"
-                    dismissible
-                    variant="danger"
-                    @dismissed="dismissCountDown=0"
-                    @dismiss-count-down="countDownChanged"
-            >
-                <p>Error! {{error}}</p>
-                <b-progress
-                        variant="dark"
-                        :max="dismissSecs"
-                        :value="dismissCountDown"
-                        height="4px"
-                ></b-progress>
-            </b-alert>
-        </div>
+        <ErrorPopup ref="error"/>
     </div>
 </template>
 
 <script>
     import axios from "axios";
+    import ErrorPopup from "../ErrorPopup/ErrorPopup";
 
     const config = require('electron').remote.getGlobal('config');
 
     export default {
+        components: {ErrorPopup},
         data() {
             return {
                 loginForm: {
                     username: "",
                     password: ""
                 },
-                error: "",
                 cookie: {
                     Username: '',
                     Authorization: ''
                 },
-                dismissSecs: 5,
-                dismissCountDown: 0,
             }
         },
 
@@ -85,29 +68,20 @@
                         let date = new Date(response.data['expires_in']*1000);
                     this.$cookies.set('session', this.cookie, date);
                 }).catch(() => {
-                    this.error = this.$t('message.loginError');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.loginError'));
+                    this.$refs.error.showAlert();
                 })
             },
 
             checkLogin: function (e) {
                 if (this.loginForm.username === '' || this.loginForm.password === '') {
-                    this.error = this.$t('message.loginFormError');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.loginFormError'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
-                this.error = '';
                 this.login();
                 e.preventDefault();
-            },
-
-            countDownChanged(dismissCountDown) {
-                this.dismissCountDown = dismissCountDown
-            },
-
-            showAlert() {
-                this.dismissCountDown = this.dismissSecs
             }
         }
     }

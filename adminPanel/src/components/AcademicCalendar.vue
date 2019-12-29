@@ -138,23 +138,7 @@
                 </div>
             </div>
         </div>
-        <div class="error">
-            <b-alert
-                    :show="dismissCountDown"
-                    dismissible
-                    variant="danger"
-                    @dismissed="dismissCountDown=0"
-                    @dismiss-count-down="countDownChanged"
-            >
-                <p>Error! {{error}}</p>
-                <b-progress
-                        variant="dark"
-                        :max="dismissSecs"
-                        :value="dismissCountDown"
-                        height="4px"
-                ></b-progress>
-            </b-alert>
-        </div>
+        <ErrorPopup ref="error"/>
         <div class="success">
             <b-alert
                     :show="successCountDown"
@@ -179,10 +163,15 @@
     import axios from "axios";
     import functions from "../functions";
     import traverse from "traverse";
+    import ErrorPopup from "../ErrorPopup/ErrorPopup";
 
     const config = require('electron').remote.getGlobal('config');
 
     export default {
+
+        components: {
+            ErrorPopup
+        },
 
         created() {
             this.retrieveCalendar();
@@ -228,10 +217,7 @@
                     }
                 },
                 dateOption: null,
-                dismissSecs: 5,
-                dismissCountDown: 0,
                 successCountDown: 0,
-                error: null,
                 date: ''
             }
         },
@@ -252,8 +238,8 @@
                 }, []);
                 for (let i in dates) {
                     if (!functions.isGoodDate(dates[i])) {
-                        this.error = this.$t('message.adminInvalidDate');
-                        this.showAlert();
+                        this.$refs.error.setError(this.$t('message.adminInvalidDate'));
+                        this.$refs.error.showAlert();
                         return;
                     }
                 }
@@ -273,8 +259,8 @@
                 }).then(() => {
                     this.showSuccess();
                 }).catch(() => {
-                    this.error = this.$t('message.calFail');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.calFail'));
+                    this.$refs.error.showAlert();
                 })
             },
 
@@ -300,8 +286,8 @@
 
             addDate: function(e) {
                 if (!functions.isGoodDate(this.date)) {
-                    this.error = this.$t('message.adminInvalidDate');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.adminInvalidDate'));
+                    this.$refs.error.showAlert();
                     this.date = '';
                     e.preventDefault();
                     return;
@@ -309,14 +295,6 @@
                 this.Calendar.Breaks.Various.push(this.date);
                 this.date = '';
                 e.preventDefault();
-            },
-
-            countDownChanged(dismissCountDown) {
-                this.dismissCountDown = dismissCountDown
-            },
-
-            showAlert() {
-                this.dismissCountDown = this.dismissSecs
             },
 
             successChanged(successCountDown) {

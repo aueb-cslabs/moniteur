@@ -79,23 +79,7 @@
                 <b-button @click="doSmth3" class="ml-3 float-right" variant="primary">{{$t('message.ecCreate')}}</b-button>
             </div>
         </div>
-        <div class="error">
-            <b-alert
-                    :show="dismissCountDown"
-                    dismissible
-                    variant="danger"
-                    @dismissed="dismissCountDown=0"
-                    @dismiss-count-down="countDownChanged"
-            >
-                <p>Error! {{error}}</p>
-                <b-progress
-                        variant="dark"
-                        :max="dismissSecs"
-                        :value="dismissCountDown"
-                        height="4px"
-                ></b-progress>
-            </b-alert>
-        </div>
+        <ErrorPopup ref="error"/>
     </div>
 </template>
 
@@ -103,9 +87,11 @@
     import Multiselect from 'vue-multiselect';
     import functions from "../functions";
     import datetime from 'vuejs-datetimepicker';
+    import ErrorPopup from "../ErrorPopup/ErrorPopup";
 
     export default {
         components: {
+            ErrorPopup,
             Multiselect,
             datetime
         },
@@ -147,9 +133,6 @@
                     department: '',
                     extraDepartments: []
                 },
-                dismissSecs: 5,
-                dismissCountDown: 0,
-                error: null
             }
         },
 
@@ -189,64 +172,56 @@
 
             checkEntry: function (e) {
                 if (this.name === '') {
-                    this.error = this.$t('message.ecFormError');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.ecFormError'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.examiner === '') {
-                    this.error = this.$t('message.ecFormError');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.ecFormError'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (!functions.isValidTime(this.startTime)) {
-                    this.error = this.$t('message.ecFormError');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.ecFormError'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (!functions.isValidTime(this.endTime)) {
-                    this.error = this.$t('message.ecFormError');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.ecFormError'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (!functions.isGoodDate(this.date)) {
-                    this.error = this.$t('message.ecFormError');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.ecFormError'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.roomSelections.length === 0) {
-                    this.error = this.$t('message.ecFormError');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.ecFormError'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.sidSelection.length === 0) {
-                    this.error = this.$t('message.ecFormError');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.ecFormError'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 if (this.udepSelection.length === 0) {
-                    this.error = this.$t('message.ecFormError');
-                    this.showAlert();
+                    this.$refs.error.setError(this.$t('message.ecFormError'));
+                    this.$refs.error.showAlert();
                     e.preventDefault();
                     return;
                 }
                 this.addExam();
                 e.preventDefault();
-            },
-
-            countDownChanged(dismissCountDown) {
-                this.dismissCountDown = dismissCountDown
-            },
-
-            showAlert() {
-                this.dismissCountDown = this.dismissSecs
-            },
+            }
         }
     }
 </script>
