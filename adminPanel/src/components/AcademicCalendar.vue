@@ -138,14 +138,13 @@
                 </div>
             </div>
         </div>
-        <ErrorPopup ref="error"/>
         <SuccessPopup ref="success"/>
+        <ErrorPopup ref="error"/>
     </div>
 </template>
 
 <script>
     import axios from "axios";
-    import functions from "../functions";
     import traverse from "traverse";
     import ErrorPopup from "../ErrorPopup/ErrorPopup";
     import SuccessPopup from "../SuccessPopup/SuccessPopup";
@@ -216,17 +215,17 @@
                             dates = dates.concat(x);
                         }
                         else {
-                            dates.push(this.convert(x));
+                            dates.push(x);
                         }
                     }
                     return dates;
                 }, []);
                 for (let i in dates) {
-                    /*if (!functions.isGoodDate(dates[i])) {
+                    if (dates[i] === '') {
                         this.$refs.error.setError(this.$t('message.adminInvalidDate'));
                         this.$refs.error.showAlert();
                         return;
-                    }*/
+                    }
                 }
                 this.error = null;
                 this.send();
@@ -270,22 +269,17 @@
             },
 
             addDate: function(e) {
-                /*if (!functions.isGoodDate(this.date)) {
+                if (this.date === '') {
                     this.$refs.error.setError(this.$t('message.adminInvalidDate'));
                     this.$refs.error.showAlert();
                     this.date = '';
                     e.preventDefault();
                     return;
-                }*/
-                this.Calendar.Breaks.Various.push(this.convert(this.date));
+                }
+                this.Calendar.Breaks.Various.push(this.date);
                 this.date = '';
                 e.preventDefault();
             },
-
-            convert: function(date) {
-                let newDate = date.split("/");
-                return newDate[2] + "-" + newDate[1] + "-" + newDate[0];
-            }
         }
     }
 </script>

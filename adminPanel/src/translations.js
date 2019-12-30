@@ -98,7 +98,8 @@ export default {
             adminBarUL: "Unscheduled Lessons",
             ecProf: "Professor",
             ecRemove: "Remove Lesson",
-            ecNoSelected: "No selected item"
+            ecNoSelected: "No selected item",
+            ecAddLesson: "Add Lesson"
         }
     },
     el: {
@@ -200,7 +201,8 @@ export default {
             adminBarUL: "Έκτακτα Μαθήματα",
             ecProf: "Καθηγητής",
             ecRemove: "Αφαίρεση Μαθήματος",
-            ecNoSelected: "Κανένα Μάθημα Επιλεγμένο"
+            ecNoSelected: "Κανένα Μάθημα Επιλεγμένο",
+            ecAddLesson: "Προσθήκη Μαθήματος"
         }
     }
 };

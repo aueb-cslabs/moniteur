@@ -36,7 +36,7 @@
                     <div class="col">
                         <!--                        ADD_BUTTON-->
                         <b-button @click="deleteLesson" class="float-left" variant="danger">{{$t('message.ecRemove')}}</b-button>
-                        <b-button @click="checkEntry" class="float-right" variant="primary">{{$t('message.ecAdd')}}</b-button>
+                        <b-button @click="checkEntry" class="float-right" variant="primary">{{$t('message.ecAddLesson')}}</b-button>
                     </div>
                 </div>
             </div>
