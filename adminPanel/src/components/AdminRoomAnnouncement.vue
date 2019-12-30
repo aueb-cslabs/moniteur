@@ -8,14 +8,13 @@
             </div>
             <CreateAnnouncement v-if="this.room != null" class="pt-5"/>
             <div class="pt-5" v-if="this.announcement != null">
-                <div class="alert alert-primary" role="alert">
-                    <h3>{{this.$t("message.adminRoomAnnCurrent")}} {{this.announcement['msg']}}</h3>
-                </div>
-                <hr>
-                <div class="alert alert-warning" role="alert">
-                    {{this.$t("message.adminExpires")}} {{this.announcement['end']}}
-                </div>
-                <button type="submit" class="btn btn-danger float-right" v-on:click="removeRoomAnnouncement">{{this.$t("message.removeAnn")}}</button>
+                <ShowAnnouncement
+                        :type="this.$t('message.adminRoomAnnCurrent')"
+                        :announcement="this.announcement['msg']"
+                        :expiration="this.announcement['end']"/>
+                <button type="submit"
+                        class="btn btn-danger float-right"
+                        v-on:click="removeRoomAnnouncement">{{this.$t("message.removeAnn")}}</button>
             </div>
         </div>
     </div>
@@ -24,12 +23,13 @@
 <script>
     import axios from 'axios';
     import CreateAnnouncement from "../CreateAnnouncement/CreateAnnouncement";
+    import ShowAnnouncement from "../ShowAnnouncement/ShowAnnouncement";
 
     const config = require('electron').remote.getGlobal('config');
 
     export default {
         name: 'AdminRoomAnnouncement',
-        components: {CreateAnnouncement},
+        components: {CreateAnnouncement, ShowAnnouncement},
         created() {
             axios({
                 method: 'get',

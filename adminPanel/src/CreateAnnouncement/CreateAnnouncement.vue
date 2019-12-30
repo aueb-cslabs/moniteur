@@ -4,11 +4,21 @@
             <form @submit="checkForm">
                 <div class="form-group">
                     <label for="message">{{$t("message.adminAnnForm1")}}</label>
-                    <input type="text" class="form-control" id="message" v-model="form.msg" v-bind:placeholder="this.$t('message.adminAnnMsg')">
+                    <input type="text"
+                           class="form-control"
+                           id="message"
+                           v-model="form.msg"
+                           v-bind:placeholder="this.$t('message.adminAnnMsg')"
+                           required>
                 </div>
                 <div class="form-group">
                     <label for="expiration">{{$t("message.adminAnnExpire")}}</label>
-                    <input type="datetime-local" class="form-control" id="expiration" v-model="form.end" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
+                    <input type="datetime-local"
+                           class="form-control"
+                           id="expiration"
+                           v-model="form.end"
+                           v-bind:placeholder="this.$t('message.adminAnnDateForm')"
+                           required>
                 </div>
                 <button type="submit" class="btn btn-primary">{{$t("message.adminAnnSend")}}</button>
             </form>

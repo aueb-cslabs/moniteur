@@ -3,46 +3,23 @@
         <div class="pt-5">
             <h2>{{$t("message.adminBarSettings")}}</h2>
             <div class="pt-3">
-                <form @submit="checkForm">
-                    <div class="form-group">
-                        <label for="api">API Endpoint</label>
-                        <input type="text" class="form-control" id="api" v-model="form.api" placeholder="API Endpoint">
-                    </div>
-                    <div class="form-group">
-                        <label for="logo_url">Logo URL</label>
-                        <input type="text" class="form-control" id="logo_url" v-model="form.logo_url" placeholder="Logo URL">
-                    </div>
-                    <div class="form-group">
-                        <label for="sec_logo_url">Secondary Logo URL</label>
-                        <input type="text" class="form-control" id="sec_logo_url"
-                               v-model="form.secondary_logo_url" placeholder="Secondary Logo URL">
-                    </div>
-                    <div class="form-group">
-                        <label for="background_color">Background color</label>
-                        <input type="text" class="form-control" id="background_color" v-model="form.background_color"
-                               placeholder="Background color">
-                    </div>
-                    <div class="form-group">
-                        <label for="navbar_background_color">NavBar Background color</label>
-                        <input type="text" class="form-control" id="navbar_background_color" v-model="form.navbar_background_color"
-                               placeholder="NavBar Background color">
-                    </div>
-                    <div class="form-group">
-                        <label for="navbar_color">NavBar color</label>
-                        <input type="text" class="form-control" id="navbar_color" v-model="form.navbar_color"
-                               placeholder="NavBar color">
-                    </div>
+                <form @submit="save">
+                    <SimpleFormGroup label="API Endpoint" v-model="form.api" :model-data="form.api"/>
+                    <SimpleFormGroup label="Logo URL" v-model="form.logo_url" :model-data="form.logo_url"/>
+                    <SimpleFormGroup label="Secondary Logo URL" v-model="form.secondary_logo_url" :model-data="form.secondary_logo_url"/>
+                    <SimpleFormGroup label="Background color" v-model="form.background_color" :model-data="form.background_color" />
+                    <SimpleFormGroup label="NavBar Background color" v-model="form.navbar_background_color" :model-data="form.navbar_background_color"/>
+                    <SimpleFormGroup label="NavBar color" v-model="form.navbar_color" :model-data="form.navbar_color"/>
                     <button type="submit" class="btn btn-primary float-right mb-4">{{$t("message.settingsSave")}}</button>
                 </form>
             </div>
         </div>
-        <ErrorPopup ref="error"/>
     </div>
 </template>
 
 <script>
     import yaml from 'js-yaml';
-    import ErrorPopup from "../ErrorPopup/ErrorPopup";
+    import SimpleFormGroup from "../SimpleFormGroup/SimpleFormGroup";
 
     const config = require('electron').remote.getGlobal('config');
     const app = require('electron').remote.app;
@@ -50,7 +27,8 @@
 
     export default {
         name: "Settings",
-        components: {ErrorPopup},
+        components: {SimpleFormGroup},
+
         data() {
             return {
                 form : {
@@ -65,53 +43,13 @@
         },
 
         methods: {
-            checkForm: function (e) {
-                if (this.form.api === '') {
-                    this.$refs.error.setError(this.$t('message.adminEmptyForm'));
-                    this.$refs.error.showAlert();
-                    e.preventDefault();
-                    return;
-                }
-                if (this.form.logo_url === '') {
-                    this.$refs.error.setError(this.$t('message.adminEmptyForm'));
-                    this.$refs.error.showAlert();
-                    e.preventDefault();
-                    return;
-                }
-                if (this.form.secondary_logo_url === '') {
-                    this.$refs.error.setError(this.$t('message.adminEmptyForm'));
-                    this.$refs.error.showAlert();
-                    e.preventDefault();
-                    return;
-                }
-                if (this.form.background_color === '') {
-                    this.$refs.error.setError(this.$t('message.adminEmptyForm'));
-                    this.$refs.error.showAlert();
-                    e.preventDefault();
-                    return;
-                }
-                if (this.form.navbar_background_color === '') {
-                    this.$refs.error.setError(this.$t('message.adminEmptyForm'));
-                    this.$refs.error.showAlert();
-                    e.preventDefault();
-                    return;
-                }
-                if (this.form.navbar_color === '') {
-                    this.$refs.error.setError(this.$t('message.adminEmptyForm'));
-                    this.$refs.error.showAlert();
-                    e.preventDefault();
-                    return;
-                }
-                this.save();
-                e.preventDefault();
-            },
-
-            save: function() {
+            save: function(e) {
                 fs.writeFileSync(app.getPath('userData')+"/config.yml", yaml.safeDump(this.form), function(err) {
                     if(err) {
                         return err;
                     }
                 });
+                e.preventDefault();
                 app.relaunch();
                 app.exit(0);
             },

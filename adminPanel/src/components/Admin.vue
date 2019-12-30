@@ -22,9 +22,6 @@
                 <div v-if="type === 'cal'">
                     <AcademicCalendar/>
                 </div>
-                <!--<div v-if="type === 'exams'">
-                    <ExamsCalendar/>
-                </div>-->
                 <div v-if="type === 'unles'">
                     <UnscheduledLessons/>
                 </div>
@@ -46,7 +43,6 @@
     import UserManagement from "./UserManagement";
     import AdminSideBar from "./AdminSideBar";
     import AcademicCalendar from "./AcademicCalendar";
-    //import ExamsCalendar from "./ExamsCalendar";
     import Settings from "./Settings";
     import UnscheduledLessons from "./UnscheduledLessons";
 

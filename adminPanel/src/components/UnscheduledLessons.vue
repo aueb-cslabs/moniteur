@@ -6,15 +6,12 @@
                 <h5>{{$t('message.ecSubmit')}}</h5>
                 <div class="row">
                     <div class="col col-lg-5">
-                        <!--                        NAME-->
                         <b-form-input v-model="title" v-bind:placeholder="this.$t('message.ecLessonName')"></b-form-input>
                     </div>
                     <div class="col col-lg-4">
-                        <!--                        NAME-->
                         <b-form-input v-model="host" v-bind:placeholder="this.$t('message.ecProf')"></b-form-input>
                     </div>
                     <div class="col col-lg-3">
-                        <!--                        ROOMS-->
                         <multiselect v-model="room" v-bind:placeholder="this.$t('message.ecSelectRooms')"
                                      :close-on-select="false" :options="roomOptions" :multiple="false"
                                      v-bind:select-label="this.$t('message.ecSelect')" v-bind:deselect-label="this.$t('message.ecDeselect')">
@@ -24,17 +21,14 @@
                 </div>
                 <div class="row pt-3">
                     <div class="col col-lg-6">
-                        <!--                        START_ΤΙΜΕ-->
                         <b-form-input type="datetime-local" v-model="start" v-bind:placeholder="this.$t('message.ecStart')"></b-form-input>
                     </div>
                     <div class="col col-lg-6">
-                        <!--                        END_TIME-->
                         <b-form-input type="datetime-local" v-model="end" v-bind:placeholder="this.$t('message.ecEnd')"></b-form-input>
                     </div>
                 </div>
                 <div class="row pt-3">
                     <div class="col">
-                        <!--                        ADD_BUTTON-->
                         <b-button @click="deleteLesson" class="float-left" variant="danger">{{$t('message.ecRemove')}}</b-button>
                         <b-button @click="checkEntry" class="float-right" variant="primary">{{$t('message.ecAddLesson')}}</b-button>
                     </div>

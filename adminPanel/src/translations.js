@@ -137,7 +137,7 @@ export default {
             adminInvalidDate: "Λανθασμένη μορφή ημερομηνίας!",
             adminAnnCurrent: "Τωρινή Ανακοίνωση:",
             removeAnn: "Αφαίρεση Ανακοίνωσης",
-            adminExpires: "Λήγη στις:",
+            adminExpires: "Λήγει στις:",
             adminRoomAnnRN: "Όνομα αίθουσας",
             adminSearch: "Αναζήτηση",
             adminRoomAnnSearchErr: "Πληκτρολογείστε ένα όνομα αίθουσας!",

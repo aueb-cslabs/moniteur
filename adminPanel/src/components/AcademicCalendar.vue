@@ -6,29 +6,19 @@
                 <div class="row">
                     <div class="col">
                         <h5>{{$t('message.calWinterS')}}</h5>
-                        <form @submit="checkForm">
-                            <div class="form-group">
-                                <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="date" class="form-control" v-model="Calendar.Semesters.Winter.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
-                            </div>
-                            <div class="form-group">
-                                <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="date" class="form-control" v-model="Calendar.Semesters.Winter.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
-                            </div>
-                        </form>
+                        <PeriodDefinition
+                                v-model="Calendar.Semesters.Winter"
+                                :period="Calendar.Semesters.Winter"
+                                :start="Calendar.Semesters.Winter.Start"
+                                :end="Calendar.Semesters.Winter.End"/>
                     </div>
                     <div class="col">
                         <h5>{{$t('message.calSprintS')}}</h5>
-                        <form @submit="checkForm">
-                            <div class="form-group">
-                                <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="date" class="form-control" v-model="Calendar.Semesters.Sprint.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
-                            </div>
-                            <div class="form-group">
-                                <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="date" class="form-control" v-model="Calendar.Semesters.Sprint.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
-                            </div>
-                        </form>
+                        <PeriodDefinition
+                                v-model="Calendar.Semesters.Sprint"
+                                :period="Calendar.Semesters.Sprint"
+                                :start="Calendar.Semesters.Sprint.Start"
+                                :end="Calendar.Semesters.Sprint.End"/>
                     </div>
                 </div>
             </div>
@@ -37,42 +27,27 @@
                 <div class="row">
                     <div class="col">
                         <h5>{{$t('message.calWin')}}</h5>
-                        <form @submit="checkForm">
-                            <div class="form-group">
-                                <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="date" class="form-control" v-model="Calendar.Exams.Winter.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
-                            </div>
-                            <div class="form-group">
-                                <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="date" class="form-control" v-model="Calendar.Exams.Winter.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
-                            </div>
-                        </form>
+                        <PeriodDefinition
+                                v-model="Calendar.Exams.Winter"
+                                :period="Calendar.Exams.Winter"
+                                :start="Calendar.Exams.Winter.Start"
+                                :end="Calendar.Exams.Winter.End"/>
                     </div>
                     <div class="col">
                         <h5>{{$t('message.calSpr')}}</h5>
-                        <form @submit="checkForm">
-                            <div class="form-group">
-                                <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="date" class="form-control" v-model="Calendar.Exams.Sprint.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
-                            </div>
-                            <div class="form-group">
-                                <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="date" class="form-control" v-model="Calendar.Exams.Sprint.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
-                            </div>
-                        </form>
+                        <PeriodDefinition
+                                v-model="Calendar.Exams.Sprint"
+                                :period="Calendar.Exams.Sprint"
+                                :start="Calendar.Exams.Sprint.Start"
+                                :end="Calendar.Exams.Sprint.End"/>
                     </div>
                     <div class="col">
                         <h5>{{$t('message.calSep')}}</h5>
-                        <form @submit="checkForm">
-                            <div class="form-group">
-                                <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="date" class="form-control" v-model="Calendar.Exams.September.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
-                            </div>
-                            <div class="form-group">
-                                <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="date" class="form-control" v-model="Calendar.Exams.September.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
-                            </div>
-                        </form>
+                        <PeriodDefinition
+                                v-model="Calendar.Exams.September"
+                                :period="Calendar.Exams.September"
+                                :start="Calendar.Exams.September.Start"
+                                :end="Calendar.Exams.September.End"/>
                     </div>
                 </div>
             </div>
@@ -81,29 +56,19 @@
                 <div class="row">
                     <div class="col">
                         <h5>{{$t('message.calWinterS')}}</h5>
-                        <form @submit="checkForm">
-                            <div class="form-group">
-                                <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="date" class="form-control" v-model="Calendar.Breaks.Winter.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
-                            </div>
-                            <div class="form-group">
-                                <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="date" class="form-control" v-model="Calendar.Breaks.Winter.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
-                            </div>
-                        </form>
+                        <PeriodDefinition
+                                v-model="Calendar.Breaks.Winter"
+                                :period="Calendar.Breaks.Winter"
+                                :start="Calendar.Breaks.Winter.Start"
+                                :end="Calendar.Breaks.Winter.End"/>
                     </div>
                     <div class="col">
                         <h5>{{$t('message.calSprintS')}}</h5>
-                        <form @submit="checkForm">
-                            <div class="form-group">
-                                <label>{{$t("message.calSemesterStart")}}</label>
-                                <input type="date" class="form-control" v-model="Calendar.Breaks.Sprint.Start" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
-                            </div>
-                            <div class="form-group">
-                                <label>{{$t("message.calSemesterEnd")}}</label>
-                                <input type="date" class="form-control" v-model="Calendar.Breaks.Sprint.End" v-bind:placeholder="this.$t('message.adminAnnDateForm')">
-                            </div>
-                        </form>
+                        <PeriodDefinition
+                                v-model="Calendar.Breaks.Sprint"
+                                :period="Calendar.Breaks.Sprint"
+                                :start="Calendar.Breaks.Sprint.Start"
+                                :end="Calendar.Breaks.Sprint.End"/>
                     </div>
                 </div>
                 <h5>{{$t('message.calVarious')}}</h5>
@@ -131,7 +96,7 @@
                             <div class="col">
                                 <b-button @click="removeDate" variant="danger" class="mt-3">{{$t("message.calRemoveDate")}}</b-button>
                                 <b-button @click="removeAll" variant="danger" class="ml-3 mt-3">{{$t("message.calRemoveAll")}}</b-button>
-                                <b-button @click="checkForm" variant="primary" class="ml-3 mt-3 float-right">{{this.$t("message.calSend")}}</b-button>
+                                <b-button @click="send" variant="primary" class="ml-3 mt-3 float-right">{{this.$t("message.calSend")}}</b-button>
                             </div>
                         </div>
                     </div>
@@ -145,15 +110,16 @@
 
 <script>
     import axios from "axios";
-    import traverse from "traverse";
     import ErrorPopup from "../ErrorPopup/ErrorPopup";
     import SuccessPopup from "../SuccessPopup/SuccessPopup";
+    import PeriodDefinition from "../PeriodDefinition/PeriodDefinition";
 
     const config = require('electron').remote.getGlobal('config');
 
     export default {
 
         components: {
+            PeriodDefinition,
             SuccessPopup,
             ErrorPopup
         },
@@ -207,30 +173,6 @@
         },
 
         methods: {
-            checkForm: function () {
-
-                let dates = traverse(this.Calendar).reduce(function (dates, x) {
-                    if (this.isLeaf) {
-                        if (Array.isArray(x)) {
-                            dates = dates.concat(x);
-                        }
-                        else {
-                            dates.push(x);
-                        }
-                    }
-                    return dates;
-                }, []);
-                for (let i in dates) {
-                    if (dates[i] === '') {
-                        this.$refs.error.setError(this.$t('message.adminInvalidDate'));
-                        this.$refs.error.showAlert();
-                        return;
-                    }
-                }
-                this.error = null;
-                this.send();
-            },
-
             send: function() {
                 axios({
                     method: 'post',

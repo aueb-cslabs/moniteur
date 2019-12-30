@@ -2,16 +2,15 @@
     <div>
         <div class="pt-5">
             <h2>{{$t("message.adminComHeader")}}</h2>
-            <CreateAnnouncement></CreateAnnouncement>
+            <CreateAnnouncement/>
             <div class="mt-5" v-if="this.comment != null">
-                <div class="alert alert-primary" role="alert">
-                    <h3>{{this.$t("message.adminCommCurrent")}} {{this.comment['msg']}}</h3>
-                </div>
-                <hr>
-                <div class="alert alert-warning" role="alert">
-                    {{this.$t("message.adminExpires")}} {{this.comment['end']}}
-                </div>
-                <button type="submit" class="btn btn-primary float-right" v-on:click="removeComment">{{this.$t("message.removeComm")}}</button>
+                <ShowAnnouncement
+                        :type="this.$t('message.adminCommCurrent')"
+                        :announcement="this.comment['msg']"
+                        :expiration="this.comment['end']"/>
+                <button type="submit"
+                        class="btn btn-primary float-right"
+                        v-on:click="removeComment">{{this.$t("message.removeComm")}}</button>
             </div>
         </div>
     </div>
@@ -20,12 +19,13 @@
 <script>
     import axios from 'axios';
     import CreateAnnouncement from "../CreateAnnouncement/CreateAnnouncement";
+    import ShowAnnouncement from "../ShowAnnouncement/ShowAnnouncement";
 
     const config = require('electron').remote.getGlobal('config');
 
     export default {
         name: 'AdminComment',
-        components: {CreateAnnouncement},
+        components: {CreateAnnouncement, ShowAnnouncement},
 
         created() {
             this.fetchComment();

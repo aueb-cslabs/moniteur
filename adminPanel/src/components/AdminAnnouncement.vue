@@ -4,13 +4,10 @@
             <h2>{{$t("message.adminAnnHeader")}}</h2>
             <CreateAnnouncement/>
             <div class="mt-5" v-if="this.announcement != null">
-                <div class="alert alert-primary" role="alert">
-                    <h3>{{this.$t("message.adminAnnCurrent")}} {{this.announcement['msg']}}</h3>
-                </div>
-                <hr>
-                <div class="alert alert-warning" role="alert">
-                    {{this.$t("message.adminExpires")}} {{this.announcement['end']}}
-                </div>
+                <ShowAnnouncement
+                        :type="this.$t('message.adminAnnCurrent')"
+                        :announcement="this.announcement['msg']"
+                        :expiration="this.announcement['end']"/>
                 <button type="submit" class="btn btn-danger float-right" v-on:click="removeAnnouncement">{{this.$t("message.removeAnn")}}</button>
             </div>
         </div>
@@ -20,6 +17,7 @@
 <script>
     import axios from 'axios';
     import CreateAnnouncement from "../CreateAnnouncement/CreateAnnouncement";
+    import ShowAnnouncement from "../ShowAnnouncement/ShowAnnouncement";
 
     const config = require('electron').remote.getGlobal('config');
 
@@ -27,6 +25,7 @@
         name: 'AdminAnnouncement',
 
         components: {
+            ShowAnnouncement,
             CreateAnnouncement
         },
 
