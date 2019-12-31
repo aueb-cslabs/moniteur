@@ -20,7 +20,7 @@
 
 <script>
     import axios from "axios";
-    import functions from "../functions";
+    import functions from "../../functions";
 
     const config = require('electron').remote.getGlobal('config');
 
@@ -61,7 +61,7 @@
 </script>
 
 <style lang="scss">
-@import "../scss/AdminBar.scss";
+@import "./AdminBar.scss";
 @import "~bootstrap/scss/bootstrap.scss";
 @import "~@fortawesome/fontawesome-free/css/all.css";
 </style>

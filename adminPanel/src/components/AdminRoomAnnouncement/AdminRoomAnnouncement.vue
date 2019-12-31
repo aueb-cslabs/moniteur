@@ -126,6 +126,6 @@
 </script>
 
 <style lang="scss">
-@import "../scss/AdminRoomAnnouncement";
+@import "./AdminRoomAnnouncement";
 @import "~bootstrap/scss/bootstrap.scss";
 </style>

@@ -58,5 +58,5 @@
 </script>
 
 <style scoped>
-@import "../scss/Settings.scss";
+@import "./Settings.scss";
 </style>

@@ -236,6 +236,5 @@
 
 <style lang="scss">
 @import "~vue-multiselect/dist/vue-multiselect.min.css";
-@import "../scss/ExamsCalendar";
-@import "../scss/AcademicCalendar";
+@import "UnscheduledLessons";
 </style>

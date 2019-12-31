@@ -227,6 +227,6 @@
 </script>
 
 <style lang="scss">
-@import "../scss/AcademicCalendar";
+@import "./AcademicCalendar";
 @import "~bootstrap/scss/bootstrap";
 </style>

@@ -102,6 +102,6 @@
 </script>
 
 <style lang="scss">
-@import "../scss/AdminAnnouncement";
+@import "./AdminAnnouncement";
 @import "~bootstrap/scss/bootstrap.scss";
 </style>

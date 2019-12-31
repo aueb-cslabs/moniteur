@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import Admin from "./components/Admin.vue";
+    import Admin from "../Admin/Admin";
 
     const config = require('electron').remote.getGlobal('config');
 
@@ -24,5 +24,5 @@
 </script>
 
 <style>
-@import "./scss/App.scss";
+@import "./App.scss";
 </style>

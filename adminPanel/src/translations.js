@@ -99,7 +99,10 @@ export default {
             ecProf: "Professor",
             ecRemove: "Remove Lesson",
             ecNoSelected: "No selected item",
-            ecAddLesson: "Add Lesson"
+            ecAddLesson: "Add Lesson",
+            Welcome: "Welcome to Moniteur Administration!",
+            WelcomeSidebar: "Open the sidebar to select a function!",
+            adminHome: "Home"
         }
     },
     el: {
@@ -202,7 +205,10 @@ export default {
             ecProf: "Καθηγητής",
             ecRemove: "Αφαίρεση Μαθήματος",
             ecNoSelected: "Κανένα Μάθημα Επιλεγμένο",
-            ecAddLesson: "Προσθήκη Μαθήματος"
+            ecAddLesson: "Προσθήκη Μαθήματος",
+            Welcome: "Καλώς ήλθατε στην διαχείριση του Moniteur!",
+            WelcomeSidebar: "Ανοίχτε το sidebar για να επιλέξετε λειτουργία!",
+            adminHome: "Home"
         }
     }
 };

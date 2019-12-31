@@ -1,5 +1,6 @@
 <template>
     <div id="sidebar" class="sidebar">
+        <router-link to="/" class="nav-item" v-on:click.native="showSidebar">{{$t("message.adminHome")}}</router-link>
         <router-link to="/announcement" class="nav-item" v-on:click.native="showSidebar">{{$t("message.adminBarGA")}}</router-link>
         <router-link to="/roomAnnouncement" class="nav-item" v-on:click.native="showSidebar">{{$t("message.adminBarRA")}}</router-link>
         <router-link to="/comment" class="nav-item" v-on:click.native="showSidebar">{{$t("message.adminBarGC")}}</router-link>
@@ -11,7 +12,7 @@
 </template>
 
 <script>
-    import functions from "../functions";
+    import functions from "../../functions";
 
     export default {
         name: 'AdminSideBar',
@@ -23,5 +24,5 @@
 </script>
 
 <style>
-@import "../scss/AdminSideBar.scss";
+@import "./AdminSideBar.scss";
 </style>

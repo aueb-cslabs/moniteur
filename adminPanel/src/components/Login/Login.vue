@@ -88,6 +88,6 @@
 </script>
 
 <style lang="scss">
-@import "../scss/Login.scss";
+@import "./Login.scss";
 @import "~bootstrap/scss/bootstrap.scss";
 </style>

@@ -102,6 +102,6 @@
 </script>
 
 <style lang="scss">
-@import "../scss/UserManagement";
+@import "./UserManagement";
 @import "~bootstrap/scss/bootstrap";
 </style>

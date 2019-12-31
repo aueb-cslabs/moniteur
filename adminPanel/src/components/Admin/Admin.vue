@@ -14,9 +14,9 @@
 </template>
 
 <script>
-    import Login from "./Login";
-    import AdminBar from "./AdminBar";
-    import AdminSideBar from "./AdminSideBar";
+    import Login from "../Login/Login";
+    import AdminBar from "../AdminBar/AdminBar";
+    import AdminSideBar from "../AdminSideBar/AdminSideBar";
 
     export default {
 
@@ -32,6 +32,6 @@
 </script>
 
 <style lang="scss">
-@import "../scss/Admin.scss";
+@import "./Admin.scss";
 @import "~bootstrap/scss/bootstrap.scss";
 </style>

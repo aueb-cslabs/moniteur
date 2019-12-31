@@ -99,6 +99,6 @@
 </script>
 
 <style lang="scss">
-    @import "../scss/AdminComment";
+    @import "./AdminComment";
     @import "~bootstrap/scss/bootstrap.scss";
 </style>

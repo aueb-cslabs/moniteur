@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './App.vue'
+import App from './components/App/App'
 import VueI18n from 'vue-i18n'
 import VueCookies from 'vue-cookies'
 import VueRouter from 'vue-router'
@@ -7,13 +7,14 @@ import BootstrapVue from 'bootstrap-vue'
 
 import authToken from './auth';
 import messages from './translations';
-import AdminAnnouncement from "./components/AdminAnnouncement";
-import AdminRoomAnnouncement from "./components/AdminRoomAnnouncement";
-import AdminComment from "./components/AdminComment";
-import UserManagement from "./components/UserManagement";
-import AcademicCalendar from "./components/AcademicCalendar";
-import UnscheduledLessons from "./components/UnscheduledLessons";
-import Settings from "./components/Settings";
+import AdminAnnouncement from "./components/AdminAnnouncement/AdminAnnouncement";
+import AdminRoomAnnouncement from "./components/AdminRoomAnnouncement/AdminRoomAnnouncement";
+import AdminComment from "./components/AdminComment/AdminComment";
+import UserManagement from "./components/UserManagement/UserManagement";
+import AcademicCalendar from "./components/AcademicCalendar/AcademicCalendar";
+import UnscheduledLessons from "./components/UnscheduledLessons/UnscheduledLessons";
+import Settings from "./components/Settings/Settings";
+import Home from "./components/Home/Home";
 
 Vue.config.productionTip = false;
 Vue.use(VueI18n);
@@ -29,6 +30,7 @@ const i18n = new VueI18n({
 });
 
 const routes = [
+    { path: '/', component: Home },
     { path: '/announcement', component: AdminAnnouncement },
     { path: '/roomAnnouncement', component: AdminRoomAnnouncement },
     { path: '/comment', component: AdminComment },
