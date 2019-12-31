@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-expand navbar-dark">
-        <button type="button" class="btn" v-on:click="this.$parent.showSidebar">
+        <button type="button" class="btn" v-on:click="showSidebar">
             <i class="fas fa-list-ul fa-2x" style="color: white;"></i>
         </button>
         <a class='navbar-brand d-none d-sm-block'>
@@ -12,7 +12,7 @@
                  alt="cs_logo" height="60" />
         </a>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item pr-3 d-none d-sm-block" v-if="this.$parent.$data['authToken'].auth">{{$t("message.adminBarLI")}} {{this.$parent.$data['authToken'].username}}</li>
+            <li class="nav-item pr-3 d-none d-sm-block" v-if="this.$root.$data.authToken.auth">{{$t("message.adminBarLI")}} {{this.$root.$data.authToken.username}}</li>
             <li class="nav-item" v-on:click="logout">{{$t("message.adminBarLogout")}}</li>
         </ul>
     </nav>
@@ -20,6 +20,7 @@
 
 <script>
     import axios from "axios";
+    import functions from "../functions";
 
     const config = require('electron').remote.getGlobal('config');
 
@@ -33,7 +34,6 @@
         data() {
             return {
                 username: '',
-                sideOpen: false,
                 logo_url: config.logo_url,
                 secondary_logo_url: config.secondary_logo_url
             }
@@ -45,15 +45,17 @@
                     method: 'post',
                     url: config.api + "/api/invalidate",
                     headers: {
-                        Authorization: this.$parent.$data['authToken'].token,
-                        Username: this.$parent.$data['authToken'].username
+                        Authorization: this.$root.$data.authToken.token,
+                        Username: this.$root.$data.authToken.username
                     }
                 }).then(() => {
-                    this.$parent.$data['authToken'].auth = false;
+                    this.$root.$data.authToken.auth = false;
                     this.$cookies.remove('session');
                 });
                 e.preventDefault();
             },
+
+            showSidebar: functions.showSidebar
         }
     }
 </script>

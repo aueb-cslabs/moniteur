@@ -43,9 +43,9 @@
                     url: config.api + '/api/validate',
                     headers: cookie
                 }).then(() => {
-                    this.$parent.$data['authToken'].auth = true;
-                    this.$parent.$data['authToken'].username = cookie.Username;
-                    this.$parent.$data['authToken'].token = cookie.Authorization;
+                    this.$root.$data['authToken'].auth = true;
+                    this.$root.$data['authToken'].username = cookie.Username;
+                    this.$root.$data['authToken'].token = cookie.Authorization;
                 })
             }
         },
@@ -62,9 +62,9 @@
                 }).then(response => {
                     this.cookie.Authorization = response.data['token_type'] + " " + response.data['access_token'];
                     this.cookie.Username = this.loginForm.username;
-                    this.$parent.$data['authToken'].auth = true;
-                    this.$parent.$data['authToken'].username = this.loginForm.username;
-                    this.$parent.$data['authToken'].token = response.data['token_type'] + " " + response.data['access_token'];
+                    this.$root.$data['authToken'].auth = true;
+                    this.$root.$data['authToken'].username = this.loginForm.username;
+                    this.$root.$data['authToken'].token = response.data['token_type'] + " " + response.data['access_token'];
                         let date = new Date(response.data['expires_in']*1000);
                     this.$cookies.set('session', this.cookie, date);
                 }).catch(() => {

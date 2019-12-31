@@ -63,8 +63,8 @@
                     method: 'post',
                     url: config.api + '/api/register/' + this.user,
                     headers: {
-                        Username: this.$parent.$data['authToken'].username,
-                        Authorization: this.$parent.$data['authToken'].token
+                        Username: this.$root.$data['authToken'].username,
+                        Authorization: this.$root.$data['authToken'].token
                     }
                 }).then(() => {
                     this.updateUsers();
@@ -76,8 +76,8 @@
                     method: 'get',
                     url: config.api + '/api/users',
                     headers: {
-                        Username: this.$parent.$data['authToken'].username,
-                        Authorization: this.$parent.$data['authToken'].token
+                        Username: this.$root.$data['authToken'].username,
+                        Authorization: this.$root.$data['authToken'].token
                     }
                 }).then(response => {
                     this.options = response.data;
@@ -89,8 +89,8 @@
                     method: 'post',
                     url: config.api + '/api/unregister/' + this.userOption,
                     headers: {
-                        Username: this.$parent.$data['authToken'].username,
-                        Authorization: this.$parent.$data['authToken'].token
+                        Username: this.$root.$data['authToken'].username,
+                        Authorization: this.$root.$data['authToken'].token
                     }
                 }).then(() => {
                     this.updateUsers();

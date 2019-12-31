@@ -1,19 +1,24 @@
 <template>
     <div id="sidebar" class="sidebar">
-        <a class="nav-item" v-on:click="this.$parent.showAnnouncement">{{$t("message.adminBarGA")}}</a>
-        <a class="nav-item" v-on:click="this.$parent.showRoomAnnouncement">{{$t("message.adminBarRA")}}</a>
-        <a class="nav-item" v-on:click="this.$parent.showComment">{{$t("message.adminBarGC")}}</a>
-        <a class="nav-item" v-on:click="this.$parent.showUserManagement">{{$t("message.adminBarUM")}}</a>
-        <a class="nav-item" v-on:click="this.$parent.showAcademicCalendar">{{$t("message.adminBarAC")}}</a>
-        <a class="nav-item" v-on:click="this.$parent.showUnscheduledLessons">{{$t("message.adminBarUL")}}</a>
-        <!--        <a class="nav-item" v-on:click="this.$parent.showExamsCalendar">{{$t("message.adminBarEC")}}</a>-->
-        <a class="nav-item" v-on:click="this.$parent.showSettings">{{$t("message.adminBarSettings")}}</a>
+        <router-link to="/announcement" class="nav-item" v-on:click.native="showSidebar">{{$t("message.adminBarGA")}}</router-link>
+        <router-link to="/roomAnnouncement" class="nav-item" v-on:click.native="showSidebar">{{$t("message.adminBarRA")}}</router-link>
+        <router-link to="/comment" class="nav-item" v-on:click.native="showSidebar">{{$t("message.adminBarGC")}}</router-link>
+        <router-link to="/users" class="nav-item" v-on:click.native="showSidebar">{{$t("message.adminBarUM")}}</router-link>
+        <router-link to="/calendar" class="nav-item" v-on:click.native="showSidebar">{{$t("message.adminBarAC")}}</router-link>
+        <router-link to="/unscheduled" class="nav-item" v-on:click.native="showSidebar">{{$t("message.adminBarUL")}}</router-link>
+        <router-link to="/settings" class="nav-item" v-on:click.native="showSidebar">{{$t("message.adminBarSettings")}}</router-link>
     </div>
 </template>
 
 <script>
+    import functions from "../functions";
+
     export default {
         name: 'AdminSideBar',
+
+        methods: {
+            showSidebar: functions.showSidebar
+        }
     }
 </script>
 

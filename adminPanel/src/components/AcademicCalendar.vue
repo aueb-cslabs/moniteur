@@ -178,8 +178,8 @@
                     method: 'post',
                     url: config.api + '/api/calendarInfo',
                     headers: {
-                        Username: this.$parent.$data['authToken'].username,
-                        Authorization: this.$parent.$data['authToken'].token
+                        Username: this.$root.$data['authToken'].username,
+                        Authorization: this.$root.$data['authToken'].token
                     },
                     data: this.Calendar
                 }).then(() => {

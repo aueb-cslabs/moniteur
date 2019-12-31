@@ -114,8 +114,8 @@
                     method: 'post',
                     url: config.api + "/api/override",
                     headers: {
-                        Username: this.$parent.$data['authToken'].username,
-                        Authorization: this.$parent.$data['authToken'].token
+                        Username: this.$root.$data['authToken'].username,
+                        Authorization: this.$root.$data['authToken'].token
                     },
                     data: {
                         room: this.room,
@@ -187,8 +187,8 @@
                     method: 'get',
                     url: config.api + "/api/override",
                     headers: {
-                        Username: this.$parent.$data['authToken'].username,
-                        Authorization: this.$parent.$data['authToken'].token
+                        Username: this.$root.$data['authToken'].username,
+                        Authorization: this.$root.$data['authToken'].token
                     }
                 }).then((response) => {
                     this.unscheduledLessons = response.data;
@@ -210,8 +210,8 @@
                         method: 'delete',
                         url: config.api + "/api/override",
                         headers: {
-                            Username: this.$parent.$data['authToken'].username,
-                            Authorization: this.$parent.$data['authToken'].token
+                            Username: this.$root.$data['authToken'].username,
+                            Authorization: this.$root.$data['authToken'].token
                         },
                         data: {
                             db_info: this.selectedRow[0].db_info,

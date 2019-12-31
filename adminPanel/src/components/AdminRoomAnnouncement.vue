@@ -6,7 +6,14 @@
                 <label>{{$t("message.adminRASelect")}}</label>
                 <b-form-select @change="fetchRoomAnnouncement" v-model="room" :options="options"></b-form-select>
             </div>
-            <CreateAnnouncement v-if="this.room != null" class="pt-5"/>
+            <div v-if="this.room != null" class="pt-5">
+                <CreateAnnouncement
+                        v-model="form"
+                        :form="form"
+                        :msg="form.msg"
+                        :end="form.end"/>
+                <button type="submit" class="btn btn-primary">{{$t("message.adminAnnSend")}}</button>
+            </div>
             <div class="pt-5" v-if="this.announcement != null">
                 <ShowAnnouncement
                         :type="this.$t('message.adminRoomAnnCurrent')"
@@ -17,19 +24,23 @@
                         v-on:click="removeRoomAnnouncement">{{this.$t("message.removeAnn")}}</button>
             </div>
         </div>
+        <div>
+            <ErrorPopup ref="error"/>
+        </div>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
     import CreateAnnouncement from "../CreateAnnouncement/CreateAnnouncement";
+    import ErrorPopup from "../ErrorPopup/ErrorPopup";
     import ShowAnnouncement from "../ShowAnnouncement/ShowAnnouncement";
 
     const config = require('electron').remote.getGlobal('config');
 
     export default {
         name: 'AdminRoomAnnouncement',
-        components: {CreateAnnouncement, ShowAnnouncement},
+        components: {ErrorPopup, CreateAnnouncement, ShowAnnouncement},
         created() {
             axios({
                 method: 'get',
@@ -45,25 +56,32 @@
                 searchError: null,
                 room: null,
                 roomBool: false,
-                options: []
+                options: [],
+                form: {
+                    msg: '',
+                    end: ''
+                }
             }
         },
 
         methods: {
-            send: function (form) {
+            send: function () {
                 axios({
                     method: 'post',
                     url: config.api + "/api/announcement/" + this.room,
                     headers: {
-                        Username: this.$parent.$data['authToken'].username,
-                        Authorization: this.$parent.$data['authToken'].token
+                        Username: this.$root.$data['authToken'].username,
+                        Authorization: this.$root.$data['authToken'].token
                     },
                     data: {
-                        end: new Date(form.end)/1000,
-                        msg: form.msg
+                        end: new Date(this.form.end)/1000,
+                        msg: this.form.msg
                     }
                 }).then(() => {
                     this.fetchRoomAnnouncement();
+                }).catch(()=> {
+                    this.$refs.error.setError(this.$t('message.calFail'));
+                    this.$refs.error.showAlert();
                 });
             },
 
@@ -72,8 +90,8 @@
                     method: 'delete',
                     url: config.api + "/api/announcement/" + this.room,
                     headers: {
-                        Username: this.$parent.$data['authToken'].username,
-                        Authorization: this.$parent.$data['authToken'].token
+                        Username: this.$root.$data['authToken'].username,
+                        Authorization: this.$root.$data['authToken'].token
                     },
                 }).then(() => {
                     this.announcement = null;

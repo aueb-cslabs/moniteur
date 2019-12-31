@@ -1,17 +1,15 @@
 :root {
-  --background: #FFFFFF;
+  --background: #46484a;
 }
-
 body {
-  background: var(--background);
-  color: white;
-
   .actions {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     height: 100%;
+    background: var(--background);
+    color: white;
   }
 
   .admin {
@@ -24,6 +22,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 100%;
+    background: var(--background);
+    color: white;
   }
 }
 
