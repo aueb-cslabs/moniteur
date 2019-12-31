@@ -1,7 +1,7 @@
 <template>
-    <div class="centered align-self-center">
+    <div id="home" class="home">
         <h2>{{ $t("message.Welcome")}}</h2>
-        <h3>{{ $t("message.WelcomeSidebar")}}</h3>
+        <h3>{{$t("message.WelcomeSidebar")}}</h3>
     </div>
 </template>
 

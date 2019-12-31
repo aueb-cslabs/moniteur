@@ -4,9 +4,9 @@
     </div>
     <div v-else class="actions">
         <AdminBar/>
-        <div class="admin">
+        <div id="admin" class="admin">
             <AdminSideBar/>
-            <div id="main">
+            <div id="main" class="main">
                 <router-view></router-view>
             </div>
         </div>
