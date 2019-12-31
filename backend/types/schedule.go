@@ -12,7 +12,6 @@ ScheduleSlot Contains information about a schedule slot, like times, room
 and subject.
 */
 type ScheduleSlot struct {
-	gorm.Model `json:"db_info"`
 	//ID int `gorm:"AUTO_INCREMENT;primary_key;not_null;unique_index"`
 	Room string `json:"room" gorm:"text;not_null"`
 	// Day is the days after the start of the week (0 = Sunday)
@@ -26,6 +25,11 @@ type ScheduleSlot struct {
 	Semester string `json:"semester" gorm:"-"`
 	DayNum   int    `json:"-" gorm:"-"`
 	MonthNum int    `json:"-" gorm:"-"`
+}
+
+type DBScheduleSlot struct {
+	gorm.Model `json:"db_info"`
+	ScheduleSlot
 }
 
 type ScheduleNow struct {

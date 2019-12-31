@@ -16,7 +16,7 @@ func OverrideGroup(g *echo.Group) {
 func createOverride(e echo.Context) error {
 	db := e.(*types.Context).DB
 
-	override := &types.ScheduleSlot{}
+	override := &types.DBScheduleSlot{}
 	err := e.Bind(override)
 
 	if err != nil {
@@ -30,7 +30,7 @@ func createOverride(e echo.Context) error {
 func deleteOverride(e echo.Context) error {
 	db := e.(*types.Context).DB
 
-	override := &types.ScheduleSlot{}
+	override := &types.DBScheduleSlot{}
 	err := e.Bind(&override)
 
 	if err != nil {
@@ -44,7 +44,7 @@ func deleteOverride(e echo.Context) error {
 func overrides(e echo.Context) error {
 	db := e.(*types.Context).DB
 
-	var overrides []*types.ScheduleSlot
+	var overrides []*types.DBScheduleSlot
 
 	db.Find(&overrides)
 
