@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/aueb-cslabs/moniteur.svg?branch=dev)](https://travis-ci.com/aueb-cslabs/moniteur)
+[![Build Status](https://travis-ci.com/aueb-cslabs/moniteur.svg?branch=master)](https://travis-ci.com/aueb-cslabs/moniteur)
 
 <a href="https://cslab.aueb.gr"><img src="https://www.aueb.gr/press/logos/2_AUEB-white-HR.jpg" title="AUEB CSLab" alt="AUEB"></a>
 
