@@ -1,29 +1,17 @@
 matrix:
   include:
-  - os: osx
-    osx_image: xcode11.2
-    language: node_js
-    node_js: '10'
-    env:
-    - ELECTRON_CACHE=$HOME/.cache/electron
-    - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
-    script:
-    - make .build-moniteur-mac
-    - make .build-admin-mac
   - os: linux
-    services: docker
     language: node_js
     node_js: '10'
     script:
-    - |
-      ENVS=`env | grep -iE '^(DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS|APPVEYOR_|CSC_|_TOKEN|_KEY|AWS_|STRIP|BUILD_)([A-Z]|_)*=' | sed -n '/^[^\t]/s/=.*//p' | sed '/^$/d' | sed 's/^/-e /g' | tr '\n' ' '`
-      docker run $ENVS --rm \
-        -v ${PWD}:/project \
-        -v ~/.cache/electron:/root/.cache/electron \
-        -v ~/.cache/electron-builder:/root/.cache/electron-builder \
-        electronuserland/builder:wine \
-        /bin/bash -c "make .build-admin-linux && make .build-admin-win \
-        && make .build-moniteur-linux && make .build-moniteur-win"
+    - make publish-linux
+  - os: windows
+    language: node_js
+    node_js: '10'
+    before_install:
+    - choco install -y make
+    script:
+    - make publish-win
   - os: linux
     language: go
     go:
@@ -39,14 +27,3 @@ cache:
   - "$HOME/.cache/electron-builder"
 before_cache:
 - rm -rf $HOME/.cache/electron-builder/wine
-deploy:
-  provider: releases
-  api_key:
-    secure: EZxGGWRPN5WSrZKT636bnPQRSW0EzX4ZZxDerikjCUnu8etx4nm3PydZJAm63kB98yBFZjOrfHlU3ksaJ05RRljsm/pp0FhOvCpaMEOZeEkJAsOVkJfz21jaCCp/aaFovRkInabjskHhAoSLEKbW9WekkghtyQgIVfZ0h3/OT5HFot5EyZhN4wp8eou0iAiQPXR9pMZ5rj0GioSm7/7vjR8dLvUwV4jNCTACAQoXcYqKNJZD3/OESS/eWMkxOcT+6gmMdpxQxPBc8Z3P5RjtWdqUqhp3AeOoHzzZn+tJu0svaLFDc8VWLlYFZGaom+2pYYuYKNSFI+H5jGCYqasf3hjDkiPM645FUe0gieiZEm5CViyfXUXwlytMcSXg9yHMALCOcY3T+rBoeH56njOX/8NR0WBySV2f5WVucXTswZ8oddUd/yMSeSbdmVPjXXoNYi0X3MrITnXakzLmuYXqDUs2EKiuacwc6I1cX/EfVu31UpdaG/ICghA8nVw1HgTDy/KAHMzaehdovcvDr5+69LAaMnd/i2H2njvpOtgM3qYPjafeNku/8p36m76F87KSYY67vg+EbHPSCu4Y0eJHwtfMgjBWJFMi4J2SY824mNf/+/nVoAuPpwMrDTYJLpnSxzSwABP88NPDHBxaAZsEwexk4VGbA1rKWmojm3s3uhE=
-  file:
-    - app/dist_electron/moniteur-*
-    - adminPanel/dist_electron/moniteur-*
-  file_glob: true
-  skip_cleanup: true
-  on:
-    tags: true

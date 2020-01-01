@@ -12,21 +12,31 @@
 .build-moniteur-linux:
 	cd app && npm install && npm run build:linux
 
-.build-moniteur-mac:
-	cd app && npm install && npm run build:macos
-
 .build-admin-win:
 	cd adminPanel && npm install && npm run build:win
 
 .build-admin-linux:
 	cd adminPanel && npm install && npm run build:linux
 
-.build-admin-mac:
-	cd adminPanel && npm install && npm run build:macos
+.publish-moniteur-win:
+	cd app && npm install && npm run publish:win
+
+.publish-moniteur-linux:
+	cd app && npm install && npm run publish:linux
+
+.publish-admin-win:
+	cd adminPanel && npm install && npm run publish:win
+
+.publish-admin-linux:
+	cd adminPanel && npm install && npm run publish:linux
 
 .build: .build-go .build-moniteur-linux .build-admin-linux
 
 default: .build
+
+publish-win: .publish-moniteur-win .publish-admin-win
+
+publish-linux: .publish-moniteur-linux .publish-admin-linux
 
 test: .build-go
 	go test github.com/aueb-cslabs/moniteur/backend

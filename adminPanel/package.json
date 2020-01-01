@@ -1,12 +1,17 @@
 {
   "name": "moniteur-admin",
   "version": "0.1.0",
-  "main": "background.js",
   "author": {
     "name": "AUEB CSLab",
     "email": "cslab@aueb.gr"
   },
+  "private": true,
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/aueb-cslabs/moniteur.git"
+  },
   "homepage": "https://cslab.aueb.gr",
+  "main": "background.js",
   "scripts": {
     "serve": "vue-cli-service serve --port 8086",
     "build": "vue-cli-service build",
@@ -14,8 +19,8 @@
     "electron:serve": "vue-cli-service electron:serve",
     "build:win": "vue-cli-service electron:build --windows",
     "build:linux": "vue-cli-service electron:build --linux",
-    "build:macos": "vue-cli-service electron:build --macos",
-    "build:win-linux": "vue-cli-service electron:build --windows --linux",
+    "publish:win": "vue-cli-service electron:build --publish always --windows",
+    "publish:linux": "vue-cli-service electron:build --publish always --linux",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
