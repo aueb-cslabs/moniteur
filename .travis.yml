@@ -23,7 +23,7 @@ matrix:
             -v ~/.cache/electron:/root/.cache/electron \
             -v ~/.cache/electron-builder:/root/.cache/electron-builder \
             electronuserland/builder:wine \
-            /bin/bash -c "make .build-admin-linux && make .build-admin-win
+            /bin/bash -c "make .build-admin-linux && make .build-admin-win \
             && make .build-moniteur-linux && make .build-moniteur-win"
 
     # Backend
