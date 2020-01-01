@@ -47,10 +47,6 @@ cache:
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine
 
-branches:
-  only:
-    - "dev"
-
 deploy:
   provider: releases
   api_key:
@@ -61,3 +57,5 @@ deploy:
     - app/dist_electron/moniteur-*
     - adminPanel/dist_electron/moniteur-admin-*
   skip_cleanup: true
+  on:
+    all_branches: true
