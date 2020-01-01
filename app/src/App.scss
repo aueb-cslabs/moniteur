@@ -1,12 +1,27 @@
-@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+:root {
+  --background: #FFFFFF;
+}
 
-$font-size-base: 1.4rem;
-
-@import "~bootstrap/scss/bootstrap.scss";
-
-body {
-  background: black;
+html, body {
+  background: var(--background);
   color: white;
 
   font-family: 'Lato', sans-serif;
+
+  width: 100%;
+  height: 100%;
+
+  .moniteur {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+
+footer {
+  color: #9c9890;
+  padding-bottom: 10px;
 }

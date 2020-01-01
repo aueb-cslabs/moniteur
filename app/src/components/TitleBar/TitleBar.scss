@@ -1,0 +1,17 @@
+:root{
+  --navbar-color: #FFFFFF;
+  --navbar-bg-color: #FFFFFF;
+}
+
+nav {
+  background: var(--navbar-bg-color);
+  color: var(--navbar-color);
+
+  align-self: stretch;
+  align-items: center;
+
+  .title {
+    font-size: 1.7em;
+  }
+}
+

@@ -1,0 +1,22 @@
+body {
+  .comments {
+    width: 40%;
+    height: 70px;
+
+    font-size: 1.2em;
+    text-align: center;
+
+    margin-top: 1em;
+  }
+
+  .comments-text {
+    background: #4b2d6f;
+    height: auto;
+    border-radius: 20px;
+  }
+
+  .fa-bullhorn {
+    color: #a73c2e;
+  }
+
+}

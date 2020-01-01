@@ -1,0 +1,11 @@
+plugin: bin/aueb-plugin.so
+exams: https://aueb.gr/sites/default/files/aueb/September_Exams_20190903.xlsx
+secret: changethesecret
+port: 27522
+redis:
+  Addr: "localhost:6379"
+  Password: ""
+  Ann_DB: 0
+  Users_DB: 1
+  Tokens_DB: 2
+postgres: postgresql://postgres:1234@localhost:5432/postgres?sslmode=disable

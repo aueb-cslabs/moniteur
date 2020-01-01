@@ -1,0 +1,26 @@
+# ALL DATES IN DD/MM/YYYY FORM (2/8/2019)
+semesters:
+  winter:
+    start: start-of-semester
+    end: end-of-semester
+  sprint:
+    start: start-of-semester
+    end: end-of-semester
+exams:
+  september:
+    start: start-of-exams
+    end: end-of-exams
+  winter:
+    start: start-of-exams
+    end: end-of-exams
+  sprint:
+    start: start-of-exams
+    end: end-of-exams
+breaks:
+  winter:
+    start: start-of-break
+    end: end-of-break
+  sprint:
+    start: start-of-break
+    end: end-of-break
+  various: [different-break-dates]
