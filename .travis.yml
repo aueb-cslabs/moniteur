@@ -50,3 +50,14 @@ before_cache:
 branches:
   only:
     - "dev"
+
+deploy:
+  provider: releases
+  api_key:
+    secure: "ZRHPZ8rIUoZDA5gO8w7lKSVWjEtQzXvquftsU4OtrIXTV+76VV4/sP/ow8av4l19jPfubkCwpAPpuXlPxA60ZL4iUBAkuOsfY6+5b6lSfUzfIqeTNT8etkGTpj98S24RdiH8o/hYhXexNOV//FkgRWqdosF30aZJVOyDah2Dd4vsJvqqL69ncK4N9eBdq/QfNd8aIJwIyfQKA6QBbizP2tNL6fSbdCpoXnlBXp1NTuAyuoSwWOVqX0TFsYCqu/A4Kfv4L4glMMSkUmx73Q0GXhOD/VrZ6lpO5dIGba0RMertaEPdSunW7pIwA9eRfGaHe136K8/22YjcAlR/xS9hoGftFNOTSchE9Ldio7BHewLsYrmz8/9lcMb7G6EMk8oPn7txjS7xIqd+mFsNEbBgczqzP18h4nBfFTYOjRVjmmdSLRy2CGGcyn3+mtUT+tA9ICm4+NVhTHanCPzwCPDpk656uz2kPQsX1Ck6P4JzdeLRPp8KdfN96OKIfXaGNRQJ5rVowcjoN6WKxDOvH7HbhanqM7IjfrOTokiGBP3LIwebTeT4OTzSkvsQD8nnom9MhXSlb708v17R7wxfnF3zDu0ydvquMrjhk8WBEeuOYcevS0M4tGGgaSE0lpwK2lw2fyCuvhjZglh9vQhdLQBKYjRuBVmtJMFQVkAo6xS3H2E="
+  # Enable wildcards
+  file_glob: true
+  file:
+    - app/dist_electron/moniteur-*
+    - adminPanel/dist_electron/moniteur-admin-*
+  skip_cleanup: true
