@@ -7,7 +7,14 @@ module.exports = {
                 "appId": "org.aueb.moniteur",
                 "nsis": {
                     "oneClick": false,
-                    "artifactName": "${productName}-Setup-${version}.${ext}"
+                    "artifactName": "${productName}-Setup-v${version}.${ext}"
+                },
+                "linux": {
+                    "target": "AppImage",
+                    "artifactName": "${productName}-v${version}.${ext}"
+                },
+                "dmg": {
+                    "artifactName": "${productName}-Setup-v${version}.${ext}",
                 },
                 "extraFiles": [
                     {
