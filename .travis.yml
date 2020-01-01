@@ -48,4 +48,4 @@ deploy:
     - adminPanel/dist_electron/moniteur-*
   skip_cleanup: true
   on:
-    all_branches: true
+    tags: true
