@@ -46,6 +46,7 @@ deploy:
   file:
     - app/dist_electron/moniteur-*
     - adminPanel/dist_electron/moniteur-*
+  file_glob: true
   skip_cleanup: true
   on:
     tags: true
