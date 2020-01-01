@@ -7,22 +7,22 @@
 .build-go: .build-moniteur .build-aueb-plugin
 
 .build-moniteur-win:
-	cd app && npm run build:win
+	cd app && npm install && npm run build:win
 
 .build-moniteur-linux:
-	cd app && npm run build:linux
+	cd app && npm install && npm run build:linux
 
 .build-moniteur-mac:
-	cd app && npm run build:macos
+	cd app && npm install && npm run build:macos
 
 .build-admin-win:
-	cd adminPanel && npm run build:win
+	cd adminPanel && npm install && npm run build:win
 
 .build-admin-linux:
-	cd adminPanel && npm run build:linux
+	cd adminPanel && npm install && npm run build:linux
 
 .build-admin-mac:
-	cd adminPanel && npm run build:macos
+	cd adminPanel && npm install && npm run build:macos
 
 .build: .build-go .build-moniteur-linux .build-admin-linux
 
