@@ -32,11 +32,15 @@
 
 .build: .build-go .build-moniteur-linux .build-admin-linux
 
+.travis-auto-version:
+	cd app && npm version ${TRAVIS_TAG} || true
+	cd adminPanel && npm version ${TRAVIS_TAG} || true
+
 default: .build
 
-publish-win: .publish-moniteur-win .publish-admin-win
+publish-win: .travis-auto-version .publish-moniteur-win .publish-admin-win
 
-publish-linux: .publish-moniteur-linux .publish-admin-linux
+publish-linux: .travis-auto-version .publish-moniteur-linux .publish-admin-linux
 
 test: .build-go
 	go test github.com/aueb-cslabs/moniteur/backend
