@@ -2,8 +2,6 @@
 
 <a href="https://cslab.aueb.gr"><img src="https://www.aueb.gr/press/logos/2_AUEB-white-HR.jpg" title="AUEB CSLab" alt="AUEB"></a>
 
-> **If you want to view the english version click [here](README_EN.md)**
-
 # Moniteur
 
 Το moniteur είναι ένα από σύστημα παρουσίασης του ακαδημαϊκού ημερολογίου καθώς και του εξαμηνιαίου και εξετασταίου προγράμματος.
@@ -12,7 +10,9 @@
 
 ![](https://i.imgur.com/mu2FIDY.png)
 
----
+*Updated README coming in a few days.*
+
+<!-----
 
 ## Περιεχόμενα
 
@@ -189,4 +189,4 @@ Make Command | Result
 
 ## License
 
-> **Έρχεται σύντομα.**
+> **Έρχεται σύντομα.**-->
