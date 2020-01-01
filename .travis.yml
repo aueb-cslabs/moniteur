@@ -1,6 +1,6 @@
 matrix:
   include:
-    # Frontend OSX
+    # Frontend and Admin OSX
     - os: osx
       osx_image: xcode10.2
       language: node_js
@@ -9,20 +9,10 @@ matrix:
         - ELECTRON_CACHE=$HOME/.cache/electron
         - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
       script:
-        - cd app && npm install && npm run build:macos
+        - make .build-moniteur-mac
+        - make .build-admin-mac
 
-    # Admin Panel OSX
-    - os: osx
-      osx_image: xcode10.2
-      language: node_js
-      node_js: "10"
-      env:
-        - ELECTRON_CACHE=$HOME/.cache/electron
-        - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
-      script:
-        - cd adminPanel && npm install && npm run build:macos
-
-    # Frontend Linux - Windows
+    # Frontend and Admin Linux - Windows
     - os: linux
       services: docker
       language: node_js
@@ -33,20 +23,8 @@ matrix:
             -v ~/.cache/electron:/root/.cache/electron \
             -v ~/.cache/electron-builder:/root/.cache/electron-builder \
             electronuserland/builder:wine \
-            /bin/bash -c "cd app && npm install && npm run build:win-linux"
-
-    # Admin Panel Windows - Linux
-    - os: linux
-      services: docker
-      language: node_js
-      script:
-        - |
-          docker run $ENVS --rm \
-            -v ${PWD}:/project \
-            -v ~/.cache/electron:/root/.cache/electron \
-            -v ~/.cache/electron-builder:/root/.cache/electron-builder \
-            electronuserland/builder:wine \
-            /bin/bash -c "cd adminPanel && npm install && npm run build:win-linux"
+            /bin/bash -c "make .build-admin-linux && make .build-admin-win
+            && make .build-moniteur-linux && make .build-moniteur-win"
 
     # Backend
     - os: linux
