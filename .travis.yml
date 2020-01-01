@@ -46,5 +46,6 @@ deploy:
   file:
     - app/dist_electron/moniteur-*
     - adminPanel/dist_electron/moniteur-*
+  skip_cleanup: true
   on:
-    repo: aueb-cslabs/moniteur
+    all_branches: true
