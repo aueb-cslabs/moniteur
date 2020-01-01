@@ -8,13 +8,14 @@ module.exports = {
                 "productName": "Moniteur Admin",
                 "nsis": {
                     "oneClick": false,
-                    "artifactName": "moniteur-admin-Setup-${version}.${ext}",
+                    "artifactName": "moniteur-admin-Setup-v${version}.${ext}",
                 },
                 "linux": {
-                    "target": "deb"
+                    "target": "AppImage",
+                    "artifactName": "moniteur-admin-v${version}.${ext}"
                 },
                 "dmg": {
-
+                    "artifactName": "moniteur-admin-Setup-v${version}.${ext}",
                 },
                 "extraFiles": [
                     "config/*"
