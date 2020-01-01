@@ -18,8 +18,8 @@
     "electron:serve": "vue-cli-service electron:serve",
     "build:win": "vue-cli-service electron:build --windows",
     "build:linux": "vue-cli-service electron:build --linux",
-    "publish:win": "vue-cli-service electron:build --publish onTagOrDraft --windows",
-    "publish:linux": "vue-cli-service electron:build --publish onTagOrDraft --linux",
+    "publish:win": "vue-cli-service electron:build --publish onTag --windows",
+    "publish:linux": "vue-cli-service electron:build --publish onTag --linux",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
