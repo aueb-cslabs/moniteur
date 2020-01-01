@@ -88,12 +88,9 @@ function checkAppData() {
 
 function loadConfig() {
   try {
-    console.log(app.getPath('userData'));
     global.config = yaml.safeLoad(fs.readFileSync(app.getPath('userData')+'/config.yml', 'utf8'));
     // eslint-disable-next-line no-console
-    console.log(global.config);
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.log(e);
   }
 }

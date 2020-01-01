@@ -67,10 +67,7 @@ function loadConfig() {
   try {
     global.config = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'));
     // eslint-disable-next-line no-console
-    console.log(global.config);
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log(e);
   }
 }
 // Exit cleanly on request from parent process in development mode.

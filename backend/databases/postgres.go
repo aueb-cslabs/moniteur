@@ -1,10 +1,9 @@
 package databases
 
 import (
-	"fmt"
 	"github.com/aueb-cslabs/moniteur/backend/types"
+	"github.com/labstack/gommon/log"
 
-	//"github.com/aueb-cslabs/moniteur/backend/types"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -12,7 +11,7 @@ import (
 func InitializePostgres(uri string) (db *gorm.DB) {
 	overrides, err := gorm.Open("postgres", uri)
 	if err != nil {
-		fmt.Println(err)
+		log.Panic(err)
 	}
 
 	overrides.AutoMigrate(&types.DBScheduleSlot{})
