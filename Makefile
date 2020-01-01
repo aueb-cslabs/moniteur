@@ -6,10 +6,25 @@
 
 .build-go: .build-moniteur .build-aueb-plugin
 
-.build-vue:
-	cd app; npm install; npm run build
+.build-moniteur-win:
+	cd app && npm run build:win
 
-.build: .build-go .build-vue
+.build-moniteur-linux:
+	cd app && npm run build:linux
+
+.build-moniteur-mac:
+	cd app && npm run build:macos
+
+.build-admin-win:
+	cd adminPanel && npm run build:win
+
+.build-admin-linux:
+	cd adminPanel && npm run build:linux
+
+.build-admin-mac:
+	cd adminPanel && npm run build:macos
+
+.build: .build-go .build-moniteur-linux .build-admin-linux
 
 default: .build
 
@@ -18,4 +33,4 @@ test: .build-go
 	go test github.com/aueb-cslabs/moniteur/backend/plugin/aueb
 
 start: .build-go
-	bin/moniteur
+	cd backend && bin/moniteur
