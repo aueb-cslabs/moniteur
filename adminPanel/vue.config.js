@@ -19,6 +19,12 @@ module.exports = {
                 },
                 "extraFiles": [
                     "config/*"
+                ],
+                "publish": [
+                    {
+                        "provider": "github",
+                        "releaseType": "release"
+                    }
                 ]
             }
         }
