@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.com/aueb-cslabs/moniteur.svg?branch=master)](https://travis-ci.com/aueb-cslabs/moniteur)
+[![dependencies Status](https://david-dm.org/aueb-cslabs/moniteur/status.svg?path=app)](https://david-dm.org/aueb-cslabs/moniteur?path=app)
+[![devDependencies Status](https://david-dm.org/aueb-cslabs/moniteur/dev-status.svg?path=app)](https://david-dm.org/aueb-cslabs/moniteur?path=app&type=dev)
 
 <a href="https://cslab.aueb.gr"><img src="https://www.aueb.gr/press/logos/2_AUEB-white-HR.jpg" title="AUEB CSLab" alt="AUEB"></a>
 
