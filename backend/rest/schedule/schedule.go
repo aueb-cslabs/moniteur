@@ -73,13 +73,13 @@ func scheduleRoomNow(ec echo.Context) error {
 	}
 
 	db := c.DB
-	var overrides []*types.ScheduleSlot
+	var overrides []*types.DBScheduleSlot
 	db.Where("room = ?", room).Find(&overrides)
 	now := time.Now().Unix()
 
 	for _, slot := range overrides {
 		if slot.Start < now && slot.End > now {
-			returnSchedule.Now = slot
+			returnSchedule.Now = &slot.ScheduleSlot
 		}
 	}
 
