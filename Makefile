@@ -12,35 +12,15 @@
 .build-moniteur-linux:
 	cd app && npm install && npm run build:linux
 
-.build-admin-win:
-	cd adminPanel && npm install && npm run build:win
-
-.build-admin-linux:
-	cd adminPanel && npm install && npm run build:linux
-
 .publish-moniteur-win:
 	cd app && npm install && npm run publish:win
 
 .publish-moniteur-linux:
 	cd app && npm install && npm run publish:linux
 
-.publish-admin-win:
-	cd adminPanel && npm install && npm run publish:win
-
-.publish-admin-linux:
-	cd adminPanel && npm install && npm run publish:linux
-
 .build: .build-go .build-moniteur-linux .build-admin-linux
 
-.travis-auto-version:
-	cd app && npm version ${TRAVIS_TAG} || true
-	cd adminPanel && npm version ${TRAVIS_TAG} || true
-
 default: .build
-
-publish-win: .travis-auto-version .publish-moniteur-win .publish-admin-win
-
-publish-linux: .travis-auto-version .publish-moniteur-linux .publish-admin-linux
 
 test: .build-go
 	go test github.com/aueb-cslabs/moniteur/backend

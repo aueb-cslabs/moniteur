@@ -4,14 +4,14 @@ matrix:
     language: node_js
     node_js: '10'
     script:
-    - make publish-linux
+    - make .publish-moniteur-linux
   - os: windows
     language: node_js
     node_js: '10'
     before_install:
     - choco install -y make
     script:
-    - make publish-win
+    - make .publish-moniteur-win
   - os: linux
     language: go
     go:
