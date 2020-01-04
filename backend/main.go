@@ -88,6 +88,6 @@ func main() {
 	e.Use(middleware.ProxyWithConfig(proxyConfig))
 	// End block
 
-	e.Logger.Fatal(e.Start(":" + strconv.Itoa(config.Port)))
+	e.Logger.Fatal(e.StartTLS(":"+strconv.Itoa(config.Port), "moniteur.pem", "moniteur-key.pem"))
 
 }

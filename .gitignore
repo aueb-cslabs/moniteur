@@ -22,3 +22,6 @@ yarn-error.log*
 
 # Unwanted configs
 /ldap.yml
+
+# Certificate
+/backend/*.pem
