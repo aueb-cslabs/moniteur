@@ -1,32 +1,27 @@
 {
   "name": "moniteur",
   "version": "0.1.0",
+  "private": true,
   "author": {
     "name": "AUEB CSLab",
     "email": "cslab@aueb.gr"
   },
-  "private": true,
-  "repository": {
-    "type" : "git",
-    "url" : "https://github.com/aueb-cslabs/moniteur.git"
-  },
-  "homepage": "https://cslab.aueb.gr",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "electron:serve": "vue-cli-service electron:serve",
-    "build:win": "vue-cli-service electron:build --windows",
     "build:linux": "vue-cli-service electron:build --linux",
-    "publish:win": "vue-cli-service electron:build --publish onTag --windows",
-    "publish:linux": "vue-cli-service electron:build --publish onTag --linux",
+    "build:win": "vue-cli-service electron:build --windows",
+    "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps"
+    "postuninstall": "electron-builder install-app-deps",
+    "publish:linux": "vue-cli-service electron:build --publish onTag --linux",
+    "publish:win": "vue-cli-service electron:build --publish onTag --windows"
   },
   "main": "background.js",
   "dependencies": {
     "axios": "^0.19.0",
-    "core-js": "^2.6.5",
+    "core-js": "^3.4.4",
     "js-yaml": "^3.13.1",
     "sass": "^1.22.9",
     "sass-loader": "^7.1.0",
@@ -36,9 +31,9 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.10.2",
-    "@vue/cli-plugin-babel": "^3.12.1",
-    "@vue/cli-plugin-eslint": "^3.9.0",
-    "@vue/cli-service": "^3.9.0",
+    "@vue/cli-plugin-babel": "^4.1.2",
+    "@vue/cli-plugin-eslint": "^4.1.2",
+    "@vue/cli-service": "^4.1.2",
     "babel-eslint": "^10.0.1",
     "bootstrap": "^4.3.1",
     "electron": "^7.1.2",
@@ -46,7 +41,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.12.0",
     "style-loader": "^0.23.1",
-    "vue-cli-plugin-electron-builder": "^1.4.1",
+    "vue-cli-plugin-electron-builder": "^1.4.4",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
@@ -71,5 +66,10 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "homepage": "https://cslab.aueb.gr",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aueb-cslabs/moniteur.git"
+  }
 }
