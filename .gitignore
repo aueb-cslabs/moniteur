@@ -25,3 +25,6 @@ yarn-error.log*
 
 # Certificate
 /backend/*.pem
+
+# Github OAuth token
+token
