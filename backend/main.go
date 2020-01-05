@@ -14,9 +14,11 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
+	"github.com/tylerb/graceful"
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -88,6 +90,6 @@ func main() {
 	e.Use(middleware.ProxyWithConfig(proxyConfig))
 	// End block
 
-	e.Logger.Fatal(e.StartTLS(":"+strconv.Itoa(config.Port), "moniteur.pem", "moniteur-key.pem"))
-
+	e.Server.Addr = ":" + strconv.Itoa(config.Port)
+	e.Logger.Fatal(graceful.ListenAndServeTLS(e.Server, "cert.pem", "key.pem", 5*time.Second))
 }
