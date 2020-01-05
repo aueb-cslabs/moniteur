@@ -4,6 +4,7 @@ import { app, protocol, BrowserWindow, dialog } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import yaml from 'js-yaml';
 import fs from 'fs';
+const { autoUpdater } = require("electron-updater");
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -61,6 +62,10 @@ app.on('ready', async () => {
   loadConfig();
   createWindow();
   win.maximize();
+
+  setInterval(() => {
+    autoUpdater.checkForUpdates()
+  }, 30000)
 });
 
 function loadConfig() {
@@ -93,3 +98,7 @@ if (isDevelopment) {
     })
   }
 }
+
+autoUpdater.on('update-downloaded', () => {
+  autoUpdater.quitAndInstall();
+})
