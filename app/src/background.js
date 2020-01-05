@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, dialog } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import yaml from 'js-yaml';
 import fs from 'fs';
@@ -66,8 +66,17 @@ app.on('ready', async () => {
 function loadConfig() {
   try {
     global.config = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'));
-    // eslint-disable-next-line no-console
   } catch (e) {
+    const options = {
+      type: "error",
+      title: "Error while reading configuration file!",
+      buttons: ["Quit"],
+      message: "Tried to read " + app.getAppPath() + "/config.yml " +
+          "and got " + e,
+    };
+    let response = dialog.showMessageBoxSync(options);
+    if(response === 0)
+      app.exit(1)
   }
 }
 // Exit cleanly on request from parent process in development mode.
