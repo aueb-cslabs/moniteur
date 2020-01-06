@@ -13,7 +13,7 @@ require (
 	github.com/labstack/gommon v0.3.0
 	github.com/lib/pq v1.3.0 // indirect
 	github.com/mattn/go-sqlite3 v2.0.2+incompatible // indirect
-	github.com/tealeg/xlsx v1.0.3
+	github.com/tealeg/xlsx v1.0.5
 	github.com/tylerb/graceful v1.2.15
 	golang.org/x/crypto v0.0.0-20191227163750-53104e6ec876 // indirect
 	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553 // indirect
