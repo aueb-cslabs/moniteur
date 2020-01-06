@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/aueb-cslabs/moniteur/backend/types"
 	"github.com/tealeg/xlsx"
 	"io/ioutil"
@@ -49,16 +48,25 @@ func getExamsSchedule() *types.Schedule {
 
 	if len(exams) != 0 {
 		file, _ := xlsx.OpenBinary(exams)
-		rows := file.Sheet[fmt.Sprintf("%d", year-1)].Rows
+		var sheetName string
+		for k := range file.Sheet {
+			sheetName = k
+			break
+		}
+		rows := file.Sheet[sheetName].Rows
 		var dayName string
 		var day int
 		var month int
 
-		for i := 0; i < len(rows); i++ {
+		for i := 5; i < len(rows); i++ {
 			var rooms []string
 			var semester string
 			var lessonName string
 			var examiner string
+
+			if len(rows[i].Cells) == 0 {
+				continue
+			}
 
 			if strings.Contains(rows[i].Cells[0].Value, "*") {
 				continue
@@ -68,20 +76,27 @@ func getExamsSchedule() *types.Schedule {
 				continue
 			}
 
-			if rows[i].Cells[0].Value == "" {
+			if rows[i].Cells[0].Value == "" || len(rows[i].Cells[0].Value) == 0 {
 				continue
 			}
 
-			if strings.Contains(rows[i].Cells[4].Value, "ΠΡΥΤΑΝΕΙΑ") {
+			if strings.Contains(rows[i].Cells[0].Value, "ΠΡΥΤΑΝΕΙΑ") ||
+				strings.Contains(rows[i].Cells[1].Value, "ΠΡΥΤΑΝΕΙΑ") ||
+				strings.Contains(rows[i].Cells[2].Value, "ΠΡΥΤΑΝΕΙΑ") ||
+				strings.Contains(rows[i].Cells[3].Value, "ΠΡΥΤΑΝΕΙΑ") ||
+				strings.Contains(rows[i].Cells[4].Value, "ΠΡΥΤΑΝΕΙΑ") {
 				break
 			}
 
 			if !strings.Contains(rows[i].Cells[1].Value, ":") {
 				examsDate := strings.Split(rows[i].Cells[0].Value, " ")
-				dayName = examsDate[0]
-				day, _ = strconv.Atoi(examsDate[1])
-				month = determineMonth(examsDate[2])
-
+				if len(examsDate) == 3 {
+					dayName = examsDate[0]
+					day, _ = strconv.Atoi(examsDate[1])
+					month = determineMonth(examsDate[2])
+				} else {
+					continue
+				}
 			} else {
 
 				rooms = strings.Split(rows[i].Cells[0].Value, ", ")
@@ -89,14 +104,15 @@ func getExamsSchedule() *types.Schedule {
 				semester = rows[i].Cells[2].Value
 				lessonName = rows[i].Cells[3].Value
 				examiner = rows[i].Cells[4].Value
+				dayTimestamp := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.Now().Location()).Unix()
 				start := convertTime(timestamp[0])
 				end := convertTime(timestamp[1])
 				for j := range rooms {
 					slot := &types.ScheduleSlot{}
 					slot.Room = rooms[j]
 					slot.Day = determineDay(dayName)
-					slot.Start = start
-					slot.End = end
+					slot.Start = dayTimestamp + start
+					slot.End = dayTimestamp + end
 					slot.Title = lessonName
 					slot.Host = examiner
 					slot.Semester = semester

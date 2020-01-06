@@ -84,7 +84,15 @@ func download() ([]byte, bool) {
 func configureLink() {
 	t := time.Now()
 	date := t.Format("20060102")
-	month := t.Month()
+	month := ""
+	monthNum := int(t.Month())
+	if (monthNum >= 1 && monthNum <= 2) || (monthNum >= 10 && monthNum <= 12) {
+		month = "Winter"
+	} else if monthNum >= 3 && monthNum <= 7 {
+		month = "Winter"
+	} else {
+		month = "September"
+	}
 	link = fmt.Sprintf("https://aueb.gr/sites/default/files/aueb/%s_Exams_%s.xlsx", month, date)
 }
 

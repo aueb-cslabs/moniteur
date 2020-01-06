@@ -57,6 +57,7 @@ func examsScheduleRoomTodayNow(ec echo.Context) error {
 	}
 
 	t := time.Now()
+	unix := t.Unix()
 	_, month, dayNum := t.Date()
 
 	day, sec := determineNow()
@@ -64,7 +65,7 @@ func examsScheduleRoomTodayNow(ec echo.Context) error {
 	returnSchedule := &types.ScheduleNow{}
 	for _, slot := range schedule.Slots {
 		if slot.Room == room && slot.MonthNum == int(month) && slot.DayNum == dayNum {
-			if slot.Day == day && slot.Start < sec && slot.End > sec {
+			if slot.Day == day && slot.Start < unix && slot.End > unix {
 				returnSchedule.Now = slot
 			}
 			if slot.Day == day && slot.Start >= sec {
