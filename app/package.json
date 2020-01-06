@@ -24,7 +24,7 @@
     "core-js": "^3.4.4",
     "electron-updater": "^4.2.0",
     "js-yaml": "^3.13.1",
-    "sass": "^1.22.9",
+    "sass": "^1.24.2",
     "sass-loader": "^7.1.0",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.5",
