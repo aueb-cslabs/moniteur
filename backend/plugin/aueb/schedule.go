@@ -187,7 +187,7 @@ func scheduleExamsDownload() {
 			configureLink()
 			ret, same := download()
 
-			if same == nil {
+			if same != nil {
 				exams = ret
 			} else {
 				time.Sleep(time.Second * 300)
