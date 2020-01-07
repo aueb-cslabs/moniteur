@@ -170,15 +170,15 @@ func saturateHolidAPI() bool {
 	_ = json.Unmarshal(bts, &holidays)
 
 	if len(holidays) != 0 {
+		now := time.Now()
+		formatted := now.Format("2006-01-02")
 		for i := range holidays {
-			if strings.Contains(holidays[i].IntName, "Solstice") ||
-				strings.Contains(holidays[i].IntName, "Equinox") ||
-				strings.Contains(holidays[i].IntName, "Armed") {
-				return false
-			} else {
-				now := time.Now()
-				formatted := now.Format("2006-01-02")
-				if formatted == holidays[i].Date {
+			if formatted == holidays[i].Date {
+				if strings.Contains(holidays[i].IntName, "Solstice") ||
+					strings.Contains(holidays[i].IntName, "Equinox") ||
+					strings.Contains(holidays[i].IntName, "Armed") {
+					return false
+				} else {
 					return true
 				}
 			}
