@@ -2,6 +2,7 @@ package calendar
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/aueb-cslabs/moniteur/backend/rest"
 	"github.com/aueb-cslabs/moniteur/backend/rest/authentication"
 	"github.com/aueb-cslabs/moniteur/backend/types"
@@ -163,22 +164,25 @@ func isWeekend() bool {
 
 // saturateHolidAPI Method that saturates public Holid API for national holidays
 func saturateHolidAPI() bool {
-	resp, _ := http.Get("http://api.holid.co/v1/GR/Europe/Athens")
+	resp, _ := http.Get(fmt.Sprintf("https://date.nager.at/api/v2/publicholidays/%d/GR", time.Now().Year()))
 	bts, _ := ioutil.ReadAll(resp.Body)
-	var holidAPI *types.HolidAPI
-	_ = json.Unmarshal(bts, &holidAPI)
+	var holidays []types.Holiday
+	_ = json.Unmarshal(bts, &holidays)
 
-	holidays := holidAPI.Holidays
-
-	if holidAPI.Success && len(holidays) != 0 {
+	if len(holidays) != 0 {
 		for i := range holidays {
-			if strings.Contains(holidays[i].Name, "Solstice") ||
-				strings.Contains(holidays[i].Name, "Equinox") ||
-				strings.Contains(holidays[i].Name, "Armed") {
+			if strings.Contains(holidays[i].IntName, "Solstice") ||
+				strings.Contains(holidays[i].IntName, "Equinox") ||
+				strings.Contains(holidays[i].IntName, "Armed") {
 				return false
+			} else {
+				now := time.Now()
+				formatted := now.Format("2006-01-02")
+				if formatted == holidays[i].Date {
+					return true
+				}
 			}
 		}
-		return true
 	}
 	return false
 }

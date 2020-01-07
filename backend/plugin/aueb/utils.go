@@ -70,13 +70,11 @@ func download() ([]byte, error) {
 	resp, err := http.Get(link)
 
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
 
 	if resp.StatusCode == 200 {
 		ret, err := ioutil.ReadAll(resp.Body)
-		fmt.Println(err)
 		return ret, err
 	} else {
 		return exams, nil
