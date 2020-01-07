@@ -37,7 +37,7 @@ func deleteOverride(e echo.Context) error {
 		return e.NoContent(http.StatusBadRequest)
 	}
 
-	db.Delete(types.ScheduleSlot{}, "id = ?", override.Model.ID)
+	db.Delete(types.DBScheduleSlot{}, "id = ?", override.Model.ID)
 	return e.NoContent(http.StatusOK)
 }
 

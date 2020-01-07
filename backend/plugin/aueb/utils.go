@@ -66,18 +66,22 @@ func convertTime(timestamp string) int64 {
 }
 
 // download Method that downloads the exam schedule from AUEB
-func download() ([]byte, bool) {
-	var ret []byte
+func download() ([]byte, error) {
+	resp, err := http.Get(link)
 
-	resp, _ := http.Get(link)
-
-	if resp.StatusCode == 200 {
-		ret, _ = ioutil.ReadAll(resp.Body)
-	} else {
-		return exams, true
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
 	}
 
-	return ret, false
+	if resp.StatusCode == 200 {
+		ret, err := ioutil.ReadAll(resp.Body)
+		fmt.Println(err)
+		return ret, err
+	} else {
+		return exams, nil
+	}
+
 }
 
 // configureLink Method that constructs link based on the date
