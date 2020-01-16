@@ -10,8 +10,11 @@ module.exports = {
                     "artifactName": "${productName}-Setup-v${version}.${ext}"
                 },
                 "linux": {
-                    "target": "AppImage",
-                    "artifactName": "${productName}-v${version}.${ext}"
+                    "target": {
+                        "target": 'AppImage',
+                        "arch": ['armv7l', 'x64']
+                    },
+                    "artifactName": "${productName}-${arch}-v${version}.${ext}"
                 },
                 "dmg": {
                     "artifactName": "${productName}-Setup-v${version}.${ext}",
