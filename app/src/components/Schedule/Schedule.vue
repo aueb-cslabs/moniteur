@@ -68,16 +68,20 @@
 
         computed: {
             nowStart() {
-                return this.time['now_start'].getHours() + ":" + this.getMinutes(this.time['now_start'])
+                return this.time['now_start'].getHours() + ":" +
+                    this.getCorrectedMinutes(this.time['now_start'].getMinutes())
             },
             nowEndHour() {
-                return this.time['now_end'].getHours() + ":" + this.getMinutes(this.time['now_end'])
+                return this.time['now_end'].getHours() + ":" +
+                    this.getCorrectedMinutes(this.time['now_end'].getMinutes())
             },
             nextStart() {
-                return this.time['next_start'].getHours() + ":" + this.getMinutes(this.time['next_start'])
+                return this.time['next_start'].getHours() + ":" +
+                    this.getCorrectedMinutes(this.time['next_start'].getMinutes())
             },
             nextEnd() {
-                return this.time['next_end'].getHours() + ":" + this.getMinutes(this.time['next_end'])
+                return this.time['next_end'].getHours() + ":" +
+                    this.getCorrectedMinutes(this.time['next_end'].getMinutes())
             }
         },
 
@@ -191,8 +195,7 @@
             /* Returns minutes with leading zero
              * if minutes < 10
              */
-            getMinutes: function (time) {
-                let min = time.getMinutes();
+            getCorrectedMinutes: function (min) {
                 return (min < 10) ? ("0" + min) : min;
             }
         }
