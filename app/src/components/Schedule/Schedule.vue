@@ -4,8 +4,7 @@
             <h3> {{ $t("message.nowMsg") }} <i class="fas fa-chalkboard-teacher"></i></h3>
             <p class="center-message common fade-in" v-if="current['now'] != null">
                 <u>
-                    {{time['now_start'].getHours()}}:{{getMinutes(this.time['now_start'])}}
-                    - {{time['now_end'].getHours()}}:{{getMinutes(this.time['now_end'])}}
+                    {{nowStart}} - {{nowEndHour}}
                 </u><br>
                 {{current['now']['title']}}<br>
                 {{current['now']['host']}}
@@ -21,8 +20,7 @@
             <h3> {{ $t("message.nextMsg") }} <i class="fas fa-chalkboard-teacher next-icon"></i></h3>
             <p class="center-message common fade-in" v-if="current['next'] != null">
                 <u>
-                    {{time['next_start'].getHours()}}:{{getMinutes(this.time['next_start'])}}
-                    - {{time['next_end'].getHours()}}:{{getMinutes(this.time['next_end'])}}
+                    {{nextStart}} - {{nextEnd}}
                 </u><br>
                 {{current['next'][0]['title']}}<br>
                 {{current['next'][0]['host']}}
@@ -66,6 +64,21 @@
             this.checkExam();
             this.checkWeekend();
             this.checkBreak();
+        },
+
+        computed: {
+            nowStart() {
+                return this.time['now_start'].getHours() + ":" + this.getMinutes(this.time['now_start'])
+            },
+            nowEndHour() {
+                return this.time['now_end'].getHours() + ":" + this.getMinutes(this.time['now_end'])
+            },
+            nextStart() {
+                return this.time['next_start'].getHours() + ":" + this.getMinutes(this.time['next_start'])
+            },
+            nextEnd() {
+                return this.time['next_end'].getHours() + ":" + this.getMinutes(this.time['next_end'])
+            }
         },
 
         methods: {
