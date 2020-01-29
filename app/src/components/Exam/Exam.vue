@@ -12,7 +12,7 @@
 
         data() {
             return {
-                isExam: ''
+                isExam: null
             }
         },
 
@@ -22,7 +22,7 @@
 
         methods: {
             registerExamListener: function () {
-               this.$on('exam', exam => {
+               this.$parent.$on('exam', exam => {
                    this.isExam = exam;
                });
             }

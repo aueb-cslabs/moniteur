@@ -122,7 +122,7 @@
                             this.convertSecToTime();
 
                             if(this.current['now'] != null)
-                                this.$emit('exam', this.isExam);
+                                this.$parent.$emit('exam', this.isExam);
                         });
                 }, 30000)
             },
