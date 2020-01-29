@@ -56,7 +56,9 @@
                 isExam: false,
                 time: {},
                 isWeekend: false,
-                isBreak: false
+                isBreak: false,
+                examIntervalId: null,
+                normIntervalId: null
             }
         },
 
@@ -64,13 +66,6 @@
             this.checkExam();
             this.checkWeekend();
             this.checkBreak();
-
-            if (this.isExam) {
-                this.fetchExamSched();
-            } else {
-                this.fetchNormSched();
-                this.$emit('exam', false);
-            }
         },
 
         methods: {
@@ -78,8 +73,26 @@
             checkExam: function () {
                 setInterval(() => {
                     axios.get(config.api + "/api/calendarInfo")
-                        .then(res => this.isExam = res.data['exams']);
-                }, 60000);
+                        .then(res => this.isExam = res.data['exams'])
+                        .finally(() => {
+                            if(this.isExam) {
+                                if(this.normIntervalId != null) {
+                                    clearInterval(this.normIntervalId);
+                                    this.normIntervalId = null
+                                }
+                                if(this.examIntervalId == null)
+                                    this.fetchExamSched();
+                            } else {
+                                if(this.examIntervalId != null) {
+                                    clearInterval(this.examIntervalId);
+                                    this.examIntervalId = null
+                                }
+                                if(this.normIntervalId == null)
+                                    this.fetchNormSched();
+                                this.$emit('exam', false)
+                            }
+                        });
+                }, 1000);
             },
 
             /* Checks if it is weekend */
@@ -100,8 +113,8 @@
 
             /* Fetches examination schedule */
             fetchExamSched: function() {
-                setInterval(() => {
-                    axios.get(config.api + "/api/exams/" + config.room)
+                this.examIntervalId = setInterval(() => {
+                    axios.get(config.api + "/api/exams/" + config.room + "/now")
                         .then(res => {
                             this.current = res.data;
 
@@ -116,7 +129,7 @@
 
             /* Fetches normal schedule */
             fetchNormSched: function() {
-                setInterval(() => {
+                this.normIntervalId = setInterval(() => {
                     axios.get(config.api + "/api/schedule/" + config.room + "/now")
                         .then(res => {
                             this.current = res.data;
