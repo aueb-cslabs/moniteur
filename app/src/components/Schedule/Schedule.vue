@@ -179,7 +179,7 @@
              * if minutes < 10
              */
             getMinutes: function (time) {
-                let min = time.getUTCMinutes();
+                let min = time.getMinutes();
                 return (min < 10) ? ("0" + min) : min;
             }
         }
