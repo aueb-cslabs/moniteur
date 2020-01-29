@@ -109,7 +109,7 @@
                                 this.$emit('exam', false)
                             }
                         });
-                }, 1000);
+                }, 30000);
             },
 
             /* Checks if it is weekend */
