@@ -52,7 +52,6 @@
             return {
                 current: [],
                 isExam: false,
-                time: {},
                 isWeekend: false,
                 isBreak: false,
                 examIntervalId: null,
@@ -68,20 +67,24 @@
 
         computed: {
             nowStart() {
-                return this.time['now_start'].getHours() + ":" +
-                    this.getCorrectedMinutes(this.time['now_start'].getMinutes())
+                let date = new Date(this.current['now']['start'] * 1000);
+                return date.getHours() + ":" +
+                    this.getCorrectedMinutes(date.getMinutes())
             },
             nowEndHour() {
-                return this.time['now_end'].getHours() + ":" +
-                    this.getCorrectedMinutes(this.time['now_end'].getMinutes())
+                let date = new Date(this.current['now']['end'] * 1000);
+                return date.getHours() + ":" +
+                    this.getCorrectedMinutes(date.getMinutes())
             },
             nextStart() {
-                return this.time['next_start'].getHours() + ":" +
-                    this.getCorrectedMinutes(this.time['next_start'].getMinutes())
+                let date = new Date(this.current['next'][0]['start'] * 1000);
+                return date.getHours() + ":" +
+                    this.getCorrectedMinutes(date.getMinutes())
             },
             nextEnd() {
-                return this.time['next_end'].getHours() + ":" +
-                    this.getCorrectedMinutes(this.time['next_end'].getMinutes())
+                let date = new Date(this.current['next'][0]['end'] * 1000);
+                return date.getHours() + ":" +
+                    this.getCorrectedMinutes(date.getMinutes())
             }
         },
 
@@ -136,8 +139,10 @@
                             this.current = res.data;
 
                             this.checkNext(this.current);
-                            this.convertSecToTime();
 
+                            /* If now is not null then an exam is taking place
+                             * Fire up exam sign!
+                             */
                             if(this.current['now'] != null)
                                 this.$parent.$emit('exam', this.isExam);
                         });
@@ -151,7 +156,6 @@
                         .then(res => {
                             this.current = res.data;
                             this.checkNext(this.current);
-                            this.convertSecToTime();
                         });
                 }, 30000)
             },
@@ -165,30 +169,6 @@
                     if(date.getHours() < 8) {
                         schedule['next'] = null;
                     }
-                }
-            },
-
-            convertSecToTime: function() {
-                let d = new Date(0);
-                if(this.current['now'] != null) {
-                    d = new Date(0);
-                    d.setSeconds(this.current['now']['start']);
-                    this.time['now_start'] = d;
-
-
-                    d = new Date(0);
-                    d.setSeconds(this.current['now']['end']);
-                    this.time['now_end'] = d;
-                }
-
-                if(this.current['next'] != null) {
-                    d = new Date(0);
-                    d.setSeconds(this.current['next'][0]['start']);
-                    this.time['next_start'] = d;
-
-                    d = new Date(0);
-                    d.setSeconds(this.current['next'][0]['end']);
-                    this.time['next_end'] = d;
                 }
             },
 
