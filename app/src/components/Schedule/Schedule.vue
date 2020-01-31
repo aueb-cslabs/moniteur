@@ -4,7 +4,7 @@
             <h3> {{ $t("message.nowMsg") }} <i class="fas fa-chalkboard-teacher"></i></h3>
             <p class="center-message common fade-in" v-if="current['now'] != null">
                 <u>
-                    {{nowStart}} - {{nowEndHour}}
+                    {{nowStart}} - {{nowEnd}}
                 </u><br>
                 {{current['now']['title']}}<br>
                 {{current['now']['host']}}
@@ -71,7 +71,7 @@
                 return date.getHours() + ":" +
                     this.getCorrectedMinutes(date.getMinutes())
             },
-            nowEndHour() {
+            nowEnd() {
                 let date = new Date(this.current['now']['end'] * 1000);
                 return date.getHours() + ":" +
                     this.getCorrectedMinutes(date.getMinutes())
