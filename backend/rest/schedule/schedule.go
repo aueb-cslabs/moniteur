@@ -57,13 +57,14 @@ func scheduleRoomNow(ec echo.Context) error {
 
 	returnSchedule := &types.ScheduleNow{}
 
-	day, sec := determineNow()
+	day, _ := determineNow()
+	unix := time.Now().Unix()
 
 	for _, slot := range schedule.Slots {
-		if slot.Room == room && slot.Day == day && slot.Start < sec && slot.End > sec {
+		if slot.Room == room && slot.Day == day && slot.Start < unix && slot.End > unix {
 			returnSchedule.Now = slot
 		}
-		if slot.Room == room && slot.Day == day && slot.Start >= sec {
+		if slot.Room == room && slot.Day == day && slot.Start >= unix {
 			returnSchedule.Next = append(returnSchedule.Next, slot)
 		}
 

@@ -14,13 +14,18 @@ import (
 // retriever Method that converts Schedule Master json to our json format
 func retriever() *types.Schedule {
 	resp := &types.Schedule{}
+
+	now := time.Now()
+
 	for _, lesson := range getEntireSchedule() {
 		subject := &types.ScheduleSlot{}
 		lessonTime := strings.Split(lesson.Time, "-")
 		start, _ := strconv.ParseInt(lessonTime[0], 10, 64)
 		end, _ := strconv.ParseInt(lessonTime[1], 10, 64)
-		subject.Start = start * int64(3600)
-		subject.End = end * int64(3600)
+		date := time.Date(now.Year(), now.Month(), now.Day(), int(start), 0, 0, 0, now.Location())
+		subject.Start = date.Unix()
+		date = time.Date(now.Year(), now.Month(), now.Day(), int(end), 0, 0, 0, now.Location())
+		subject.End = date.Unix()
 		subject.Room = lesson.Room
 		subject.Day = determineDay(lesson.Day)
 		subject.Title = lesson.LessonTitle
