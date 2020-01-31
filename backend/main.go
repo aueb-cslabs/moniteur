@@ -90,6 +90,6 @@ func main() {
 	e.Use(middleware.ProxyWithConfig(proxyConfig))
 	// End block
 
-	e.Server.Addr = config.Hostname + strconv.Itoa(config.Port)
+	e.Server.Addr = config.Hostname + ":" + strconv.Itoa(config.Port)
 	e.Logger.Fatal(graceful.ListenAndServeTLS(e.Server, "moniteur.crt", "moniteur.key", 5*time.Second))
 }
