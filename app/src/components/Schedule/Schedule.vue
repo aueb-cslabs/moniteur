@@ -144,7 +144,9 @@
                              * Fire up exam sign!
                              */
                             if(this.current['now'] != null)
-                                this.$parent.$emit('exam', this.isExam);
+                                this.$parent.$emit('exam', true);
+                            else
+                                this.$parent.$emit('exam', false)
                         });
                 }, 30000)
             },
