@@ -9,6 +9,7 @@ import (
 type Configuration struct {
 	Plugin      string `yaml:"plugin"`
 	ExamsLink   string `yaml:"exams"`
+	Hostname    string `yaml:"hostname"`
 	Secret      string `yaml:"secret"`
 	Port        int    `yaml:"port"`
 	RedisConfig Redis  `yaml:"redis"`
