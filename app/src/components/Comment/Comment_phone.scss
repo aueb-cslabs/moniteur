@@ -1,5 +1,13 @@
-.comments-text {
-  @include media-breakpoint-between(xs, md) {
-    font-size: 0.8em;
+body {
+  .comments {
+    @include media-breakpoint-between(xs, md) {
+      width: calc(80% + 10px);
+    }
+  }
+
+  .comments-text {
+    @include media-breakpoint-between(xs, md) {
+      font-size: 1em;
+    }
   }
 }

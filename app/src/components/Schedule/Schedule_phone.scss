@@ -8,7 +8,7 @@ body {
 
   .title {
     @include media-breakpoint-down(sm) {
-      font-size: 1.3em;
+      font-size: 1.5em;
     }
   }
 
@@ -30,7 +30,7 @@ body {
 
   .center-message {
     @include media-breakpoint-down(sm) {
-      font-size: 1.1em;
+      font-size: 1.3em;
     }
   }
 }

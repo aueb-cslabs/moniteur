@@ -2,7 +2,7 @@ body {
   .exams {
     @include media-breakpoint-down(sm) {
       width: calc(65% + 10px);
-      font-size: 0.7em;
+      font-size: 0.8em;
     }
   }
 }

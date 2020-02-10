@@ -36,9 +36,6 @@
 </script>
 
 <style lang="scss">
-    @import "~bootstrap/scss/bootstrap";
     @import "../common";
     @import "Announcement";
-    @import "Announcement_phone";
-    @import "Announcement_tablet";
 </style>
