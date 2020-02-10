@@ -1,0 +1,5 @@
+.room-ann-text {
+  @include media-breakpoint-between(xs, md) {
+    font-size: 0.8em;
+  }
+}

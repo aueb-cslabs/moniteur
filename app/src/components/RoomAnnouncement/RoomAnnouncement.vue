@@ -35,5 +35,8 @@
 </script>
 
 <style lang="scss">
+    @import "~bootstrap/scss/bootstrap";
     @import "RoomAnnouncement";
+    @import "RoomAnnouncement_phone";
+    @import "RoomAnnouncement_tablet";
 </style>

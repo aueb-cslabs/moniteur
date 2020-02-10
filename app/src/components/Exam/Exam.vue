@@ -31,6 +31,9 @@
 </script>
 
 <style lang="scss">
+    @import "~bootstrap/scss/bootstrap";
     @import "Exam";
+    @import "Exam_phone";
+    @import "Exam_tablet";
     @import "../common";
 </style>

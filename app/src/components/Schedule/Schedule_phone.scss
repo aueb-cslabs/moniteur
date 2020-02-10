@@ -1,0 +1,36 @@
+body {
+  .wrapper {
+    //@media screen and (max-width: 600px) {
+    @include media-breakpoint-down(sm) {
+      flex-direction: column;
+    }
+  }
+
+  .title {
+    @include media-breakpoint-down(sm) {
+      font-size: 1.3em;
+    }
+  }
+
+  .current {
+    //@media screen and (max-width: 600px) {
+    @include media-breakpoint-down(sm) {
+      width: 80%;
+    }
+  }
+
+  .next {
+    //@media screen and (max-width: 600px) {
+    @include media-breakpoint-down(sm) {
+      width: 80%;
+      margin-top: 1em;
+      margin-left: 0;
+    }
+  }
+
+  .center-message {
+    @include media-breakpoint-down(sm) {
+      font-size: 1.1em;
+    }
+  }
+}

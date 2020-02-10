@@ -1,7 +1,7 @@
 body {
   .exams {
-    width: 400px;
-    height: 30px;
+    width: calc(30% + 5px);
+    height: auto;
 
     margin-top: 1.1em;
 

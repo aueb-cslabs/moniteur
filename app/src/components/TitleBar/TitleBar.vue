@@ -1,15 +1,15 @@
 <template>
     <nav class="navbar navbar-expand navbar-dark">
         <a class='navbar-brand'>
-            <img v-bind:src="logo"
-                 alt="logo" height="90" />
+            <img v-bind:src="logo" class="d-none d-md-block logo"
+                 alt="logo" />
         </a>
         <nav class="navbar-nav mr-auto">
-            <img class="ml-2" v-bind:src="secondary_logo"
-                 alt="cs_logo" height="95" />
-            <a class="ml-4 navbar-brand title">{{room}}</a>
+            <img class="ml-2 d-none d-md-block logo" v-bind:src="secondary_logo"
+                 alt="cs_logo"/>
+            <a class="ml-4 navbar-brand room-date">{{room}}</a>
         </nav>
-        <a class="navbar-brand title">
+        <a class="navbar-brand room-date">
             {{date}}
         </a>
     </nav>
@@ -61,5 +61,8 @@
 </script>
 
 <style lang="scss">
+    @import "~bootstrap/scss/bootstrap";
     @import "TitleBar";
+    @import "TitleBar_phone";
+    @import "TitleBar_tablet";
 </style>

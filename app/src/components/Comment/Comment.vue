@@ -35,5 +35,8 @@
 </script>
 
 <style lang="scss">
+    @import "~bootstrap/scss/bootstrap";
     @import "Comment";
+    @import "Comment_phone";
+    @import "Comment_tablet";
 </style>

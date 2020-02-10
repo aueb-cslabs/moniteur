@@ -1,0 +1,5 @@
+.comments-text {
+  @include media-breakpoint-between(xs, md) {
+    font-size: 1em;
+  }
+}

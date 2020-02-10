@@ -1,0 +1,12 @@
+body {
+  .exams {
+    @include media-breakpoint-between(sm, md) {
+      width: calc(40% + 10px);
+    }
+
+    @include media-breakpoint-between(md, lg) {
+      width: calc(30% + 70px);
+      font-size: 0.8em;
+    }
+  }
+}

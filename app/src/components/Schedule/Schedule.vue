@@ -1,11 +1,11 @@
 <template>
     <div class="wrapper" v-if="!this.isWeekend && !this.isBreak">
         <div class="text-center current schedule">
-            <h3> {{ $t("message.nowMsg") }} <i class="fas fa-chalkboard-teacher"></i></h3>
+            <p class="title"> {{ $t("message.nowMsg") }} <i class="fas fa-chalkboard-teacher"></i></p>
             <p class="center-message common fade-in" v-if="current['now'] != null">
                 <u>
                     {{nowStart}} - {{nowEnd}}
-                </u><br>
+                </u>
                 {{current['now']['title']}}<br>
                 {{current['now']['host']}}
             </p>
@@ -17,11 +17,11 @@
             </p>
         </div>
         <div id="next" class="text-center next schedule">
-            <h3> {{ $t("message.nextMsg") }} <i class="fas fa-chalkboard-teacher next-icon"></i></h3>
+            <p class="title"> {{ $t("message.nextMsg") }} <i class="fas fa-chalkboard-teacher next-icon"></i></p>
             <p class="center-message common fade-in" v-if="current['next'] != null">
                 <u>
                     {{nextStart}} - {{nextEnd}}
-                </u><br>
+                </u>
                 {{current['next'][0]['title']}}<br>
                 {{current['next'][0]['host']}}
             </p>
@@ -148,7 +148,7 @@
                             else
                                 this.$parent.$emit('exam', false)
                         });
-                }, 30000)
+                }, 1000)
             },
 
             /* Fetches normal schedule */
@@ -185,5 +185,8 @@
 </script>
 
 <style lang="scss">
+    @import "~bootstrap/scss/bootstrap";
     @import "Schedule";
+    @import "Schedule_phone";
+    @import "Schedule_tablet";
 </style>

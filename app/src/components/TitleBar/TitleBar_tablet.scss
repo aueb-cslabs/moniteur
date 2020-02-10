@@ -1,0 +1,7 @@
+nav {
+  @include media-breakpoint-between(md, lg) {
+    .logo {
+      height: 50px;
+    }
+  }
+}
