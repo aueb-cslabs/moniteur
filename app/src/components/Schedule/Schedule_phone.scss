@@ -8,21 +8,21 @@ body {
 
   .title {
     @include media-breakpoint-down(sm) {
-      font-size: 1.5em;
+      font-size: 1.4em;
     }
   }
 
   .current {
     //@media screen and (max-width: 600px) {
     @include media-breakpoint-down(sm) {
-      width: 80%;
+      width: 90%;
     }
   }
 
   .next {
     //@media screen and (max-width: 600px) {
     @include media-breakpoint-down(sm) {
-      width: 80%;
+      width: 90%;
       margin-top: 1em;
       margin-left: 0;
     }
@@ -30,7 +30,7 @@ body {
 
   .center-message {
     @include media-breakpoint-down(sm) {
-      font-size: 1.3em;
+      font-size: 1.2em;
     }
   }
 }

@@ -1,5 +1,12 @@
-.ann-text {
-  @include media-breakpoint-between(xs, md) {
-    font-size: 0.8em;
+body {
+  .announcements {
+    @include media-breakpoint-between(xs, sm) {
+      width: calc(90% + 10px);
+    }
+  }
+  .ann-text {
+    @include media-breakpoint-between(xs, sm) {
+      font-size: 0.7em;
+    }
   }
 }

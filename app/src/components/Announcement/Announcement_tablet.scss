@@ -1,5 +1,7 @@
-.ann-text {
-  @include media-breakpoint-between(md, lg) {
-    font-size: 1em;
+body {
+  .ann-text {
+    @include media-breakpoint-between(md, lg) {
+      font-size: 1em;
+    }
   }
 }
