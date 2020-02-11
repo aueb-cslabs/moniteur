@@ -109,7 +109,7 @@
                                 }
                                 if(this.normIntervalId == null)
                                     this.fetchNormSched();
-                                this.$emit('exam', false)
+                                this.$parent.$emit('exam', false)
                             }
                         });
                 }, 30000);
