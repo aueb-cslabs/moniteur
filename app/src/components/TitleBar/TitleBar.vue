@@ -50,7 +50,7 @@
             },
 
             getRoom: function () {
-                fetch(config.api + "/api/room/" + config.room)
+                fetch(config.api + "/api/room/" + this.$route.params.room)
                     .then(res => res.json())
                     .then(json => {
                         this.room = json.toString()

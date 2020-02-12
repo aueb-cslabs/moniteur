@@ -134,7 +134,7 @@
             /* Fetches examination schedule */
             fetchExamSched: function() {
                 this.examIntervalId = setInterval(() => {
-                    axios.get(config.api + "/api/exams/" + config.room + "/now")
+                    axios.get(config.api + "/api/exams/" + this.$route.params.room + "/now")
                         .then(res => {
                             this.current = res.data;
 
@@ -154,7 +154,7 @@
             /* Fetches normal schedule */
             fetchNormSched: function() {
                 this.normIntervalId = setInterval(() => {
-                    axios.get(config.api + "/api/schedule/" + config.room + "/now")
+                    axios.get(config.api + "/api/schedule/" + this.$route.params.room + "/now")
                         .then(res => {
                             this.current = res.data;
                             this.checkNext(this.current);

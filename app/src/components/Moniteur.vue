@@ -31,6 +31,8 @@
         created() {
             let r = document.documentElement;
             r.style.setProperty("--background", config.background_color);
+
+            console.log("created")
         },
 
         components: {
