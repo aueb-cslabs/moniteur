@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    const config = require('electron').remote.getGlobal('config');
+    import config from "../../config";
 
     export default {
         name: "TitleBar",

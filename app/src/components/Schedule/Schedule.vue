@@ -42,7 +42,7 @@
 </template>
 
 <script>
-    const config = require('electron').remote.getGlobal('config');
+    import config from "../../config";
     import axios from 'axios';
 
     export default {

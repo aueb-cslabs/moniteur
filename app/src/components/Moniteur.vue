@@ -24,7 +24,7 @@
     import RoomAnnouncement from "./RoomAnnouncement/RoomAnnouncement";
     import Comment from "./Comment/Comment";
 
-    const config = require('electron').remote.getGlobal('config');
+    import config from "../config";
 
     export default {
 
