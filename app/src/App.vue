@@ -3,8 +3,6 @@
 </template>
 
 <script>
-    //import Moniteur from "./components/Moniteur";
-
     export default {
         name: 'app',
     }

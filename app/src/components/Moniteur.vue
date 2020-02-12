@@ -1,17 +1,15 @@
 <template>
-    <div>
-        <div class="parent-flex">
-            <TitleBar/>
-            <div class="flex-container">
-                <Exam/>
-                <Announcement/>
-                <Schedule/>
-                <RoomAnnouncement/>
-                <Comment/>
-                <footer class="text-center footer">
-                    {{ $t("message.touchscreen")}}
-                </footer>
-            </div>
+    <div class="parent-flex">
+        <TitleBar/>
+        <div class="flex-container">
+            <Exam/>
+            <Announcement/>
+            <Schedule/>
+            <RoomAnnouncement/>
+            <Comment/>
+            <footer class="text-center footer">
+                {{ $t("message.touchscreen")}}
+            </footer>
         </div>
     </div>
 </template>
@@ -31,8 +29,6 @@
         created() {
             let r = document.documentElement;
             r.style.setProperty("--background", config.background_color);
-
-            console.log("created")
         },
 
         components: {
