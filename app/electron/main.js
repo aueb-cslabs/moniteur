@@ -1,9 +1,8 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, dialog } from 'electron'
-import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
-import yaml from 'js-yaml';
-import fs from 'fs';
+const { app, BrowserWindow, dialog } =  require('electron');
+const yaml = require('js-yaml');
+const fs = require('fs');
 const { autoUpdater } = require("electron-updater");
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
@@ -13,23 +12,19 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 let win;
 global.config = {};
 
-// Scheme must be registered before the app is ready
-protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }])
-
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({ width: 800, height: 600, frame: false, fullscreen: true, webPreferences: {
-    nodeIntegration: true
-  } })
+    nodeIntegration: false, contextIsolation: true
+  } });
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
     if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
-    createProtocol('app');
     // Load the index.html when not in development
-    win.loadURL('app://./index.html')
+    win.loadURL(global.config.api + global.config.room)
   }
 
   win.on('closed', () => {
