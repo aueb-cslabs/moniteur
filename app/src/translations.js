@@ -1,6 +1,7 @@
 export default {
     en: {
         message: {
+            room: "Room: ",
             touchscreen: "The monitor has no touch functionality. Refrain from touching it!",
             examMsg: "Ongoing course examination!",
             nowMsg: "Now ",
@@ -15,6 +16,7 @@ export default {
     },
     el: {
         message: {
+            room: "Αίθουσα: ",
             touchscreen: "Η οθόνη δεν είναι touchscreen. Μην αγγίζετε!",
             examMsg: "Πραγματοποιείται εξέταση!",
             nowMsg: "Τώρα ",
