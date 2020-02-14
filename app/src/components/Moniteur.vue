@@ -1,17 +1,15 @@
 <template>
-    <div>
-        <div class="parent-flex">
-            <TitleBar/>
-            <div class="flex-container">
-                <Exam/>
-                <Announcement/>
-                <Schedule/>
-                <RoomAnnouncement/>
-                <Comment/>
-                <footer class="text-center footer">
-                    {{ $t("message.touchscreen")}}
-                </footer>
-            </div>
+    <div class="parent-flex">
+        <TitleBar/>
+        <div class="flex-container">
+            <Exam/>
+            <Announcement/>
+            <Schedule/>
+            <RoomAnnouncement/>
+            <Comment/>
+            <footer class="text-center footer">
+                {{ $t("message.touchscreen")}}
+            </footer>
         </div>
     </div>
 </template>
@@ -24,7 +22,7 @@
     import RoomAnnouncement from "./RoomAnnouncement/RoomAnnouncement";
     import Comment from "./Comment/Comment";
 
-    const config = require('electron').remote.getGlobal('config');
+    import config from "../config";
 
     export default {
 

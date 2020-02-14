@@ -1,16 +1,10 @@
 <template>
-    <Moniteur class="moniteur"></Moniteur>
+    <router-view class="moniteur"></router-view>
 </template>
 
 <script>
-    import Moniteur from "./components/Moniteur";
-
     export default {
         name: 'app',
-
-        components: {
-            Moniteur
-        }
     }
 
 </script>
