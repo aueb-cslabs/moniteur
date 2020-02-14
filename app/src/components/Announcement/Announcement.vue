@@ -9,7 +9,7 @@
 
 <script>
     import axios from 'axios';
-    const config = require('electron').remote.getGlobal('config');
+    import config from "../../config";
 
     export default {
         name: "Announcement",
