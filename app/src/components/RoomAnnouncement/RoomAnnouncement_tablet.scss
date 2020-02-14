@@ -1,0 +1,12 @@
+body {
+  .roomAnnouncements {
+    @include media-breakpoint-between(md, lg) {
+      width: calc(80% + 10px);
+    }
+  }
+  .room-ann-text {
+    @include media-breakpoint-between(md, lg) {
+      font-size: 1.1em;
+    }
+  }
+}

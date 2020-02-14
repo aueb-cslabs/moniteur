@@ -1,7 +1,6 @@
 body {
   .schedule {
     background: #494148;
-    font-size: 1.5em;
 
     align-self: center;
     border-radius: 50px;
@@ -33,6 +32,11 @@ body {
     flex-direction: column;
 
     margin-left: 1em;
+
+  }
+
+  .title {
+    font-size: 2em;
   }
 
   .fa-chalkboard-teacher {
@@ -51,6 +55,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-size: 1.8em;
   }
 
   .message {

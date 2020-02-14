@@ -7,7 +7,6 @@
                 <Announcement/>
                 <Schedule/>
                 <RoomAnnouncement/>
-                <Comment/>
                 <footer class="text-center footer">
                     {{ $t("message.touchscreen")}}
                 </footer>
@@ -22,7 +21,6 @@
     import Exam from "./Exam/Exam";
     import Announcement from "./Announcement/Announcement";
     import RoomAnnouncement from "./RoomAnnouncement/RoomAnnouncement";
-    import Comment from "./Comment/Comment";
 
     const config = require('electron').remote.getGlobal('config');
 
@@ -34,7 +32,6 @@
         },
 
         components: {
-            Comment,
             RoomAnnouncement,
             Announcement,
             TitleBar,

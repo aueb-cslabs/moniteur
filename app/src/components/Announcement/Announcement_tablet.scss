@@ -1,0 +1,12 @@
+body {
+  .announcements {
+    @include media-breakpoint-between(md, lg) {
+      width: calc(80% + 10px);
+    }
+  }
+  .ann-text {
+    @include media-breakpoint-between(md, lg) {
+      font-size: 1em;
+    }
+  }
+}

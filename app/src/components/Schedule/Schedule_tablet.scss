@@ -1,0 +1,14 @@
+body {
+  .center-message {
+    //@media screen and (min-width: 600px) {
+    @include media-breakpoint-between(md, lg) {
+      font-size: 1.6em;
+    }
+  }
+
+  .title {
+    @include media-breakpoint-between(md, lg) {
+      font-size: 1.8em;
+    }
+  }
+}
