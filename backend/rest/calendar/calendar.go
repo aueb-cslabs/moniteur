@@ -74,7 +74,7 @@ func checkDates(start string, end string) bool {
 
 	now := time.Now()
 	startDate := time.Date(startY, startM, startD, 0, 0, 0, 0, now.Location())
-	endDate := time.Date(endY, endM, endD, 0, 0, 0, 0, now.Location())
+	endDate := time.Date(endY, endM, endD, 0, 0, 0, 0, now.Location()).Add(24 * time.Hour)
 
 	return now.After(startDate) && now.Before(endDate)
 }
