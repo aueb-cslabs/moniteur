@@ -50,7 +50,6 @@ func main() {
 
 	calendar.CalendarGroup(api.Group("/calendarInfo"))
 	announcements.AnnouncementsGroup(api.Group("/announcement"))
-	announcements.CommentGroup(api.Group("/comment"))
 	schedule.ScheduleGroup(api.Group("/schedule"))
 	schedule.ExamsGroup(api.Group("/exams"))
 	schedule.OverrideGroup(api.Group("/override"))
