@@ -148,7 +148,7 @@
                             else
                                 this.$parent.$emit('exam', false)
                         });
-                }, 1000)
+                }, 30000)
             },
 
             /* Fetches normal schedule */
