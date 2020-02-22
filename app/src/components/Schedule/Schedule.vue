@@ -159,6 +159,7 @@
                             this.current = res.data;
                             this.checkNext(this.current);
                         });
+                    if (this.current.isExam) this.$parent.$emit('exam', true);
                 }, 30000)
             },
 

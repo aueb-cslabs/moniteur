@@ -25,6 +25,7 @@ type ScheduleSlot struct {
 	Semester string `json:"semester" gorm:"-"`
 	DayNum   int    `json:"-" gorm:"-"`
 	MonthNum int    `json:"-" gorm:"-"`
+	IsExam   bool   `json:"isExam" gorm:"boolean;not_null"`
 }
 
 type DBScheduleSlot struct {
