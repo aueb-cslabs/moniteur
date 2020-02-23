@@ -53,6 +53,7 @@ func main() {
 	schedule.ScheduleGroup(api.Group("/schedule"))
 	schedule.ExamsGroup(api.Group("/exams"))
 	schedule.OverrideGroup(api.Group("/override"))
+	schedule.RoomSchedule(api.Group("/rs"))
 	api.GET("/room/:id", schedule.Room)
 	api.POST("/authenticate", authentication.Authenticate)
 	api.POST("/validate", authentication.AuthenticateToken)

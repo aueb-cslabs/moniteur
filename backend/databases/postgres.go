@@ -14,7 +14,7 @@ func InitializePostgres(uri string) (db *gorm.DB) {
 		log.Panic(err)
 	}
 
-	overrides.AutoMigrate(&types.DBScheduleSlot{})
+	overrides.AutoMigrate(&types.DBScheduleSlot{}, &types.RoomSchedule{})
 	return overrides
 }
 
