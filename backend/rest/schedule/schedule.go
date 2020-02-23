@@ -106,5 +106,6 @@ func Room(e echo.Context) error {
 func Rooms(e echo.Context) error {
 	c := e.(*types.Context)
 	rooms := c.Plugin().GetRooms()
+	sort.Strings(rooms)
 	return c.JSON(http.StatusOK, rooms)
 }
