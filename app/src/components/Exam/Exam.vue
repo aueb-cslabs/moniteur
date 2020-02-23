@@ -30,7 +30,7 @@
             },
 
             registerOverrideListener: function () {
-                this.$parent.$on('overrideExam', exam => this.overrideExam = exam)
+                this.$parent.$on('overrideExam', (exam) => this.overrideExam = exam);
             }
         }
     }
