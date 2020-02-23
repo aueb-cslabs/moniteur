@@ -1,5 +1,5 @@
 <template>
-    <div class="exams text-center" v-if="isExam">
+    <div class="exams text-center" v-if="isExam || overrideExam">
         <p class="exam-text common fade-in" >
             <i class="fas fa-exclamation-triangle"></i> {{ $t("message.examMsg") }}
         </p>
@@ -12,12 +12,14 @@
 
         data() {
             return {
-                isExam: null
+                isExam: null,
+                overrideExam: null
             }
         },
 
         created() {
             this.registerExamListener();
+            this.registerOverrideListener();
         },
 
         methods: {
@@ -25,6 +27,10 @@
                this.$parent.$on('exam', exam => {
                    this.isExam = exam;
                });
+            },
+
+            registerOverrideListener: function () {
+                this.$parent.$on('overrideExam', exam => this.overrideExam = exam)
             }
         }
     }

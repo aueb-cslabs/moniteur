@@ -159,7 +159,11 @@
                             this.current = res.data;
                             this.checkNext(this.current);
                         });
-                    if (this.current.isExam) this.$parent.$emit('exam', true);
+
+                    if (this.current.isExam)
+                        this.$parent.$emit('overrideExam', true);
+                    else
+                        this.$parent.$emit('overrideExam', false);
                 }, 30000)
             },
 
