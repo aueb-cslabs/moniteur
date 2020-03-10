@@ -22,7 +22,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.4.4",
-    "electron-updater": "^4.2.0",
+    "electron-updater": "^4.2.4",
     "js-yaml": "^3.13.1",
     "sass": "^1.26.2",
     "sass-loader": "^8.0.0",
