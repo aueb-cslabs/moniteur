@@ -2,13 +2,13 @@ matrix:
   include:
   - os: linux
     language: node_js
-    node_js: '10'
+    node_js: '12'
     script:
     - make .publish-moniteur-linux
   - os: linux
     services: docker
     language: node_js
-    node_js: '10'
+    node_js: '12'
     script:
       - |
         docker run --rm -ti \
