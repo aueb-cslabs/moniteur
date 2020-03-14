@@ -23,8 +23,7 @@ matrix:
           /bin/bash -c "make .publish-moniteur-win"
   - os: linux
     language: go
-    go:
-    - '1.14'
+    go: '1.14'
     script:
     - make .build-go
     env:
