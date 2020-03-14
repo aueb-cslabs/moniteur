@@ -24,7 +24,7 @@ matrix:
   - os: linux
     language: go
     go:
-    - '1.12'
+    - '1.14'
     script:
     - make .build-go
     env:
