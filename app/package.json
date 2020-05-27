@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.12.1",
-    "@vue/cli-plugin-babel": "^4.2.3",
+    "@vue/cli-plugin-babel": "^4.4.1",
     "@vue/cli-plugin-eslint": "^4.2.3",
     "@vue/cli-service": "^4.2.3",
     "babel-eslint": "^10.1.0",
