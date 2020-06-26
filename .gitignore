@@ -26,5 +26,11 @@ yarn-error.log*
 # Certificate
 /backend/*.pem
 
+# Backend Binaries
+/backend/bin
+
+# Backend Production LDAP
+/backend/config/ldap.yml
+
 # Github OAuth token
 token
