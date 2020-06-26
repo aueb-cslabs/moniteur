@@ -20,6 +20,10 @@ func createRoomAnn(e echo.Context) error {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 
+	if err := post.Validate(); err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
+
 	//Because of the room names that are in Greek we need to convert it to English
 	room := ctx.Plugin().ConvertNameInverse(e.Param("room"))
 
@@ -38,6 +42,10 @@ func updateRoomAnn(e echo.Context) error {
 	err := e.Bind(post)
 
 	if err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
+
+	if err := post.Validate(); err != nil {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 
