@@ -23,7 +23,7 @@
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "electron-updater": "^4.3.1",
-    "js-yaml": "^3.13.1",
+    "js-yaml": "^3.14.0",
     "sass": "^1.26.9",
     "sass-loader": "^8.0.0",
     "vue": "^2.6.11",
