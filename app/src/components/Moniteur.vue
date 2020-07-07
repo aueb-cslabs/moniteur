@@ -6,7 +6,7 @@
             <Announcement/>
             <Schedule/>
             <RoomAnnouncement/>
-            <footer class="text-center footer">
+            <footer class="d-none d-md-block text-center footer">
                 {{ $t("message.touchscreen")}}
             </footer>
         </div>
