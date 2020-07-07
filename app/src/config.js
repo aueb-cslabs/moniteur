@@ -4,5 +4,6 @@ export default {
     secondary_logo_url: 'https://www.dept.aueb.gr/schools_department_photos/cs.png',
     background_color: "#1d1c1d",
     navbar_background_color: "#762124",
-    navbar_color: "#ffffff"
+    navbar_color: "#ffffff",
+    locale: "el"
 }

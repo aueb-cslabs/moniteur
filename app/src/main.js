@@ -4,6 +4,7 @@ import VueI18n from 'vue-i18n'
 import VueRouter from "vue-router";
 
 import messages from './translations'
+import config from "./config";
 
 import Moniteur from "./components/Moniteur";
 
@@ -13,7 +14,7 @@ Vue.use(VueI18n);
 Vue.use(VueRouter);
 
 const i18n = new VueI18n({
-  locale: 'el',
+  locale: config.locale,
   messages,
 });
 
