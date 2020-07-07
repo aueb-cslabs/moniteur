@@ -7,7 +7,7 @@
         <nav class="navbar-nav mr-auto">
             <img class="ml-2 d-none d-md-block logo" v-bind:src="secondary_logo"
                  alt="cs_logo"/>
-            <a class="ml-4 navbar-brand room-date">{{room}}</a>
+            <a class="ml-4 navbar-brand room-date">{{$t("message.room")}} {{room}}</a>
         </nav>
         <a class="navbar-brand room-date">
             {{date}}
