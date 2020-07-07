@@ -3,6 +3,7 @@ body {
     //@media screen and (max-width: 600px) {
     @include media-breakpoint-down(sm) {
       flex-direction: column;
+      height: 80%;
     }
   }
 
