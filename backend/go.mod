@@ -6,6 +6,7 @@ require (
 	github.com/aueb-cslabs/moniteur v0.0.0-20191229071749-b4f325d6499e // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20191128021309-1d7a30a10f73 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/go-ldap/ldap v3.0.3+incompatible
 	github.com/go-redis/redis/v7 v7.4.0
 	github.com/jinzhu/gorm v1.9.14
 	github.com/jinzhu/now v1.1.1 // indirect
@@ -20,6 +21,5 @@ require (
 	golang.org/x/tools v0.0.0-20191227053925-7b8e75db28f4 // indirect
 	golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543 // indirect
 	gopkg.in/asn1-ber.v1 v1.0.0-20181015200546-f715ec2f112d // indirect
-	gopkg.in/ldap.v3 v3.0.3
 	gopkg.in/yaml.v2 v2.3.0
 )
