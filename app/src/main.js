@@ -7,6 +7,7 @@ import messages from './translations'
 import config from "./config";
 
 import Moniteur from "./components/Moniteur";
+import Page404 from "./components/Page404/Page404";
 
 Vue.config.productionTip = false;
 
@@ -22,6 +23,10 @@ const routes = [
   {
     path: '/:room',
     component: Moniteur
+  },
+  {
+    path: '*',
+    component: Page404
   }
 ];
 
