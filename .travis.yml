@@ -4,23 +4,7 @@ matrix:
     language: node_js
     node_js: '12'
     script:
-    - make .publish-moniteur-linux
-  - os: linux
-    services: docker
-    language: node_js
-    node_js: '12'
-    script:
-      - |
-        docker run --rm -ti \
-         --env-file <(env | grep -vE '\r|\n' | grep -iE 'DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS_TAG|TRAVIS|TRAVIS_REPO_|TRAVIS_BUILD_|TRAVIS_BRANCH|TRAVIS_PULL_REQUEST_|APPVEYOR_|CSC_|GH_|GITHUB_|BT_|AWS_|STRIP|BUILD_') \
-         --env ELECTRON_CACHE="/root/.cache/electron" \
-         --env ELECTRON_BUILDER_CACHE="/root/.cache/electron-builder" \
-         -v ${PWD}:/project \
-         -v ${PWD##*/}-node-modules:/project/node_modules \
-         -v ~/.cache/electron:/root/.cache/electron \
-         -v ~/.cache/electron-builder:/root/.cache/electron-builder \
-          electronuserland/builder:wine \
-          /bin/bash -c "make .publish-moniteur-win"
+    - make .build-web
   - os: linux
     language: go
     go: '1.14'
@@ -31,8 +15,3 @@ matrix:
 cache:
   directories:
   - node_modules
-  - "$HOME/.cache/electron"
-  - "$HOME/.cache/electron-builder"
-before_cache:
-- rm -rf $HOME/.cache/electron-builder/wine
-- sudo chown travis:travis -R $HOME/.cache/electron-builder

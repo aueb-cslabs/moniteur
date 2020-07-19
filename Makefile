@@ -6,19 +6,10 @@
 
 .build-go: .build-moniteur .build-aueb-plugin
 
-.build-moniteur-win:
-	cd app && npm install && npm run build:win
+.build-web:
+	cd app && npm install && npm run build
 
-.build-moniteur-linux:
-	cd app && npm install && npm run build:linux
-
-.publish-moniteur-win:
-	cd app && npm install && npm run publish:win
-
-.publish-moniteur-linux:
-	cd app && npm install && npm run publish:linux
-
-.build: .build-go .build-moniteur-linux .build-admin-linux
+.build: .build-go .build-web
 
 default: .build
 
