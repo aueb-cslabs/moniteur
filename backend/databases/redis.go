@@ -1,9 +1,11 @@
 package databases
 
 import (
-	"github.com/aueb-cslabs/moniteur/backend/types"
-	"github.com/go-redis/redis/v7"
 	"log"
+
+	"github.com/go-redis/redis/v7"
+
+	"github.com/aueb-cslabs/moniteur/backend/types"
 )
 
 func InitializeRedis(config types.Redis) (*redis.Client, *redis.Client, *redis.Client) {

@@ -2,12 +2,14 @@ package authentication
 
 import (
 	"encoding/json"
-	"github.com/aueb-cslabs/moniteur/backend/types"
-	"github.com/dgrijalva/jwt-go"
-	"github.com/labstack/echo"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/dgrijalva/jwt-go"
+	"github.com/labstack/echo"
+
+	"github.com/aueb-cslabs/moniteur/backend/types"
 )
 
 // Authenticate user authentication based on plugin authentication and generates JWT auth token

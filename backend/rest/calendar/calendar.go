@@ -3,16 +3,18 @@ package calendar
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/aueb-cslabs/moniteur/backend/rest"
-	"github.com/aueb-cslabs/moniteur/backend/rest/authentication"
-	"github.com/aueb-cslabs/moniteur/backend/types"
-	"github.com/aueb-cslabs/moniteur/backend/utils"
-	"github.com/labstack/echo"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/labstack/echo"
+
+	"github.com/aueb-cslabs/moniteur/backend/rest"
+	"github.com/aueb-cslabs/moniteur/backend/rest/authentication"
+	"github.com/aueb-cslabs/moniteur/backend/types"
+	"github.com/aueb-cslabs/moniteur/backend/utils"
 )
 
 // CalendarGroup Defines the api paths for all the calendar information

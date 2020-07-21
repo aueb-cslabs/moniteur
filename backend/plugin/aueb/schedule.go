@@ -2,13 +2,15 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/aueb-cslabs/moniteur/backend/types"
-	"github.com/tealeg/xlsx"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/tealeg/xlsx"
+
+	"github.com/aueb-cslabs/moniteur/backend/types"
 )
 
 // retriever Method that converts Schedule Master json to our json format

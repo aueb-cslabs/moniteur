@@ -1,9 +1,11 @@
 package authentication
 
 import (
-	"github.com/aueb-cslabs/moniteur/backend/types"
-	"github.com/labstack/echo"
 	"net/http"
+
+	"github.com/labstack/echo"
+
+	"github.com/aueb-cslabs/moniteur/backend/types"
 )
 
 func Register(e echo.Context) error {

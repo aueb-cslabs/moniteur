@@ -1,11 +1,11 @@
 package databases
 
 import (
-	"github.com/aueb-cslabs/moniteur/backend/types"
 	"github.com/labstack/gommon/log"
 
+	"github.com/aueb-cslabs/moniteur/backend/types"
+
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 func InitializePostgres(uri string) (db *gorm.DB) {

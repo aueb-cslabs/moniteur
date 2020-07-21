@@ -1,9 +1,11 @@
 package utils
 
 import (
-	"github.com/aueb-cslabs/moniteur/backend/types"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
+
+	"gopkg.in/yaml.v2"
+
+	"github.com/aueb-cslabs/moniteur/backend/types"
 )
 
 func UpdateCalendar(calendar *types.Calendar) error {

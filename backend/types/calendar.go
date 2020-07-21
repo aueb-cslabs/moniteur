@@ -1,8 +1,9 @@
 package types
 
 import (
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
+
+	"gopkg.in/yaml.v2"
 )
 
 // Calendar contains semesters, exams and breaks in an academic year

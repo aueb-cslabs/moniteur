@@ -1,11 +1,13 @@
 package schedule
 
 import (
-	"github.com/aueb-cslabs/moniteur/backend/types"
-	"github.com/labstack/echo"
 	"net/http"
 	"sort"
 	"time"
+
+	"github.com/labstack/echo"
+
+	"github.com/aueb-cslabs/moniteur/backend/types"
 )
 
 // ScheduleGroup Defines the api paths for the normal schedule

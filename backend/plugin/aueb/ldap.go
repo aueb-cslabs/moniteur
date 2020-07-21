@@ -4,9 +4,10 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"io/ioutil"
+
 	"gopkg.in/ldap.v3"
 	"gopkg.in/yaml.v2"
-	"io/ioutil"
 )
 
 var ldapConf LdapConfiguration

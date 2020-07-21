@@ -1,10 +1,12 @@
 package schedule
 
 import (
-	"github.com/aueb-cslabs/moniteur/backend/types"
-	"github.com/labstack/echo"
 	"net/http"
 	"time"
+
+	"github.com/labstack/echo"
+
+	"github.com/aueb-cslabs/moniteur/backend/types"
 )
 
 // ExamsGroup Defines the api paths for all the exams

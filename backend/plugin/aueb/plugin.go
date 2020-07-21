@@ -4,6 +4,7 @@ package main
 
 import (
 	"errors"
+
 	"github.com/aueb-cslabs/moniteur/backend/types"
 )
 

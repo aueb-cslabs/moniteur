@@ -1,10 +1,12 @@
 package announcements
 
 import (
-	"github.com/aueb-cslabs/moniteur/backend/types"
-	"github.com/labstack/echo"
 	"net/http"
 	"time"
+
+	"github.com/labstack/echo"
+
+	"github.com/aueb-cslabs/moniteur/backend/types"
 )
 
 // createRoomAnn Method that accepts POSTs a room announcement
