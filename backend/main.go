@@ -2,8 +2,20 @@
 
 package main
 
-import "C"
 import (
+	"flag"
+	"fmt"
+	"net/url"
+	"os"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
+	"github.com/labstack/gommon/log"
+	"github.com/tylerb/graceful"
+
 	"github.com/aueb-cslabs/moniteur/backend/databases"
 	"github.com/aueb-cslabs/moniteur/backend/rest"
 	"github.com/aueb-cslabs/moniteur/backend/rest/announcements"
@@ -11,27 +23,35 @@ import (
 	"github.com/aueb-cslabs/moniteur/backend/rest/calendar"
 	"github.com/aueb-cslabs/moniteur/backend/rest/schedule"
 	"github.com/aueb-cslabs/moniteur/backend/types"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
-	"github.com/labstack/gommon/log"
-	"github.com/tylerb/graceful"
-	"net/url"
-	"strconv"
-	"strings"
-	"time"
 )
 
 func main() {
+	configFile := flag.String("config", "config.yml", "Specifies the configuration file to be read")
+	pluginFIle := flag.String("plugin", "", "Specifies the plugin file to bread (Required)")
+	calendarFile := flag.String("calendar", "calendar.yml", "Specifies the calendar file to be read")
+	help := flag.Bool("help", false, "Displays this message")
 
-	config, err := types.LoadConfiguration("config/config.yml")
+	flag.Parse()
+
+	if *help {
+		flag.PrintDefaults()
+		os.Exit(0)
+	}
+
+	if *pluginFIle == "" {
+		fmt.Println("Error! Please specify a plugin file!")
+		os.Exit(-1)
+	}
+
+	config, err := types.LoadConfiguration(*configFile)
 	if err != nil {
 		log.Panic(err)
 	}
-	plugin, err := types.LoadPlugin(config.Plugin)
+	plugin, err := types.LoadPlugin(*pluginFIle)
 	if err != nil {
 		log.Panic(err)
 	}
-	calendarInfo, err := types.LoadCalendar("config/calendar.yml")
+	calendarInfo, err := types.LoadCalendar(*calendarFile)
 	if err != nil {
 		log.Panic(err)
 	}
