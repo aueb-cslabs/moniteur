@@ -1,3 +1,12 @@
-plugin: bin/name-of-plugin.so
+# Examination link has to be an xlsx file
 exams: link-of-exams.xlsx
 secret: changethesecret
+hostname: hostname-of-the-api
+port: port-of-the-api
+redis:
+  Addr: "localhost:6379"
+  Password: ""
+  Ann_DB: 0
+  Users_DB: 1
+  Tokens_DB: 2
+postgres: postgresql://<username>:<password>@localhost:5432/postgres?sslmode=required

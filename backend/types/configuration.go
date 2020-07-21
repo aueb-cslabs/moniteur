@@ -8,7 +8,6 @@ import (
 
 // Configuration contains all the configuration parameters.
 type Configuration struct {
-	Plugin      string `yaml:"plugin"`
 	ExamsLink   string `yaml:"exams"`
 	Hostname    string `yaml:"hostname"`
 	Secret      string `yaml:"secret"`
