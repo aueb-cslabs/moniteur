@@ -29,6 +29,8 @@ func main() {
 	configFile := flag.String("config", "config.yml", "Specifies the configuration file to be read")
 	pluginFIle := flag.String("plugin", "", "Specifies the plugin file to bread (Required)")
 	calendarFile := flag.String("calendar", "calendar.yml", "Specifies the calendar file to be read")
+	cert := flag.String("cert", "moniteur.crt", "Public certificate file. Must end with .crt")
+	key := flag.String("key", "moniteur.key", "Private key. Must end .key")
 	help := flag.Bool("help", false, "Displays this message")
 
 	flag.Parse()
@@ -56,7 +58,7 @@ func main() {
 		log.Panic(err)
 	}
 
-	psql := databases.InitializePostgres(config.Postgres)
+	psql := databases.InitializePostgres()
 	redisClient, authUsers, tokens := databases.InitializeRedis(config.RedisConfig)
 
 	plugin.Initialize(config.ExamsLink)
@@ -84,7 +86,7 @@ func main() {
 
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			return next(types.NewContext(c, plugin, psql, redisClient, authUsers, tokens, config.Secret))
+			return next(types.NewContext(c, plugin, psql, redisClient, authUsers, tokens, os.Getenv("JWT_SECRET")))
 		}
 	})
 
@@ -110,5 +112,5 @@ func main() {
 	// End block
 
 	e.Server.Addr = config.Hostname + ":" + strconv.Itoa(config.Port)
-	e.Logger.Fatal(graceful.ListenAndServeTLS(e.Server, "moniteur.crt", "moniteur.key", 5*time.Second))
+	e.Logger.Fatal(graceful.ListenAndServeTLS(e.Server, *cert, *key, 5*time.Second))
 }

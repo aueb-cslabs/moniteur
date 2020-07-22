@@ -1,12 +1,9 @@
 # Examination link has to be an xlsx file
 exams: link-of-exams.xlsx
-secret: changethesecret
+# For docker container it should be 0.0.0.0
 hostname: hostname-of-the-api
 port: port-of-the-api
 redis:
-  Addr: "localhost:6379"
-  Password: ""
   Ann_DB: 0
   Users_DB: 1
   Tokens_DB: 2
-postgres: postgresql://<username>:<password>@localhost:5432/postgres?sslmode=required

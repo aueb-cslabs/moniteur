@@ -29,8 +29,9 @@ yarn-error.log*
 # Backend Binaries
 /backend/bin
 
-# Backend Production LDAP
+# Backend Production configurations
 /backend/config/ldap.yml
+/backend/config/config.yml
 
 # Github OAuth token
 token

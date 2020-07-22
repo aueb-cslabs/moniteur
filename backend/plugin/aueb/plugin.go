@@ -41,7 +41,7 @@ type Plugin struct {
 // Initialize Method that initializes crucial functions for the plugin
 func (Plugin) Initialize(examsLink string) {
 	if len(mapping.Rooms) == 0 {
-		mapping, _ = loadMapping("config/mapping.yml")
+		mapping, _ = loadMapping("mapping.yml")
 	}
 	link = examsLink
 	exams, _ = download()

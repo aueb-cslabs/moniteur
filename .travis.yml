@@ -6,12 +6,16 @@ matrix:
     script:
     - make .build-web
   - os: linux
+    services: docker
     language: go
     go: '1.14'
     script:
-    - make .build-go
-    env:
-    - GO111MODULE=on
+      - docker-compose build
+    deploy:
+      provider: script
+      script: bash docker_push
+      on:
+        branch: master
 cache:
   directories:
   - node_modules

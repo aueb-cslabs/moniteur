@@ -29,7 +29,7 @@ type LdapConfiguration struct {
 
 // loadLdapConfig loads the config in the struct above from ldap.yml
 func loadLdapConfig(ldapConf *LdapConfiguration) error {
-	all, err := ioutil.ReadFile("config/ldap.yml")
+	all, err := ioutil.ReadFile("ldap.yml")
 	if err != nil {
 		return err
 	}

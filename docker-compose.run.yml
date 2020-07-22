@@ -1,0 +1,41 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:12
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: "postgresuser"
+      POSTGRES_PASSWORD: "pass"
+    volumes:
+    - moniteur-data:/var/lib/postgresql/data
+  redis:
+    image: redis
+    restart: unless-stopped
+    # Remove this for no password
+    command: >
+      --requirepass secret
+  backend:
+    depends_on:
+      - postgres
+      - redis
+    image: docker.pkg.github.com/aueb-cslabs/moniteur/backend
+    restart: unless-stopped
+    environment:
+      # postgresql://<username>:<password>@<hostname>:<port>/<databse>?sslmode=disable
+      POSTGRES_URI: "postgresql://postgresuser:pass@postgres:5432/postgres?sslmode=disable"
+      REDIS_URI: "redis:6379"
+      # Leave empty for no password
+      REDIS_PASSWORD: "secret"
+      JWT_SECRET: "secret"
+    ports:
+    - 27522:27522
+    volumes:
+    - /etc/ssl/certs/:/production/certificates:ro
+  #frontend:
+   # depends_on:
+    #  - backend
+    #image: docker.pkg.github.com/aueb-cslabs/moniteur/frontend
+    #restart: unless-stopped
+volumes:
+  moniteur-data:
+    driver: local

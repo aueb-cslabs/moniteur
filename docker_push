@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "$GH_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+docker-compose push
