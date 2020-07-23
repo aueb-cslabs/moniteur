@@ -31,6 +31,7 @@ services:
     - 27522:27522
     volumes:
     - /etc/ssl/certs/:/production/certificates:ro
+    - /home/test/config/:/production/config:ro
   #frontend:
    # depends_on:
     #  - backend

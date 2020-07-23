@@ -22,7 +22,9 @@ FROM alpine
 RUN mkdir /production
 COPY --from=build-stage /dist/moniteur /production
 COPY --from=build-stage /dist/aueb-plugin.so /production
-COPY --from=build-stage /dist/*.yml /production/
+COPY --from=build-stage /dist/calendar.yml /production
+COPY --from=build-stage /dist/config.yml /production
+COPY --from=build-stage /dist/mapping.yml /production
 
 RUN apk add libc6-compat
 
