@@ -8,7 +8,7 @@ matrix:
         provider: script
         script: bash docker_push
         on:
-          branch: master
+          tags: true
 cache:
   directories:
     - node_modules
