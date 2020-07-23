@@ -4,18 +4,18 @@ matrix:
     language: node_js
     node_js: '12'
     script:
-    - make .build-web
+      - docker-compose build frontend
   - os: linux
     services: docker
     language: go
     go: '1.14'
     script:
-      - docker-compose build
-    deploy:
-      provider: script
-      script: bash docker_push
-      on:
-        branch: master
+      - docker-compose build backend
+deploy:
+  provider: script
+  script: bash docker_push
+  on:
+    branch: master
 cache:
   directories:
   - node_modules
