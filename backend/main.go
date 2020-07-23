@@ -6,13 +6,10 @@ import (
 	"context"
 	"crypto/tls"
 	"flag"
-	"fmt"
 	"net/http"
-	"net/url"
 	"os"
 	"os/signal"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/labstack/echo"
@@ -68,8 +65,6 @@ func main() {
 	rest.Initialize(calendarInfo)
 
 	e := echo.New()
-	e.HideBanner = true
-	e.HidePort = true
 
 	api := e.Group("/api")
 
@@ -98,22 +93,6 @@ func main() {
 		AllowOrigins: []string{"*"},
 	}))
 
-	// Should go in effect only in development mode.
-	// In production this should just serve the files.
-	u, err := url.Parse("http://localhost:3000")
-	if err != nil {
-		e.Logger.Fatal(err)
-	}
-	targets := []*middleware.ProxyTarget{{URL: u}}
-	proxyConfig := middleware.ProxyConfig{
-		Skipper: func(c echo.Context) bool {
-			return strings.HasPrefix(c.Path(), "/api")
-		},
-		Balancer: middleware.NewRandomBalancer(targets),
-	}
-	e.Use(middleware.ProxyWithConfig(proxyConfig))
-	// End block
-
 	// Load the certificates
 	certificate, err := tls.LoadX509KeyPair(*cert, *key)
 	if err != nil {
@@ -135,8 +114,6 @@ func main() {
 	go func() {
 		if err := e.StartServer(s); err != nil {
 			e.Logger.Fatal("Shutting down the server! " + err.Error())
-		} else {
-			e.Logger.Info("Server started successfully!")
 		}
 	}()
 
