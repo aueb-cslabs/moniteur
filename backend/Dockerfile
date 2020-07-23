@@ -22,11 +22,13 @@ FROM alpine
 RUN mkdir /production
 COPY --from=build-stage /dist/moniteur /production
 COPY --from=build-stage /dist/aueb-plugin.so /production
-COPY --from=build-stage /dist/calendar.yml /production
-COPY --from=build-stage /dist/mapping.yml /production
 
 RUN apk add libc6-compat
 
 WORKDIR /production
 
-CMD ./moniteur --config config/config.yml --cert certificates/moniteur.crt --key certificates/moniteur.key --plugin aueb-plugin.so
+CMD ./moniteur --config config/config.yml \
+    --calendar config/calendar.yml \
+    --cert certificates/moniteur.crt \
+    --key certificates/moniteur.key  \
+    --plugin aueb-plugin.so

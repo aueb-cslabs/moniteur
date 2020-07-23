@@ -29,9 +29,10 @@ services:
       JWT_SECRET: "secret"
     ports:
     - 27522:27522
+    # Change these to match your preference
     volumes:
     - /etc/ssl/certs/:/production/certificates:ro
-    - /home/test/config/:/production/config:ro
+    - /home/christos/config/:/production/config:rw
   #frontend:
    # depends_on:
     #  - backend
