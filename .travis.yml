@@ -3,7 +3,7 @@ matrix:
     - os: linux
       services: docker
       script:
-        - docker-compose build
+        - docker-compose build --parallel
       deploy:
         provider: script
         script: bash docker_push
