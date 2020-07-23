@@ -11,6 +11,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/getsentry/sentry-go"
+	sentryecho "github.com/getsentry/sentry-go/echo"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
@@ -62,6 +64,14 @@ func main() {
 	plugin.Initialize(config.ExamsLink)
 	rest.Initialize(calendarInfo)
 
+	if err := sentry.Init(sentry.ClientOptions{
+		Dsn: os.Getenv("SENTRY_DSN"),
+	}); err != nil {
+		log.Printf("Sentry initialization failed: %v\n", err)
+	} else {
+		log.Printf("Sentry initialization completed!")
+	}
+
 	e := echo.New()
 
 	api := e.Group("/api")
@@ -85,6 +95,9 @@ func main() {
 			return next(types.NewContext(c, plugin, psql, redisClient, authUsers, tokens, os.Getenv("JWT_SECRET")))
 		}
 	})
+
+	// Initialize Snetry middleware
+	e.Use(sentryecho.New(sentryecho.Options{}))
 
 	//For CORS to work, please define the EXACT link that you will use!!!
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
