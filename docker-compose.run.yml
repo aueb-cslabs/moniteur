@@ -27,6 +27,7 @@ services:
       # Leave empty for no password
       REDIS_PASSWORD: "secret"
       JWT_SECRET: "secret"
+      SENTRY_DSN: "sentry-dsn"
     ports:
       - 27522:27522
     # Change these to match your preference

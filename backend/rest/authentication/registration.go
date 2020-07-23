@@ -3,7 +3,7 @@ package authentication
 import (
 	"net/http"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 
 	"github.com/aueb-cslabs/moniteur/backend/types"
 )
