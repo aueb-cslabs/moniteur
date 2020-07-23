@@ -2,6 +2,7 @@
 echo "$GH_TOKEN" | docker login https://docker.pkg.github.com -u "$DOCKER_USERNAME" --password-stdin
 docker-compose push
 
-sentry-cli releases new -p moniteur $TRAVIS_TAG
-sentry-cli releases set-commits --auto $TRAVIS_TAG
-sentry-cli releases finalize "$TRAVIS_TAG"
+VERSION=$(sentry-cli releases propose-version)
+sentry-cli releases new -p moniteur $VERSION
+sentry-cli releases set-commits --auto $VERSION
+sentry-cli releases finalize "$VERSION"
