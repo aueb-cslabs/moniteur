@@ -3,6 +3,6 @@ services:
   backend:
     build: backend
     image: docker.pkg.github.com/aueb-cslabs/moniteur/backend
-  #frontend:
-   # build: app
-   # image: docker.pkg.github.com/aueb-cslabs/moniteur/frontend
+  frontend:
+    build: app
+    image: docker.pkg.github.com/aueb-cslabs/moniteur/frontend
