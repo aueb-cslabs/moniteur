@@ -2,11 +2,13 @@ matrix:
   include:
     - os: linux
       services: docker
+      install:
+        - curl -sL https://sentry.io/get-cli/ | bash
       script:
         - docker-compose build --parallel
       deploy:
         provider: script
-        script: bash docker_push
+        script: bash deploy
         on:
           tags: true
 cache:
