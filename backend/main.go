@@ -4,9 +4,8 @@ package main
 
 import (
 	"context"
-	"crypto/tls"
 	"flag"
-	"net/http"
+	"log"
 	"os"
 	"os/signal"
 	"strconv"
@@ -14,7 +13,6 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/labstack/gommon/log"
 
 	"github.com/aueb-cslabs/moniteur/backend/databases"
 	"github.com/aueb-cslabs/moniteur/backend/rest"
@@ -23,6 +21,7 @@ import (
 	"github.com/aueb-cslabs/moniteur/backend/rest/calendar"
 	"github.com/aueb-cslabs/moniteur/backend/rest/schedule"
 	"github.com/aueb-cslabs/moniteur/backend/types"
+	"github.com/aueb-cslabs/moniteur/backend/utils"
 )
 
 func main() {
@@ -41,8 +40,7 @@ func main() {
 	}
 
 	if *pluginFIle == "" {
-		fmt.Println("Error! Please specify a plugin file!")
-		os.Exit(-1)
+		log.Panic("Error! Please specify a plugin file!")
 	}
 
 	config, err := types.LoadConfiguration(*configFile)
@@ -93,26 +91,11 @@ func main() {
 		AllowOrigins: []string{"*"},
 	}))
 
-	// Load the certificates
-	certificate, err := tls.LoadX509KeyPair(*cert, *key)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	tlsConfig := &tls.Config{}
-	tlsConfig.Certificates = make([]tls.Certificate, 1)
-	tlsConfig.Certificates[0] = certificate
-
-	// Create a custom server with Read and Write timeouts
-	s := &http.Server{
-		Addr:         config.Hostname + ":" + strconv.Itoa(config.Port),
-		TLSConfig:    tlsConfig,
-		ReadTimeout:  20 * time.Second,
-		WriteTimeout: 20 * time.Second,
-	}
+	address := config.Hostname + ":" + strconv.Itoa(config.Port)
+	server := utils.CreateCustomServer(*cert, *key, address)
 
 	go func() {
-		if err := e.StartServer(s); err != nil {
+		if err := e.StartServer(server); err != nil {
 			e.Logger.Fatal("Shutting down the server! " + err.Error())
 		}
 	}()
