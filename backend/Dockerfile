@@ -2,8 +2,7 @@ FROM golang AS build-stage
 
 WORKDIR /build
 
-ADD go.mod .
-ADD go.sum .
+ADD go.* ./
 
 RUN go mod download
 
@@ -15,7 +14,6 @@ WORKDIR /dist
 
 RUN cp /build/moniteur .
 RUN cp /build/aueb-plugin.so .
-RUN cp /build/config/* .
 
 FROM alpine
 
