@@ -3,10 +3,14 @@
 package main
 
 import (
+	"context"
+	"crypto/tls"
 	"flag"
 	"fmt"
+	"net/http"
 	"net/url"
 	"os"
+	"os/signal"
 	"strconv"
 	"strings"
 	"time"
@@ -14,7 +18,6 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
-	"github.com/tylerb/graceful"
 
 	"github.com/aueb-cslabs/moniteur/backend/databases"
 	"github.com/aueb-cslabs/moniteur/backend/rest"
@@ -111,6 +114,40 @@ func main() {
 	e.Use(middleware.ProxyWithConfig(proxyConfig))
 	// End block
 
-	e.Server.Addr = config.Hostname + ":" + strconv.Itoa(config.Port)
-	e.Logger.Fatal(graceful.ListenAndServeTLS(e.Server, *cert, *key, 5*time.Second))
+	// Load the certificates
+	certificate, err := tls.LoadX509KeyPair(*cert, *key)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	tlsConfig := &tls.Config{}
+	tlsConfig.Certificates = make([]tls.Certificate, 1)
+	tlsConfig.Certificates[0] = certificate
+
+	// Create a custom server with Read and Write timeouts
+	s := &http.Server{
+		Addr:         config.Hostname + ":" + strconv.Itoa(config.Port),
+		TLSConfig:    tlsConfig,
+		ReadTimeout:  20 * time.Second,
+		WriteTimeout: 20 * time.Second,
+	}
+
+	go func() {
+		if err := e.StartServer(s); err != nil {
+			e.Logger.Fatal("Shutting down the server! " + err.Error())
+		} else {
+			e.Logger.Info("Server started successfully!")
+		}
+	}()
+
+	// Wait for interrupt signal to gracefully shutdown the server with
+	// a timeout of 10 seconds.
+	quit := make(chan os.Signal)
+	signal.Notify(quit, os.Interrupt)
+	<-quit
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	if err := e.Shutdown(ctx); err != nil {
+		e.Logger.Fatal(err)
+	}
 }
