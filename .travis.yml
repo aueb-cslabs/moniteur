@@ -8,6 +8,7 @@ matrix:
         - LATEST_TAG=$(git rev-parse $(git describe --abbrev=0 --tags))
         - SHA=$(git rev-parse $LATEST_TAG)
         - sed -i "s/@.*\"/@"$SHA"\"/" $TRAVIS_BUILD_DIR/backend/main.go
+        - sed -i "s/@.*'/@"$SHA"'/" $TRAVIS_BUILD_DIR/app/src/main.js
         - docker-compose build --parallel
       deploy:
         provider: script

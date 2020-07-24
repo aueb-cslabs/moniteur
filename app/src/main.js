@@ -9,6 +9,9 @@ import config from "./config";
 import Moniteur from "./components/Moniteur";
 import Page404 from "./components/Page404/Page404";
 
+import * as Sentry from '@sentry/browser';
+import { Vue as VueIntegration } from '@sentry/integrations';
+
 Vue.config.productionTip = false;
 
 Vue.use(VueI18n);
@@ -33,6 +36,12 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   routes
+});
+
+Sentry.init({
+  dsn: 'https://564a5fc484f1487aac89ad3490fd2473@o424515.ingest.sentry.io/5357396',
+  release: 'frontend@sha',
+  integrations: [new VueIntegration({Vue, attachProps: true})],
 });
 
 new Vue({
