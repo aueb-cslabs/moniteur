@@ -1,8 +1,11 @@
 #!/bin/bash
-echo "$GH_TOKEN" | docker login https://docker.pkg.github.com -u "$DOCKER_USERNAME" --password-stdin
-docker-compose push
 
 VERSION=$(sentry-cli releases propose-version)
 sentry-cli releases new -p moniteur $VERSION
 sentry-cli releases set-commits --auto $VERSION
 sentry-cli releases finalize "$VERSION"
+
+echo "$GH_TOKEN" | docker login https://docker.pkg.github.com -u "$DOCKER_USERNAME" --password-stdin
+docker-compose push
+
+sentry-cli releases deploys $VERSION new -e production

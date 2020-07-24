@@ -5,6 +5,9 @@ matrix:
       install:
         - curl -sL https://sentry.io/get-cli/ | bash
       script:
+        - LATEST_TAG=$(git rev-parse $(git describe --abbrev=0 --tags))
+        - SHA=$(git rev-parse $LATEST_TAG)
+        - sed -i "s/@.*\"/@"$SHA"\"/" $TRAVIS_BUILD_DIR/backend/main.go
         - docker-compose build --parallel
       deploy:
         provider: script

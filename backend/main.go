@@ -65,7 +65,8 @@ func main() {
 	rest.Initialize(calendarInfo)
 
 	if err := sentry.Init(sentry.ClientOptions{
-		Dsn: os.Getenv("SENTRY_DSN"),
+		Dsn:     os.Getenv("SENTRY_DSN"),
+		Release: "moniteur@sha",
 	}); err != nil {
 		log.Printf("Sentry initialization failed: %v\n", err)
 	} else {
