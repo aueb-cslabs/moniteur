@@ -6,6 +6,3 @@ bind_username:
 bind_password:
 search_class:
 username_attribute:
-authorized_users:
-  #ALL AUTHENTICATED USERS IN THIS FORM
-  username: Y
