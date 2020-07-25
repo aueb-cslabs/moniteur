@@ -14,9 +14,10 @@ services:
     restart: unless-stopped
     # Remove this for no password
     command: >
-      --requirepass secret
+      --requirepass secret --appendonly yes
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - /var/lib/redis/:/data:rw
   backend:
     depends_on:
       - postgres
