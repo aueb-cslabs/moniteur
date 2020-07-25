@@ -95,17 +95,3 @@ func authenticateLdap(username string, password string) (bool, error) {
 
 	return true, nil
 }
-
-/*func register(username string) (bool, error) {
-	ldapConf.AuthorizedUsers[username] = "Y"
-	byt, err := yaml.Marshal(ldapConf)
-	if err != nil {
-		return false, errors.New("marshaling error")
-	}
-	err = ioutil.WriteFile("config/ldap.yml", byt, 0644)
-	if err != nil {
-		return false, errors.New("cannot write to ldap.yml")
-	}
-	return true, nil
-}
-*/
