@@ -10,17 +10,20 @@ import (
 
 func Register(e echo.Context) error {
 	ctx := e.(*types.Context)
+	db := ctx.DB
 
 	username := e.Param("id")
 
 	if username == "" {
 		return e.NoContent(http.StatusBadRequest)
 	}
-	if ctx.AuthUsers.Get(username).Val() == "Y" {
+
+	user := &types.User{Username: username}
+
+	if err := db.Find(user).Error; err != nil {
 		return e.NoContent(http.StatusAccepted)
 	}
-	_, err := ctx.AuthUsers.Set(username, "Y", 0).Result()
-	if err != nil {
+	if err := db.Create(user).Error; err != nil {
 		return e.NoContent(http.StatusBadRequest)
 	}
 	return e.NoContent(http.StatusOK)
@@ -28,14 +31,17 @@ func Register(e echo.Context) error {
 
 func Unregister(e echo.Context) error {
 	ctx := e.(*types.Context)
+	db := ctx.DB
 
 	username := e.Param("id")
 
 	if username == "" {
 		return e.NoContent(http.StatusBadRequest)
 	}
-	res, _ := ctx.AuthUsers.Del(username).Result()
-	if res != 1 {
+
+	user := &types.User{Username: username}
+
+	if err := db.Delete(user).Error; err != nil {
 		return e.NoContent(http.StatusBadRequest)
 	}
 	return e.NoContent(http.StatusOK)

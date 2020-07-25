@@ -16,6 +16,7 @@ import (
 func Authenticate(e echo.Context) error {
 	ctx := e.(*types.Context)
 	user := &types.User{}
+	db := ctx.DB
 
 	err := e.Bind(user)
 
@@ -23,7 +24,7 @@ func Authenticate(e echo.Context) error {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 
-	if ctx.AuthUsers.Exists(user.Username).Val() != 1 {
+	if err := db.Find(&types.User{Username: user.Username}).Error; err != nil {
 		return e.NoContent(http.StatusUnauthorized)
 	}
 
@@ -68,6 +69,7 @@ func Authenticate(e echo.Context) error {
 
 func AuthenticateToken(e echo.Context) error {
 	ctx := e.(*types.Context)
+	db := ctx.DB
 
 	authHeader := e.Request().Header.Get("Authorization")
 	if authHeader == "" {
@@ -91,7 +93,7 @@ func AuthenticateToken(e echo.Context) error {
 	claim := &types.AuthTokenClaim{}
 	_ = json.Unmarshal(redisClaim, claim)
 	name := e.Request().Header.Get("Username")
-	if ctx.AuthUsers.Exists(name).Val() != 1 {
+	if err := db.Find(&types.User{Username: name}).Error; err != nil {
 		return e.NoContent(http.StatusUnauthorized)
 	}
 	if len(claim.Username) == 0 {
@@ -116,6 +118,7 @@ func AuthenticateToken(e echo.Context) error {
 func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		ctx := c.(*types.Context)
+		db := ctx.DB
 
 		authHeader := c.Request().Header.Get("authorization")
 		if authHeader == "" {
@@ -139,7 +142,7 @@ func Validate(next echo.HandlerFunc) echo.HandlerFunc {
 		claim := &types.AuthTokenClaim{}
 		_ = json.Unmarshal(redisClaim, claim)
 		name := c.Request().Header.Get("Username")
-		if ctx.AuthUsers.Exists(name).Val() != 1 {
+		if err := db.Find(&types.User{Username: name}).Error; err != nil {
 			return c.NoContent(http.StatusUnauthorized)
 		}
 		if len(claim.Username) == 0 {
@@ -208,9 +211,10 @@ func jwtKey(token *jwt.Token, secret string) (interface{}, error) {
 
 func Users(e echo.Context) error {
 	ctx := e.(*types.Context)
+	db := ctx.DB
 
-	authorizedUsers := ctx.AuthUsers.Do("SCAN", "0", "COUNT", "1000")
-	data := authorizedUsers.Val().([]interface{})
-	users := data[1].([]interface{})
+	var users []string
+	db.Find(&types.User{}).Pluck("username", &users)
+
 	return e.JSON(http.StatusOK, users)
 }
