@@ -1,7 +1,12 @@
+language: go
+go: '1.14'
+
 matrix:
   include:
-    - os: linux
-      services: docker
+    - stage: "Test"
+      script: go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
+      after_success: bash <(curl -s https://codecov.io/bash)
+    - stage: "Build images"
       install:
         - curl -sL https://sentry.io/get-cli/ | bash
       script:
