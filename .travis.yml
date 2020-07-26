@@ -4,7 +4,7 @@ go: '1.14'
 matrix:
   include:
     - stage: "Test"
-      script: go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
+      script: make test
       after_success: bash <(curl -s https://codecov.io/bash)
     - stage: "Build images"
       install:

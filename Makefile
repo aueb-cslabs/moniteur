@@ -13,9 +13,8 @@
 
 default: .build
 
-test: .build-go
-	go test github.com/aueb-cslabs/moniteur/backend
-	go test github.com/aueb-cslabs/moniteur/backend/plugin/aueb
+test:
+	cd backend && go get && go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
 
 start: .build-go
 	cd backend && bin/moniteur
