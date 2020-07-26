@@ -214,7 +214,7 @@ func Users(e echo.Context) error {
 	db := ctx.DB
 
 	var users []string
-	db.Find(&types.User{}).Pluck("username", &users)
+	db.Model(&types.User{}).Pluck("username", &users)
 
 	return e.JSON(http.StatusOK, users)
 }
