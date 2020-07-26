@@ -1,6 +1,6 @@
 module github.com/aueb-cslabs/moniteur/backend
 
-go 1.12
+go 1.13
 
 require (
 	github.com/denisenkom/go-mssqldb v0.0.0-20191128021309-1d7a30a10f73 // indirect
@@ -8,6 +8,7 @@ require (
 	github.com/getsentry/sentry-go v0.7.0
 	github.com/go-redis/redis/v7 v7.4.0
 	github.com/jinzhu/gorm v1.9.15
+	github.com/go-ozzo/ozzo-validation/v4 v4.2.1
 	github.com/jinzhu/now v1.1.1 // indirect
 	github.com/labstack/echo/v4 v4.1.16
 	github.com/labstack/gommon v0.3.0

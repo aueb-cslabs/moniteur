@@ -24,6 +24,10 @@ func Authenticate(e echo.Context) error {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 
+	if err := user.Validate(); err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
+
 	if err := db.Find(&types.User{Username: user.Username}).Error; err != nil {
 		return e.NoContent(http.StatusUnauthorized)
 	}

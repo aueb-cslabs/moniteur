@@ -33,6 +33,10 @@ func createAnnouncement(e echo.Context) error {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 
+	if err := post.Validate(); err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
+
 	ctx.RedisClient.Set("Announcement", post.Msg, 0)
 	ctx.RedisClient.ExpireAt("Announcement", time.Unix(post.End, 0))
 	ctx.RedisClient.Set("Announcement_dt", post.End, 0)
@@ -73,6 +77,10 @@ func updateAnnouncement(e echo.Context) error {
 	err := e.Bind(&post)
 
 	if err != nil {
+		return e.JSON(http.StatusBadRequest, err)
+	}
+
+	if err := post.Validate(); err != nil {
 		return e.JSON(http.StatusBadRequest, err)
 	}
 

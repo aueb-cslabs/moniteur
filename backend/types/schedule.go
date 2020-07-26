@@ -1,6 +1,9 @@
 package types
 
-import "github.com/jinzhu/gorm"
+import (
+	validation "github.com/go-ozzo/ozzo-validation/v4"
+	"github.com/jinzhu/gorm"
+)
 
 // Schedule The schedule object containing all the schedule slots.
 type Schedule struct {
@@ -36,4 +39,19 @@ type DBScheduleSlot struct {
 type ScheduleNow struct {
 	Now  *ScheduleSlot   `json:"now"`
 	Next []*ScheduleSlot `json:"next"`
+}
+
+func (ss ScheduleSlot) Validate() error {
+	return validation.ValidateStruct(&ss,
+		validation.Field(&ss.Title, validation.Required),
+		validation.Field(&ss.Host, validation.Required),
+		validation.Field(&ss.Start, validation.Required),
+		validation.Field(&ss.End, validation.Required),
+		validation.Field(&ss.Room, validation.Required),
+		validation.Field(&ss.IsExam, validation.Required),
+	)
+}
+
+func (dbss DBScheduleSlot) Validate() error {
+	return dbss.ScheduleSlot.Validate()
 }
