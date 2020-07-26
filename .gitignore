@@ -35,3 +35,6 @@ yarn-error.log*
 
 # Github OAuth token
 token
+
+# Docker run config file
+docker-compose.run.yml
