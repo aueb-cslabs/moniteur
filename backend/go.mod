@@ -13,6 +13,7 @@ require (
 	github.com/labstack/gommon v0.3.0
 	github.com/lib/pq v1.3.0 // indirect
 	github.com/mattn/go-sqlite3 v2.0.2+incompatible // indirect
+	github.com/stretchr/testify v1.4.0
 	github.com/tealeg/xlsx v1.0.3
 	gopkg.in/asn1-ber.v1 v1.0.0-20181015200546-f715ec2f112d // indirect
 	gopkg.in/ldap.v3 v3.0.3
