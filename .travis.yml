@@ -5,8 +5,8 @@ matrix:
   include:
     - stage: "Test"
       env:
-        - POSTGRES_URI="postgresql://postgresuser:pass@postgres:24000/postgres?sslmode=disable"
-        - REDIS_URI="redis:24001"
+        - POSTGRES_URI="postgresql://postgresuser:pass@localhost:24000/postgres?sslmode=disable"
+        - REDIS_URI="localhost:24001"
         - REDIS_PASSWORD="secret"
       script:
         - docker-compose -f docker-compose.test.yml up -d
