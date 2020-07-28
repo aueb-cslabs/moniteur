@@ -6,6 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
+	"github.com/aueb-cslabs/moniteur/backend/plugin/aueb"
 	"github.com/aueb-cslabs/moniteur/backend/types"
 )
 
@@ -21,7 +22,7 @@ func createRoomAnn(e echo.Context) error {
 	}
 
 	//Because of the room names that are in Greek we need to convert it to English
-	room := ctx.Plugin().ConvertNameInverse(e.Param("room"))
+	room := aueb.ConvertNameInverse(e.Param("room"))
 
 	ctx.RedisClient.Set(room+"_ann", post.Msg, 0)
 	ctx.RedisClient.ExpireAt(room+"_ann", time.Unix(post.End, 0))
@@ -42,7 +43,7 @@ func updateRoomAnn(e echo.Context) error {
 	}
 
 	//Because of the room names that are in Greek we need to convert it to English
-	room := ctx.Plugin().ConvertNameInverse(e.Param("room"))
+	room := aueb.ConvertNameInverse(e.Param("room"))
 
 	ctx.RedisClient.Set(room+"_ann", post.Msg, 0)
 	ctx.RedisClient.ExpireAt(room+"_ann", time.Unix(post.End, 0))
@@ -55,7 +56,7 @@ func updateRoomAnn(e echo.Context) error {
 func deleteRoomAnn(e echo.Context) error {
 	ctx := e.(*types.Context)
 
-	room := ctx.Plugin().ConvertNameInverse(e.Param("room"))
+	room := aueb.ConvertNameInverse(e.Param("room"))
 
 	ctx.RedisClient.Del(room + "_ann")
 	ctx.RedisClient.Del(room + "_ann_dt")
@@ -67,7 +68,7 @@ func deleteRoomAnn(e echo.Context) error {
 func getRoomAnn(e echo.Context) error {
 	ctx := e.(*types.Context)
 
-	room := ctx.Plugin().ConvertNameInverse(e.Param("room"))
+	room := aueb.ConvertNameInverse(e.Param("room"))
 	room = room + "_ann"
 	exists := ctx.RedisClient.Exists(room).Val()
 	if exists == 1 {

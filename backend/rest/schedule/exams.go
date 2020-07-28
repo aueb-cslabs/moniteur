@@ -6,6 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
+	"github.com/aueb-cslabs/moniteur/backend/plugin/aueb"
 	"github.com/aueb-cslabs/moniteur/backend/types"
 )
 
@@ -19,7 +20,7 @@ func ExamsGroup(g *echo.Group) {
 // examsScheduleAll Method that returns the exams schedule
 func examsScheduleAll(ec echo.Context) error {
 	c := ec.(*types.Context)
-	schedule, err := c.Plugin().ExamsSchedule()
+	schedule, err := aueb.ExamsSchedule()
 	if err != nil {
 		return c.JSON(http.StatusNotFound, err)
 	}
@@ -30,7 +31,7 @@ func examsScheduleAll(ec echo.Context) error {
 func examsScheduleRoomToday(ec echo.Context) error {
 	c := ec.(*types.Context)
 
-	schedule, err, room := c.Plugin().ExamsScheduleRoom(c.Param("room"))
+	schedule, err, room := aueb.ExamsScheduleRoom(c.Param("room"))
 	if err != nil {
 		return c.JSON(http.StatusNotFound, err)
 	}
@@ -53,7 +54,7 @@ func examsScheduleRoomToday(ec echo.Context) error {
 func examsScheduleRoomTodayNow(ec echo.Context) error {
 	c := ec.(*types.Context)
 
-	schedule, err, room := c.Plugin().ExamsScheduleRoom(c.Param("room"))
+	schedule, err, room := aueb.ExamsScheduleRoom(c.Param("room"))
 	if err != nil {
 		return c.JSON(http.StatusNotFound, err)
 	}

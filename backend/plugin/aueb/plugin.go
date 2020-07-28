@@ -1,45 +1,23 @@
-// +build linux darwin
-
-package main
+package aueb
 
 import (
 	"errors"
 
+	pluginTypes "github.com/aueb-cslabs/moniteur/backend/plugin/aueb/types"
 	"github.com/aueb-cslabs/moniteur/backend/types"
 )
 
-type Lesson struct {
-	Semester        string `json:"semester"`
-	LessonComments  string `json:"Lesson_comments"`
-	Room            string `json:"Room"`
-	LessonTitle     string `json:"Lesson_title"`
-	Professor       string `json:"professor"`
-	Time            string `json:"time"`
-	Day             string `json:"Day"`
-	DepartmentTitle string `json:"Department_title"`
-}
-
-type RoomMap struct {
-	Rooms        map[string]string `yaml:"rooms,omitempty"`
-	RoomsInverse map[string]string `yaml:"-"`
-}
-
 var (
-	// PLUGIN The plugin to be read by the moniteur agent.
-	PLUGIN = Plugin{}
 	// Provides map for english-greek room name translation
-	mapping = &RoomMap{}
+	mapping = &pluginTypes.RoomMap{}
 	// The xlsx file that AUEB provides that contains the exams schedule
 	exams []byte
 	// The link that corresponds to the exams file
 	link string
 )
 
-type Plugin struct {
-}
-
 // Initialize Method that initializes crucial functions for the plugin
-func (Plugin) Initialize(examsLink string) {
+func Initialize(examsLink string) {
 	if len(mapping.Rooms) == 0 {
 		mapping, _ = loadMapping("config/mapping.yml")
 	}
@@ -57,12 +35,12 @@ func (Plugin) Initialize(examsLink string) {
 }
 
 // Schedule Method that returns current schedule from Schedule Master
-func (Plugin) Schedule() (*types.Schedule, error) {
+func Schedule() (*types.Schedule, error) {
 	return retriever(), nil
 }
 
 // ScheduleRoom Method that returns current schedule and the room that corresponds to it
-func (Plugin) ScheduleRoom(room string) (*types.Schedule, error, string) {
+func ScheduleRoom(room string) (*types.Schedule, error, string) {
 	room, changed := checkMapping(room)
 	if !changed {
 		room = convertChars(room)
@@ -71,7 +49,7 @@ func (Plugin) ScheduleRoom(room string) (*types.Schedule, error, string) {
 }
 
 // ExamsSchedule Method that returns current exams schedule if that exists
-func (Plugin) ExamsSchedule() (*types.Schedule, error) {
+func ExamsSchedule() (*types.Schedule, error) {
 	schedule := getExamsSchedule()
 	var err error
 	if len(exams) == 0 {
@@ -80,7 +58,7 @@ func (Plugin) ExamsSchedule() (*types.Schedule, error) {
 	return schedule, err
 }
 
-func (Plugin) ConvertNameInverse(name string) string {
+func ConvertNameInverse(name string) string {
 	name, changed := checkMappingInverse(name)
 	if !changed {
 		name = convertCharsInverse(name)
@@ -89,7 +67,7 @@ func (Plugin) ConvertNameInverse(name string) string {
 }
 
 // ExamsScheduleRoom Method that returns current exams schedule if that exists and the room that corresponds to it
-func (Plugin) ExamsScheduleRoom(room string) (*types.Schedule, error, string) {
+func ExamsScheduleRoom(room string) (*types.Schedule, error, string) {
 	room, changed := checkMapping(room)
 	if !changed {
 		room = convertChars(room)
@@ -102,11 +80,11 @@ func (Plugin) ExamsScheduleRoom(room string) (*types.Schedule, error, string) {
 	return schedule, err, room
 }
 
-func (Plugin) AuthorizeUser(username string, password string) (bool, error) {
+func AuthorizeUser(username string, password string) (bool, error) {
 	return authenticateLdap(username, password)
 }
 
-func (Plugin) GetRooms() []string {
+func GetRooms() []string {
 	rooms := make(map[string]int)
 	slots := getEntireSchedule()
 	for _, lesson := range slots {

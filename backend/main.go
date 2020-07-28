@@ -17,6 +17,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 
 	"github.com/aueb-cslabs/moniteur/backend/databases"
+	"github.com/aueb-cslabs/moniteur/backend/plugin/aueb"
 	"github.com/aueb-cslabs/moniteur/backend/rest"
 	"github.com/aueb-cslabs/moniteur/backend/rest/announcements"
 	"github.com/aueb-cslabs/moniteur/backend/rest/authentication"
@@ -28,7 +29,6 @@ import (
 
 func main() {
 	configFile := flag.String("config", "config.yml", "Specifies the configuration file to be read")
-	pluginFIle := flag.String("plugin", "", "Specifies the plugin file to bread (Required)")
 	calendarFile := flag.String("calendar", "calendar.yml", "Specifies the calendar file to be read")
 	cert := flag.String("cert", "moniteur.crt", "Public certificate file. Must end with .crt")
 	key := flag.String("key", "moniteur.key", "Private key. Must end .key")
@@ -41,15 +41,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	if *pluginFIle == "" {
-		log.Panic("Error! Please specify a plugin file!")
-	}
-
 	config, err := types.LoadConfiguration(*configFile)
-	if err != nil {
-		log.Panic(err)
-	}
-	plugin, err := types.LoadPlugin(*pluginFIle)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -61,7 +53,7 @@ func main() {
 	psql := databases.InitializePostgres()
 	redisClient, authUsers, tokens := databases.InitializeRedis(config.RedisConfig)
 
-	plugin.Initialize(config.ExamsLink)
+	aueb.Initialize(config.ExamsLink)
 	rest.Initialize(calendarInfo)
 
 	if err := sentry.Init(sentry.ClientOptions{
@@ -93,7 +85,7 @@ func main() {
 
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			return next(types.NewContext(c, plugin, psql, redisClient, authUsers, tokens, os.Getenv("JWT_SECRET")))
+			return next(types.NewContext(c, psql, redisClient, authUsers, tokens, os.Getenv("JWT_SECRET")))
 		}
 	})
 
