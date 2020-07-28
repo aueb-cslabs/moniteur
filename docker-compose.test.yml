@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
     # Remove this for no password
     command: >
-      --requirepass secret --appendonly yes
+      --requirepass secret
     volumes:
       - /etc/localtime:/etc/localtime:ro
     ports:

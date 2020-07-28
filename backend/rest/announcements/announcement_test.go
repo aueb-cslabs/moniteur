@@ -56,6 +56,28 @@ func TestGetAnnouncement(t *testing.T) {
 	}
 }
 
+func TestUpdateAnnouncement(t *testing.T) {
+	newAnn := types.Announcement{
+		End: time.Now().Add(time.Hour).Unix(),
+		Msg: "Test Announcement New",
+	}
+
+	testData, _ := json.Marshal(newAnn)
+
+	e := echo.New()
+	req := httptest.NewRequest(http.MethodPut, "/", bytes.NewReader(testData))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+
+	ctx := test.TestFactory()
+	ctx.Context = e.NewContext(req, rec)
+
+	if assert.NoError(t, updateAnnouncement(ctx)) {
+		assert.Equal(t, http.StatusOK, rec.Code)
+		assert.Equal(t, "Test Announcement New", ctx.RedisClient.Get("Announcement").Val())
+	}
+}
+
 func TestDeleteAnnouncement(t *testing.T) {
 	e := echo.New()
 	req := httptest.NewRequest(http.MethodDelete, "/", nil)
