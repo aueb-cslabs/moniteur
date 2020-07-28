@@ -1,4 +1,4 @@
-package main
+package aueb
 
 import (
 	"encoding/json"
@@ -10,6 +10,7 @@ import (
 
 	"github.com/tealeg/xlsx"
 
+	pluginTypes "github.com/aueb-cslabs/moniteur/backend/plugin/aueb/types"
 	"github.com/aueb-cslabs/moniteur/backend/types"
 )
 
@@ -39,10 +40,10 @@ func retriever() *types.Schedule {
 }
 
 // getEntireSchedule Method that retrieves the schedule for Schedule Master API
-func getEntireSchedule() []*Lesson {
+func getEntireSchedule() []*pluginTypes.Lesson {
 	resp, _ := http.Get("http://schedule.aueb.gr/mobile/")
 	bts, _ := ioutil.ReadAll(resp.Body)
-	var slots []*Lesson
+	var slots []*pluginTypes.Lesson
 	_ = json.Unmarshal(bts, &slots)
 	return slots
 }

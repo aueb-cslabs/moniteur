@@ -7,6 +7,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
+	"github.com/aueb-cslabs/moniteur/backend/plugin/aueb"
 	"github.com/aueb-cslabs/moniteur/backend/types"
 )
 
@@ -20,7 +21,7 @@ func ScheduleGroup(g *echo.Group) {
 // scheduleAll Method that returns the normal schedule
 func scheduleAll(ec echo.Context) error {
 	c := ec.(*types.Context)
-	schedule, err := c.Plugin().Schedule()
+	schedule, err := aueb.Schedule()
 	if err != nil {
 		return err
 	}
@@ -31,7 +32,7 @@ func scheduleAll(ec echo.Context) error {
 func scheduleRoom(ec echo.Context) error {
 	c := ec.(*types.Context)
 
-	schedule, err, room := c.Plugin().ScheduleRoom(c.Param("room"))
+	schedule, err, room := aueb.ScheduleRoom(c.Param("room"))
 	if err != nil {
 		return err
 	}
@@ -52,7 +53,7 @@ func scheduleRoom(ec echo.Context) error {
 func scheduleRoomNow(ec echo.Context) error {
 	c := ec.(*types.Context)
 
-	schedule, err, room := c.Plugin().ScheduleRoom(c.Param("room"))
+	schedule, err, room := aueb.ScheduleRoom(c.Param("room"))
 	if err != nil {
 		return err
 	}
@@ -100,14 +101,14 @@ func determineNow() (int, int64) {
 // Room returns the room name based on the mapping
 func Room(e echo.Context) error {
 	c := e.(*types.Context)
-	_, _, room := c.Plugin().ScheduleRoom(c.Param("id"))
+	_, _, room := aueb.ScheduleRoom(c.Param("id"))
 
 	return c.JSON(http.StatusOK, room)
 }
 
 func Rooms(e echo.Context) error {
 	c := e.(*types.Context)
-	rooms := c.Plugin().GetRooms()
+	rooms := aueb.GetRooms()
 	sort.Strings(rooms)
 	return c.JSON(http.StatusOK, rooms)
 }

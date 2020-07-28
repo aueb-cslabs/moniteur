@@ -1,4 +1,4 @@
-package main
+package aueb
 
 import (
 	"fmt"
@@ -10,15 +10,17 @@ import (
 	"time"
 
 	"gopkg.in/yaml.v2"
+
+	pluginTypes "github.com/aueb-cslabs/moniteur/backend/plugin/aueb/types"
 )
 
 // loadMapping Method that loads the room mapping from english to greek names
-func loadMapping(file string) (*RoomMap, error) {
+func loadMapping(file string) (*pluginTypes.RoomMap, error) {
 	byt, err := ioutil.ReadFile(file)
 	if err != nil {
 		return nil, err
 	}
-	rooms := &RoomMap{}
+	rooms := &pluginTypes.RoomMap{}
 	if err := yaml.Unmarshal(byt, rooms); err != nil {
 		return nil, err
 	}

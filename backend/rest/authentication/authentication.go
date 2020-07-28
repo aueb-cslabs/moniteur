@@ -9,6 +9,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
 
+	"github.com/aueb-cslabs/moniteur/backend/plugin/aueb"
 	"github.com/aueb-cslabs/moniteur/backend/types"
 )
 
@@ -28,7 +29,7 @@ func Authenticate(e echo.Context) error {
 		return e.NoContent(http.StatusUnauthorized)
 	}
 
-	res, ldapErr := ctx.Plugin().AuthorizeUser(user.Username, user.Password)
+	res, ldapErr := aueb.AuthorizeUser(user.Username, user.Password)
 
 	if res {
 		expiresAt := time.Now().Add(time.Hour * 24).Unix()

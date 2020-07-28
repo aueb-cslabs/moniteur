@@ -1,4 +1,4 @@
-package main
+package aueb
 
 import (
 	"crypto/tls"
