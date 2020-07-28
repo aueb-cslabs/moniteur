@@ -20,7 +20,7 @@ func Register(e echo.Context) error {
 
 	user := &types.User{Username: username}
 
-	if err := db.Find(user).Error; err != nil {
+	if !db.Where("username = ?", username).Find(user).RecordNotFound() {
 		return e.NoContent(http.StatusAccepted)
 	}
 	if err := db.Create(user).Error; err != nil {
@@ -41,7 +41,7 @@ func Unregister(e echo.Context) error {
 
 	user := &types.User{Username: username}
 
-	if err := db.Delete(user).Error; err != nil {
+	if err := db.Unscoped().Delete(user).Error; err != nil {
 		return e.NoContent(http.StatusBadRequest)
 	}
 	return e.NoContent(http.StatusOK)
