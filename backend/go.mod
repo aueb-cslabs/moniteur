@@ -5,7 +5,7 @@ go 1.12
 require (
 	github.com/denisenkom/go-mssqldb v0.0.0-20191128021309-1d7a30a10f73 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/getsentry/sentry-go v0.7.0
+	github.com/getsentry/sentry-go v0.9.0
 	github.com/go-redis/redis/v7 v7.4.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/jinzhu/now v1.1.1 // indirect
