@@ -1,0 +1,22 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:12
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: "postgresuser"
+      POSTGRES_PASSWORD: "pass"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+    - 24000:5432
+  redis:
+    image: redis
+    restart: unless-stopped
+    # Remove this for no password
+    command: >
+      --requirepass secret
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+    - 24001:6379
