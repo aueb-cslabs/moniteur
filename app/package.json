@@ -15,7 +15,7 @@
   "dependencies": {
     "@sentry/browser": "^5.20.0",
     "@sentry/integrations": "^5.20.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "sass": "^1.26.10",
     "sass-loader": "^9.0.2",
