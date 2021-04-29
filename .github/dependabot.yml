@@ -1,0 +1,70 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/app"
+  schedule:
+    interval: weekly
+    time: "03:00"
+  pull-request-branch-name:
+    separator: "-"
+  open-pull-requests-limit: 10
+  reviewers:
+  - root-expert
+  ignore:
+  - dependency-name: "@sentry/browser"
+    versions:
+    - 6.0.1
+    - 6.0.3
+    - 6.1.0
+    - 6.2.0
+    - 6.2.1
+    - 6.2.2
+    - 6.2.3
+    - 6.2.5
+  - dependency-name: "@sentry/integrations"
+    versions:
+    - 6.0.1
+    - 6.0.3
+    - 6.1.0
+    - 6.2.0
+    - 6.2.1
+    - 6.2.2
+    - 6.2.3
+    - 6.2.5
+  - dependency-name: y18n
+    versions:
+    - 4.0.1
+  - dependency-name: vue-i18n
+    versions:
+    - 8.22.4
+    - 8.23.0
+    - 8.24.1
+    - 8.24.2
+  - dependency-name: "@vue/cli-plugin-babel"
+    versions:
+    - 4.5.11
+  - dependency-name: "@vue/cli-plugin-eslint"
+    versions:
+    - 4.5.11
+  - dependency-name: "@vue/cli-service"
+    versions:
+    - 4.5.11
+  - dependency-name: vue-router
+    versions:
+    - 3.4.9
+- package-ecosystem: gomod
+  directory: "/backend"
+  schedule:
+    interval: daily
+    time: "03:00"
+  pull-request-branch-name:
+    separator: "-"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: github.com/labstack/echo/v4
+    versions:
+    - 4.1.17
+    - 4.2.0
+  - dependency-name: github.com/getsentry/sentry-go
+    versions:
+    - 0.9.0
